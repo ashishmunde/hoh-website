@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import { PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER, SECONDARY_HOVER } from '@/utils/const'
+import {
+  BALAYAGE_IMAGES,
+  FEMALE_HAIRCUT_IMAGES,
+  MENS_HAIRCUT_IMAGES,
+  HIGHLIGHTS_IMAGES,
+  GLOBAL_IMAGES,
+  HAIR_TREATMENT_IMAGES,
+  MAKEUP_AND_HAIRSTYLE_IMAGES,
+} from '@/utils/images'
+import { useRouter } from 'vue-router'
 
 interface Service {
   id: number
@@ -8,42 +18,58 @@ interface Service {
   description: string
 }
 
+const router = useRouter()
+
 const services: Service[] = [
   {
     id: 1,
-    title: "Hair Services",
-    image: "https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-    description: "Professional hair styling, cutting, and treatments"
+    title: "Balayage",
+    image: BALAYAGE_IMAGES[0],
+    description: "Professional balayage hair coloring"
   },
   {
     id: 2,
-    title: "Skin Services",
-    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-    description: "Facial treatments and skin care services"
+    title: "Female Haircut",
+    image: FEMALE_HAIRCUT_IMAGES[0],
+    description: "Expert female haircut and styling"
   },
   {
     id: 3,
-    title: "Mani-Pedi",
-    image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-    description: "Manicure and pedicure services"
+    title: "Men's Haircut",
+    image: MENS_HAIRCUT_IMAGES[0],
+    description: "Professional men's haircut services"
   },
   {
     id: 4,
-    title: "Nail Services",
-    image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-    description: "Nail art and nail care services"
+    title: "Highlights",
+    image: HIGHLIGHTS_IMAGES[0],
+    description: "Hair highlighting and color services"
   },
   {
     id: 5,
-    title: "Makeup Services",
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-    description: "Professional makeup application and styling"
+    title: "Global",
+    image: GLOBAL_IMAGES[0],
+    description: "Comprehensive hair services"
+  },
+  {
+    id: 6,
+    title: "Hair Treatment",
+    image: HAIR_TREATMENT_IMAGES[0],
+    description: "Hair care and treatment services"
+  },
+  {
+    id: 7,
+    title: "Make-up and Hairstyle",
+    image: MAKEUP_AND_HAIRSTYLE_IMAGES[0],
+    description: "Professional makeup and hairstyling"
   }
 ]
 
 const handleServiceClick = (service: Service) => {
-  console.log(`Clicked on ${service.title}`)
-  // Add navigation logic here
+  router.push({
+    name: 'gallery',
+    query: { category: service.title }
+  })
 }
 </script>
 
@@ -80,7 +106,8 @@ const handleServiceClick = (service: Service) => {
 
 .container {
   width: 100%;
-  margin: 0;
+  max-width: 100%;
+  margin: 0 auto;
   padding: 0 2rem;
   box-sizing: border-box;
 }
@@ -90,14 +117,18 @@ const handleServiceClick = (service: Service) => {
   font-weight: bold;
   color: v-bind(SECONDARY_COLOR);
   margin-bottom: 3rem;
-  text-align: left;
+  text-align: center;
 }
 
 .services-grid {
   display: flex;
   gap: 2rem;
   overflow-x: auto;
+  overflow-y: hidden;
   padding: 1rem 0 2rem 0;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
   /* Hide scrollbar for webkit browsers */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -116,6 +147,7 @@ const handleServiceClick = (service: Service) => {
   overflow: hidden;
   position: relative;
   margin: 0.5rem 0;
+  scroll-snap-align: start;
 }
 
 .service-card:hover {

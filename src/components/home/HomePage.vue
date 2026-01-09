@@ -2,6 +2,8 @@
 import { BANNER_IMAGE } from '@/utils/const'
 import Services from './Services.vue'
 import TopBar from './TopBar.vue'
+import Branches from './Branches.vue'
+import OurWork from './OurWork.vue'
 
 </script>
 
@@ -12,6 +14,8 @@ import TopBar from './TopBar.vue'
       <img :src="BANNER_IMAGE" alt="banner" class="banner-image" />
     </div>
     <Services />
+    <Branches />
+    <OurWork />
   </div>
 </template>
 
