@@ -1,88 +1,38 @@
 <script setup lang="ts">
-import { PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER, SECONDARY_HOVER } from '@/utils/const'
-import {
-  BALAYAGE_IMAGES,
-  FEMALE_HAIRCUT_IMAGES,
-  MENS_HAIRCUT_IMAGES,
-  HIGHLIGHTS_IMAGES,
-  GLOBAL_IMAGES,
-  HAIR_TREATMENT_IMAGES,
-  MAKEUP_AND_HAIRSTYLE_IMAGES,
-} from '@/utils/images'
+import SectionHeader from '@/components/ui/SectionHeader.vue'
+import { WORK_GALLERY_CATEGORIES } from '@/utils/workGallery'
 import { useRouter } from 'vue-router'
-
-interface Service {
-  name: string
-  thumbnail: string
-  images: string[]
-}
 
 const router = useRouter()
 
-const services: Service[] = [
-  {
-    name: 'Balayage',
-    thumbnail: BALAYAGE_IMAGES[0],
-    images: BALAYAGE_IMAGES,
-  },
-  {
-    name: 'Female Haircut',
-    thumbnail: FEMALE_HAIRCUT_IMAGES[0],
-    images: FEMALE_HAIRCUT_IMAGES,
-  },
-  {
-    name: "Men's Haircut",
-    thumbnail: MENS_HAIRCUT_IMAGES[0],
-    images: MENS_HAIRCUT_IMAGES,
-  },
-  {
-    name: 'Highlights',
-    thumbnail: HIGHLIGHTS_IMAGES[0],
-    images: HIGHLIGHTS_IMAGES,
-  },
-  {
-    name: 'Global',
-    thumbnail: GLOBAL_IMAGES[0],
-    images: GLOBAL_IMAGES,
-  },
-  {
-    name: 'Hair Treatment',
-    thumbnail: HAIR_TREATMENT_IMAGES[0],
-    images: HAIR_TREATMENT_IMAGES,
-  },
-  {
-    name: 'Make-up and Hairstyle',
-    thumbnail: MAKEUP_AND_HAIRSTYLE_IMAGES[0],
-    images: MAKEUP_AND_HAIRSTYLE_IMAGES,
-  },
-]
-
-const handleServiceClick = (service: Service) => {
-  router.push({
-    name: 'gallery',
-    query: { category: service.name }
-  })
+const openGallery = (galleryQuery: string) => {
+  router.push({ name: 'gallery', query: { category: galleryQuery } })
 }
 </script>
 
 <template>
   <section class="our-work-section">
-    <div class="container">
-      <h2 class="section-title">Our Work</h2>
-      <div class="services-grid">
-        <div
-          v-for="service in services"
-          :key="service.name"
-          class="service-card"
-          @click="handleServiceClick(service)"
+    <div class="page-container">
+      <SectionHeader title="Our Work" subtitle="Portfolio" />
+      <p class="work-intro">
+        Real results from our salon — browse photo galleries by style and treatment.
+      </p>
+      <div class="work-grid">
+        <button
+          v-for="cat in WORK_GALLERY_CATEGORIES"
+          :key="cat.id"
+          type="button"
+          class="work-card card-elevated"
+          @click="openGallery(cat.galleryQuery)"
         >
-          <div class="service-image-container">
-            <img :src="service.thumbnail" :alt="service.name" class="service-image" />
-            <div class="service-overlay">
-              <h3 class="service-title">{{ service.name }}</h3>
+          <div class="work-image-wrap">
+            <img :src="cat.thumbnail" :alt="cat.name" class="work-image" />
+            <div class="work-overlay">
+              <h3 class="work-title">{{ cat.name }}</h3>
+              <span class="work-count">{{ cat.images.length }} photos</span>
             </div>
           </div>
-        </div>
+        </button>
       </div>
     </div>
   </section>
@@ -90,125 +40,90 @@ const handleServiceClick = (service: Service) => {
 
 <style scoped>
 .our-work-section {
-  padding: 4rem 0;
-  background-color: #ffffff;
-  width: 100%;
+  padding: var(--hoh-section-py) 0;
+  background: var(--hoh-surface);
 }
 
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  box-sizing: border-box;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: v-bind(SECONDARY_COLOR);
-  margin-bottom: 3rem;
+.work-intro {
   text-align: center;
+  color: var(--hoh-text-muted);
+  font-size: 1.05rem;
+  margin: -1.5rem auto 2.5rem;
+  max-width: 32rem;
+  line-height: 1.7;
 }
 
-.services-grid {
+.work-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 1rem 0;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
 }
 
-.service-card {
+.work-card {
+  padding: 0;
+  border: none;
+  background: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 12px;
+  border-radius: var(--hoh-radius-lg);
   overflow: hidden;
-  position: relative;
+  text-align: left;
 }
 
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.service-image-container {
+.work-image-wrap {
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--hoh-radius-lg);
   overflow: hidden;
-  border: 2px solid #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  transform-origin: center;
+  aspect-ratio: 1;
 }
 
-.service-card:hover .service-image-container {
-  transform: scale(1.02);
-}
-
-.service-image {
+.work-image {
   width: 100%;
-  height: 350px;
+  height: 100%;
   object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s var(--hoh-ease);
 }
 
-.service-card:hover .service-image {
+.work-card:hover .work-image {
   transform: scale(1.05);
 }
 
-.service-overlay {
+.work-overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-  padding: 2rem 1.5rem 1.5rem;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26, 26, 26, 0.78) 0%, transparent 50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1.35rem;
+  gap: 0.35rem;
+}
+
+.work-title {
+  font-family: var(--hoh-font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
   color: white;
-  transition: all 0.3s ease;
-}
-
-.service-card:hover .service-overlay {
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
-}
-
-.service-title {
-  font-size: 1.5rem;
-  font-weight: 600;
   margin: 0;
-  text-align: center;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive design */
+.work-count {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
 @media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .services-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .service-image {
-    height: 300px;
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  .services-grid {
+  .work-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .section-title {
-    font-size: 1.75rem;
-  }
-
-  .service-image {
-    height: 250px;
   }
 }
 </style>

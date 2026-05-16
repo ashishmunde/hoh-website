@@ -112,6 +112,9 @@ export const HIGHLIGHTS_IMAGES = [
   `${IMAGE_BASE_URL}/Highlights/photo_2025-08-01_13-04-08.jpg`,
 ]
 
+// Hero banner (homepage)
+export const HERO_BANNER_IMAGE = `${IMAGE_BASE_URL}/Home Page Photos/hero-banner.png`
+
 // Homepage Images
 export const HOMEPAGE_IMAGES = [
   `${IMAGE_BASE_URL}/Home Page Photos/Balayage.jpg`,
@@ -146,6 +149,16 @@ export const HOMEPAGE_IMAGES = [
   `${IMAGE_BASE_URL}/Home Page Photos/balayage 1.jpg`,
   `${IMAGE_BASE_URL}/Home Page Photos/balayage 2.jpg`,
   `${IMAGE_BASE_URL}/Home Page Photos/balayage 3.jpg`,
+]
+
+// Men's Hair Color Images
+export const MENS_HAIR_COLOR_IMAGES = [
+  `${IMAGE_BASE_URL}/Men_s Hair Color/IMG_20250801_113629_298.jpg`,
+  `${IMAGE_BASE_URL}/Men_s Hair Color/IMG_20250801_114636_930.jpg`,
+  `${IMAGE_BASE_URL}/Men_s Hair Color/IMG_20250801_114741_290.jpg`,
+  `${IMAGE_BASE_URL}/Men_s Hair Color/IMG_20250801_114745_336.jpg`,
+  `${IMAGE_BASE_URL}/Men_s Hair Color/IMG_20250801_115923_351.jpg`,
+  `${IMAGE_BASE_URL}/Men_s Hair Color/IMG_20250801_124300_561.jpg`,
 ]
 
 // Men's Haircut Images
@@ -209,6 +222,7 @@ export const ALL_GALLERY_IMAGES = [
   ...HIGHLIGHTS_IMAGES,
   ...HOMEPAGE_IMAGES,
   ...MENS_HAIRCUT_IMAGES,
+  ...MENS_HAIR_COLOR_IMAGES,
   ...MAKEUP_AND_HAIRSTYLE_IMAGES,
 ]
 
@@ -221,6 +235,7 @@ export const GALLERY_IMAGES_BY_CATEGORY = {
   highlights: HIGHLIGHTS_IMAGES,
   homepage: HOMEPAGE_IMAGES,
   mensHaircut: MENS_HAIRCUT_IMAGES,
+  mensHairColor: MENS_HAIR_COLOR_IMAGES,
   makeupAndHairstyle: MAKEUP_AND_HAIRSTYLE_IMAGES,
 }
 

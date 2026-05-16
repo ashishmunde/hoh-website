@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER, SECONDARY_HOVER } from '@/utils/const'
 import { ALL_GALLERY_IMAGES, GALLERY_IMAGES_BY_CATEGORY } from '@/utils/images'
+import { getServiceImages } from '@/utils/serviceImages'
+import { findSubcategory } from '@/data/servicesCatalog'
 import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
 
@@ -15,24 +17,36 @@ const goBack = () => {
   }
 }
 
-// Get category from query parameter
-const category = computed(() => route.query.category as string | undefined)
+/** Legacy gallery label from Our Work (e.g. "Balayage") */
+const legacyCategory = computed(() => route.query.category as string | undefined)
+const division = computed(() => route.query.division as string | undefined)
+const categorySlug = computed(() => route.query.category as string | undefined)
+const subcategoryId = computed(() => route.query.subcategory as string | undefined)
+
+const isServiceRoute = computed(
+  () => Boolean(division.value && categorySlug.value && subcategoryId.value),
+)
 
 // Map service names to category keys
 const categoryMap: Record<string, keyof typeof GALLERY_IMAGES_BY_CATEGORY> = {
   'Balayage': 'balayage',
   'Female Haircut': 'femaleHaircut',
   "Men's Haircut": 'mensHaircut',
+  "Men's Hair Color": 'mensHairColor',
   'Highlights': 'highlights',
   'Global': 'global',
   'Hair Treatment': 'hairTreatment',
   'Make-up and Hairstyle': 'makeupAndHairstyle',
 }
 
-// Get filtered images based on category
 const galleryImages = computed(() => {
-  if (category.value) {
-    const categoryKey = categoryMap[category.value] || category.value as keyof typeof GALLERY_IMAGES_BY_CATEGORY
+  if (isServiceRoute.value && division.value && categorySlug.value && subcategoryId.value) {
+    return getServiceImages(division.value, categorySlug.value, subcategoryId.value)
+  }
+  if (legacyCategory.value && !route.query.division) {
+    const categoryKey =
+      categoryMap[legacyCategory.value] ||
+      (legacyCategory.value as keyof typeof GALLERY_IMAGES_BY_CATEGORY)
     return GALLERY_IMAGES_BY_CATEGORY[categoryKey] || ALL_GALLERY_IMAGES
   }
   return ALL_GALLERY_IMAGES
@@ -40,11 +54,12 @@ const galleryImages = computed(() => {
 
 const hasImages = computed(() => galleryImages.value.length > 0)
 
-// Gallery title based on category
 const galleryTitle = computed(() => {
-  if (category.value) {
-    return category.value
+  if (isServiceRoute.value && division.value && categorySlug.value && subcategoryId.value) {
+    const sub = findSubcategory(division.value, categorySlug.value, subcategoryId.value)
+    if (sub) return sub.name
   }
+  if (legacyCategory.value) return legacyCategory.value
   return 'Gallery'
 })
 </script>
@@ -83,8 +98,8 @@ const galleryTitle = computed(() => {
 <style scoped>
 .gallery-page {
   min-height: 100vh;
-  background-color: #f8f8f8;
-  padding: 2rem 0;
+  background: var(--hoh-bg);
+  padding: var(--hoh-section-py) 0;
 }
 
 .gallery-container {
@@ -135,11 +150,13 @@ const galleryTitle = computed(() => {
 }
 
 .gallery-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: v-bind(SECONDARY_COLOR);
+  font-family: var(--hoh-font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 500;
+  color: var(--hoh-secondary);
   text-align: center;
   flex: 1;
+  letter-spacing: 0.02em;
 }
 
 .gallery-grid {
@@ -151,12 +168,12 @@ const galleryTitle = computed(() => {
 
 .gallery-item {
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--hoh-radius-lg);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: white;
+  transition: all 0.35s var(--hoh-ease);
+  box-shadow: var(--hoh-shadow-sm);
+  background: var(--hoh-surface);
 }
 
 .gallery-item:hover {

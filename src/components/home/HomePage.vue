@@ -4,15 +4,20 @@ import Services from './Services.vue'
 import TopBar from './TopBar.vue'
 import Branches from './Branches.vue'
 import OurWork from './OurWork.vue'
-
 </script>
 
 <template>
   <div class="home-page">
     <TopBar />
-    <div class="banner-section">
-      <img :src="BANNER_IMAGE" alt="banner" class="banner-image" />
-    </div>
+    <section class="hero">
+      <img :src="BANNER_IMAGE" alt="The House of Hair salon" class="hero-image" />
+      <div class="hero-overlay" />
+      <div class="hero-content">
+        <p class="hero-eyebrow">Pune · Unisex Salon</p>
+        <h1 class="hero-title">The House of Hair</h1>
+        <p class="hero-tagline">Where style meets craftsmanship</p>
+      </div>
+    </section>
     <Services />
     <Branches />
     <OurWork />
@@ -24,27 +29,74 @@ import OurWork from './OurWork.vue'
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 100%;
   overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  background: var(--hoh-bg);
 }
 
-.banner-section {
+.hero {
+  position: relative;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: #f8f8f8;
-  box-sizing: border-box;
+  max-height: min(72vh, 640px);
+  overflow: hidden;
+  background: var(--hoh-secondary);
 }
 
-.banner-image {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.hero-image {
+  width: 100%;
+  height: min(72vh, 640px);
+  object-fit: cover;
+  object-position: center center;
 }
 
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26, 26, 26, 0.55) 0%,
+    rgba(26, 26, 26, 0.15) 45%,
+    rgba(26, 26, 26, 0.05) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(2rem, 6vw, 4rem) 1.25rem;
+  text-align: center;
+  color: white;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 0.75rem;
+}
+
+.hero-title {
+  font-family: var(--hoh-font-display);
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin: 0 0 0.5rem;
+}
+
+.hero-tagline {
+  font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+  font-weight: 400;
+  opacity: 0.88;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .hero-image {
+    height: min(55vh, 480px);
+  }
+}
 </style>

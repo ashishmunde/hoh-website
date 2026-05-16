@@ -15,7 +15,7 @@ import ServiceCatalog from './ServiceCatalog.vue'
 <style scoped>
 .services-page {
   min-height: 100vh;
-  background-color: #f8f8f8;
+  background: var(--hoh-bg);
 }
 
 .services-content {

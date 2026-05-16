@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER, SECONDARY_HOVER, BRANCHES_DATA } from '@/utils/const'
+import SectionHeader from '@/components/ui/SectionHeader.vue'
+import { PRIMARY_COLOR, SECONDARY_COLOR, BRANCHES_DATA } from '@/utils/const'
 
 const branches = BRANCHES_DATA
 
@@ -10,13 +11,13 @@ const openGoogleMaps = (link: string) => {
 
 <template>
   <section class="branches-section">
-    <div class="container">
-      <h2 class="section-title">Branches</h2>
+    <div class="page-container">
+      <SectionHeader title="Branches" subtitle="Visit us" />
       <div class="branches-grid">
         <div
           v-for="branch in branches"
           :key="branch.name"
-          class="branch-card"
+          class="branch-card card-elevated"
         >
           <div class="branch-image-container">
             <img :src="branch.thumbnail" :alt="branch.name" class="branch-image" />
@@ -46,25 +47,9 @@ const openGoogleMaps = (link: string) => {
 
 <style scoped>
 .branches-section {
-  padding: 4rem 0;
-  background-color: #f8f8f8;
+  padding: var(--hoh-section-py) 0;
+  background: var(--hoh-bg-alt);
   width: 100%;
-}
-
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  box-sizing: border-box;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: v-bind(SECONDARY_COLOR);
-  margin-bottom: 3rem;
-  text-align: center;
 }
 
 .branches-grid {
@@ -77,26 +62,15 @@ const openGoogleMaps = (link: string) => {
 .branch-card {
   background: transparent;
   overflow: visible;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-}
-
-.branch-card:hover {
-  transform: translateY(-8px);
 }
 
 .branch-image-container {
   position: relative;
   width: 100%;
-  height: 350px;
+  height: 340px;
   overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.branch-card:hover .branch-image-container {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border-radius: var(--hoh-radius-lg);
 }
 
 .branch-image {
@@ -107,7 +81,7 @@ const openGoogleMaps = (link: string) => {
 }
 
 .branch-card:hover .branch-image {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 
 .branch-overlay {
@@ -131,38 +105,40 @@ const openGoogleMaps = (link: string) => {
 }
 
 .branch-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 1rem 0 0 0;
-  padding: 0;
+  font-family: var(--hoh-font-display);
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin: 1rem 0 0;
   text-align: center;
-  color: v-bind(SECONDARY_COLOR);
-  letter-spacing: -0.02em;
+  color: var(--hoh-secondary);
+  letter-spacing: 0.02em;
 }
 
 .location-btn {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 1.25rem;
-  background-color: white;
-  color: v-bind(SECONDARY_COLOR);
+  gap: 0.65rem;
+  padding: 0.75rem 1.15rem;
+  background: var(--hoh-surface);
+  color: var(--hoh-secondary);
   border: none;
-  border-radius: 10px;
-  font-size: 0.95rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s var(--hoh-ease);
+  box-shadow: var(--hoh-shadow-sm);
   width: fit-content;
   align-self: center;
 }
 
 .location-btn:hover {
-  background-color: v-bind(PRIMARY_COLOR);
+  background: var(--hoh-primary);
   color: white;
-  transform: translateX(4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: var(--hoh-shadow-md);
 }
 
 .location-btn:active {
@@ -200,11 +176,6 @@ const openGoogleMaps = (link: string) => {
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-
   .branches-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
@@ -232,10 +203,6 @@ const openGoogleMaps = (link: string) => {
   .branches-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
-  }
-
-  .section-title {
-    font-size: 1.75rem;
   }
 
   .branch-image-container {

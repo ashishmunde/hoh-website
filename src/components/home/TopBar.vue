@@ -37,8 +37,7 @@ const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
           WE DON'T SELL FRANCHISE.
         </div>
         <div class="locations">
-          <span class="location-icon">📍</span>
-          <span class="location-text">{{ locations.join(' | ') }}</span>
+          <span class="location-text">{{ locations.join(' · ') }}</span>
         </div>
       </div>
     </div>
@@ -89,14 +88,17 @@ const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
 <style scoped>
 .topbar {
   width: 100%;
-  font-family: Arial, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--hoh-shadow-sm);
 }
 
 /* Top Strip Styles */
 .top-strip {
-  background-color: v-bind(PRIMARY_COLOR);
-  color: white;
-  padding: 0.5rem 0;
+  background-color: v-bind(SECONDARY_COLOR);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 0.45rem 0;
 }
 
 .top-strip-content {
@@ -109,8 +111,10 @@ const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
 }
 
 .franchise-message {
-  font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .locations {
@@ -119,20 +123,17 @@ const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
   gap: 0.5rem;
 }
 
-.location-icon {
-  color: v-bind(SECONDARY_COLOR);
-  font-size: 1rem;
-}
-
 .location-text {
-  font-size: 0.9rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
 }
 
 /* Bottom Strip Styles */
 .bottom-strip {
-  background-color: white;
-  padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0;
+  background: var(--hoh-surface);
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--hoh-border);
 }
 
 .bottom-strip-content {
@@ -220,6 +221,7 @@ const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
 
 .social-icon:hover {
   color: v-bind(PRIMARY_COLOR);
+  background: transparent;
 }
 
 /* Contact Section */
@@ -255,7 +257,7 @@ const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
 
 .contact-value {
   font-size: 0.8rem;
-  color: #666666;
+  color: var(--hoh-text-muted);
 }
 
 /* Responsive Design */

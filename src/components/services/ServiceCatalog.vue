@@ -6,9 +6,10 @@ import {
   TOP_LEVEL_CARDS,
   findCategory,
   findSubcategory,
-  GALLERY_CATEGORY_LABELS,
+  getSubcategoryCover,
   type TopLevelServiceCard,
 } from '@/data/servicesCatalog'
+import { getServiceThumbnail } from '@/utils/serviceThumbnails'
 import { PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER } from '@/utils/const'
 
 const route = useRoute()
@@ -104,18 +105,6 @@ const openSubcategory = (divId: string, catId: string, subId: string) => {
   navigate({ division: divId, category: catId, subcategory: subId })
 }
 
-const viewGallery = () => {
-  const key = currentSubcategory.value?.galleryKey
-  if (!key) return
-  router.push({
-    name: 'gallery',
-    query: { category: GALLERY_CATEGORY_LABELS[key] },
-  })
-}
-
-const hasGallery = computed(() => Boolean(currentSubcategory.value?.galleryKey))
-
-// Sync initial card from ?card= query (homepage links)
 watch(
   () => route.query.card,
   (card) => {
@@ -146,10 +135,10 @@ watch(
 
     <h1 class="catalog-title">{{ pageTitle }}</h1>
 
-    <!-- Landing: division + top cards -->
+    <!-- Landing -->
     <template v-if="viewLevel === 'landing'">
       <p class="catalog-subtitle">
-        Explore our hair and beauty services. Select a category to view all options.
+        Browse our full service menu — prices available at the salon.
       </p>
 
       <div class="division-row">
@@ -159,7 +148,7 @@ watch(
         </button>
         <button type="button" class="division-card" @click="openDivision('beauty')">
           <span class="division-label">Beauty Services</span>
-          <span class="division-hint">Waxing, Nails, Facials &amp; more</span>
+          <span class="division-hint">Waxing, Nails, Facials &amp; Makeup</span>
         </button>
       </div>
 
@@ -169,7 +158,7 @@ watch(
           v-for="card in TOP_LEVEL_CARDS"
           :key="card.id"
           type="button"
-          class="category-card"
+          class="category-card card-elevated"
           @click="openCard(card)"
         >
           <div class="category-card-image-wrap">
@@ -182,7 +171,7 @@ watch(
       </div>
     </template>
 
-    <!-- Division: category cards with images -->
+    <!-- Division: Men's Hair / Female Hair / Beauty -->
     <template v-else-if="viewLevel === 'division' && currentDivision">
       <p class="catalog-subtitle">Select a service category</p>
       <div class="cards-grid">
@@ -190,7 +179,7 @@ watch(
           v-for="cat in currentDivision.categories"
           :key="cat.id"
           type="button"
-          class="category-card"
+          class="category-card card-elevated"
           @click="openCategory(currentDivision.id, cat.id)"
         >
           <div class="category-card-image-wrap">
@@ -203,38 +192,55 @@ watch(
       </div>
     </template>
 
-    <!-- Category: subcategory list -->
+    <!-- Category: subcategory cards (PDF drill-down) -->
     <template v-else-if="viewLevel === 'category' && currentCategory && divisionId">
       <p class="catalog-subtitle">Choose a service type</p>
-      <ul class="subcategory-list">
-        <li v-for="sub in currentCategory.subcategories" :key="sub.id">
-          <button
-            type="button"
-            class="subcategory-btn"
-            @click="openSubcategory(divisionId, currentCategory.id, sub.id)"
-          >
-            <span>{{ sub.name }}</span>
-            <span class="chevron">›</span>
-          </button>
-        </li>
-      </ul>
-    </template>
-
-    <!-- Subcategory: individual services -->
-    <template v-else-if="viewLevel === 'subcategory' && currentSubcategory">
-      <p class="catalog-subtitle">
-        {{ currentSubcategory.items.length }} services available
-      </p>
-      <ul class="service-items-list">
-        <li v-for="item in currentSubcategory.items" :key="item" class="service-item">
-          {{ item }}
-        </li>
-      </ul>
-      <div v-if="hasGallery" class="catalog-actions">
-        <button type="button" class="gallery-btn" @click="viewGallery">
-          View gallery photos
+      <div class="cards-grid">
+        <button
+          v-for="sub in currentCategory.subcategories"
+          :key="sub.id"
+          type="button"
+          class="category-card card-elevated"
+          @click="openSubcategory(divisionId, currentCategory.id, sub.id)"
+        >
+          <div class="category-card-image-wrap">
+            <img
+              :src="getSubcategoryCover(sub, currentCategory.id)"
+              :alt="sub.name"
+              class="category-card-image"
+            />
+            <div class="category-card-overlay">
+              <span class="category-card-name">{{ sub.name }}</span>
+              <span class="photo-count">{{ sub.items.length }} services</span>
+            </div>
+          </div>
         </button>
       </div>
+    </template>
+
+    <!-- Subcategory: full service list with thumbnails -->
+    <template v-else-if="viewLevel === 'subcategory' && currentSubcategory">
+      <p class="catalog-subtitle">
+        {{ currentSubcategory.items.length }} services in this category
+      </p>
+
+      <ul class="service-items-grid">
+        <li
+          v-for="item in currentSubcategory.items"
+          :key="item"
+          class="service-item-card"
+        >
+          <div class="service-thumb-wrap">
+            <img
+              :src="getServiceThumbnail(item, currentSubcategory.id, categoryId)"
+              :alt="item"
+              class="service-thumb"
+              loading="lazy"
+            />
+          </div>
+          <span class="service-item-name">{{ item }}</span>
+        </li>
+      </ul>
     </template>
   </div>
 </template>
@@ -257,45 +263,48 @@ watch(
   background: none;
   border: none;
   padding: 0;
-  color: #666;
+  color: var(--hoh-text-muted);
   cursor: pointer;
   font-size: inherit;
-  transition: color 0.2s ease;
+  transition: color 0.2s var(--hoh-ease);
 }
 
 .breadcrumb-btn:hover:not(.active) {
-  color: v-bind(SECONDARY_COLOR);
+  color: var(--hoh-secondary);
   text-decoration: underline;
 }
 
 .breadcrumb-btn.active {
-  color: v-bind(SECONDARY_COLOR);
+  color: var(--hoh-secondary);
   font-weight: 600;
   cursor: default;
 }
 
 .breadcrumb-sep {
-  color: #bbb;
+  color: var(--hoh-border);
 }
 
 .catalog-title {
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: v-bind(SECONDARY_COLOR);
+  font-family: var(--hoh-font-display);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 500;
+  color: var(--hoh-secondary);
   margin: 0 0 0.5rem;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
 }
 
 .catalog-subtitle {
-  color: #666;
+  color: var(--hoh-text-muted);
   font-size: 1.05rem;
   margin: 0 0 2rem;
+  line-height: 1.65;
 }
 
 .section-heading {
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: v-bind(SECONDARY_COLOR);
+  font-family: var(--hoh-font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--hoh-secondary);
   margin: 2.5rem 0 1.25rem;
 }
 
@@ -309,37 +318,38 @@ watch(
 .division-card {
   text-align: left;
   padding: 1.75rem 1.5rem;
-  border: 2px solid #e8e8e8;
-  border-radius: 14px;
-  background: white;
+  border: 1px solid var(--hoh-border);
+  border-radius: var(--hoh-radius-lg);
+  background: var(--hoh-surface);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.25s var(--hoh-ease);
 }
 
 .division-card:hover {
   border-color: v-bind(PRIMARY_COLOR);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--hoh-shadow-md);
   transform: translateY(-2px);
 }
 
 .division-label {
   display: block;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: v-bind(SECONDARY_COLOR);
+  font-family: var(--hoh-font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--hoh-secondary);
   margin-bottom: 0.35rem;
 }
 
 .division-hint {
   display: block;
   font-size: 0.9rem;
-  color: #777;
+  color: var(--hoh-text-muted);
 }
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
 }
 
 .category-card {
@@ -347,15 +357,9 @@ watch(
   border: none;
   background: none;
   cursor: pointer;
-  border-radius: 14px;
+  border-radius: var(--hoh-radius-lg);
   overflow: hidden;
   text-align: left;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.category-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
 .category-card-image-wrap {
@@ -363,127 +367,110 @@ watch(
   width: 100%;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-radius: var(--hoh-radius-lg);
 }
 
 .category-card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s var(--hoh-ease);
 }
 
 .category-card:hover .category-card-image {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .category-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 55%);
+  background: linear-gradient(to top, rgba(26, 26, 26, 0.8) 0%, transparent 55%);
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 1.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1.35rem 1rem;
+  gap: 0.35rem;
 }
 
 .category-card-name {
+  font-family: var(--hoh-font-display);
   color: white;
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-size: 1.3rem;
+  font-weight: 500;
   text-align: center;
+  letter-spacing: 0.03em;
 }
 
-.subcategory-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 640px;
-}
-
-.subcategory-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.15rem 1.35rem;
-  background: white;
-  border: 2px solid #eee;
-  border-radius: 12px;
-  font-size: 1.05rem;
+.photo-count {
+  font-size: 0.68rem;
   font-weight: 600;
-  color: v-bind(SECONDARY_COLOR);
-  cursor: pointer;
-  transition: all 0.2s ease;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.subcategory-btn:hover {
-  border-color: v-bind(PRIMARY_COLOR);
-  background: #fafafa;
+.photo-count.muted {
+  opacity: 0.7;
 }
 
-.chevron {
-  font-size: 1.5rem;
-  color: v-bind(PRIMARY_COLOR);
-  line-height: 1;
-}
-
-.service-items-list {
+.service-items-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.25rem;
 }
 
-.service-item {
-  padding: 0.9rem 1.1rem;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid #eee;
-  font-size: 0.98rem;
-  color: v-bind(SECONDARY_COLOR);
+.service-item-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.service-thumb-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--hoh-radius-lg);
+  overflow: hidden;
+  background: var(--hoh-surface);
+  border: 1px solid var(--hoh-border);
+  box-shadow: var(--hoh-shadow-sm);
+}
+
+.service-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--hoh-ease);
+}
+
+.service-item-card:hover .service-thumb {
+  transform: scale(1.04);
+}
+
+.service-item-name {
+  font-size: 0.9rem;
   font-weight: 500;
-}
-
-.catalog-actions {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #eee;
-}
-
-.gallery-btn {
-  padding: 0.85rem 1.75rem;
-  background: v-bind(PRIMARY_COLOR);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.gallery-btn:hover {
-  background: v-bind(PRIMARY_HOVER);
+  color: var(--hoh-secondary);
+  line-height: 1.35;
+  padding: 0 0.25rem;
 }
 
 @media (max-width: 768px) {
-  .catalog-title {
-    font-size: 1.85rem;
+  .cards-grid,
+  .service-items-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .service-items-list {
-    grid-template-columns: 1fr;
+@media (max-width: 480px) {
+  .cards-grid,
+  .service-items-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>

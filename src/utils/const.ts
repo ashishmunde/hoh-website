@@ -1,7 +1,7 @@
-import { BRANCHES } from './images'
+import { BRANCHES, HERO_BANNER_IMAGE } from './images'
 
 export const LOGO_IMAGE = "https://thehouseofhair.in/wp-content/uploads/2020/01/cropped-house-hair-.png"
-export const BANNER_IMAGE = "https://applesalon.in/wp-content/uploads/2024/04/hhh.jpg"
+export const BANNER_IMAGE = HERO_BANNER_IMAGE
 
 // Color Scheme
 export const PRIMARY_COLOR = "#9c9994"
