@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { LOGO_IMAGE, PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER, SECONDARY_HOVER } from '@/utils/const'
 
 const socialMediaIcons = [
@@ -46,11 +47,11 @@ const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
     <div class="bottom-strip">
       <div class="bottom-strip-content">
         <!-- Left Side - Logo -->
-        <div class="logo-section">
+        <RouterLink to="/home" class="logo-section" aria-label="Go to home page">
           <div class="logo-container">
-            <img :src="LOGO_IMAGE" alt="Apple Unisex Salon" class="logo-image" />
+            <img :src="LOGO_IMAGE" alt="The House of Hair" class="logo-image" />
           </div>
-        </div>
+        </RouterLink>
 
         <!-- Right Side - Contact Info -->
         <div class="contact-section">
@@ -148,6 +149,22 @@ const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
   display: flex;
   align-items: center;
   gap: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+  transition: none;
+}
+
+.logo-section:hover,
+.logo-section:focus,
+.logo-section:focus-visible,
+.logo-section:active,
+.logo-section.router-link-active,
+.logo-section.router-link-exact-active {
+  background-color: transparent;
+  color: inherit;
+  outline: none;
 }
 
 .logo-container {
