@@ -95,8 +95,36 @@ import OurWork from './OurWork.vue'
 }
 
 @media (max-width: 768px) {
+  .hero,
   .hero-image {
-    height: min(55vh, 480px);
+    height: min(50vh, 420px);
+    max-height: min(50vh, 420px);
+  }
+
+  .hero-content {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero,
+  .hero-image {
+    height: min(45vh, 360px);
+    max-height: min(45vh, 360px);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 9vw, 2.5rem);
+  }
+
+  .hero-tagline {
+    font-size: 0.9rem;
   }
 }
 </style>

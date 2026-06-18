@@ -15,7 +15,7 @@ a:not(.logo-section):not(.social-icon):hover {
   width: var(--hoh-container);
   max-width: 1200px;
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: clamp(1rem, 3vw, 1.25rem);
 }
 
 .card-elevated {

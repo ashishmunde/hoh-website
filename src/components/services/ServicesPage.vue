@@ -21,12 +21,12 @@ import ServiceCatalog from './ServiceCatalog.vue'
 .services-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .services-content {
-    padding: 1.25rem 1rem 2rem;
+    padding: 1rem 0.75rem 1.75rem;
   }
 }
 </style>

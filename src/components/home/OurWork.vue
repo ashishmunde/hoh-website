@@ -116,14 +116,29 @@ const openGallery = (galleryQuery: string) => {
 }
 
 @media (max-width: 768px) {
+  .work-intro {
+    font-size: 0.95rem;
+    margin: -1rem auto 2rem;
+    padding: 0 0.5rem;
+  }
+
   .work-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .work-title {
+    font-size: 1.1rem;
   }
 }
 
 @media (max-width: 480px) {
   .work-grid {
     grid-template-columns: 1fr;
+  }
+
+  .work-overlay {
+    padding: 1.15rem;
   }
 }
 </style>

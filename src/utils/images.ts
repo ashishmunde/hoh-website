@@ -108,6 +108,7 @@ export const HIGHLIGHTS_IMAGES = [
 
 // Hero banner (homepage)
 export const HERO_BANNER_IMAGE = `${IMAGE_BASE_URL}/homepage/hero-banner.png`
+export const LOGO_IMAGE = `${IMAGE_BASE_URL}/homepage/hoh-logo.webp`
 
 // Homepage Images
 export const HOMEPAGE_IMAGES = [

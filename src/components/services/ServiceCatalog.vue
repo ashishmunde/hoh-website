@@ -461,16 +461,63 @@ watch(
 }
 
 @media (max-width: 768px) {
-  .cards-grid,
+  .catalog-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .division-label {
+    font-size: 1.15rem;
+  }
+
+  .category-card-name {
+    font-size: 1.1rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
   .service-items-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .cards-grid,
+  .breadcrumbs {
+    font-size: 0.82rem;
+  }
+
+  .catalog-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .division-row {
+    grid-template-columns: 1fr;
+  }
+
+  .division-card {
+    padding: 1.25rem 1.15rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
   .service-items-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .service-item-name {
+    font-size: 0.82rem;
   }
 }
 </style>

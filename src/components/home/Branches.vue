@@ -63,7 +63,7 @@ const openLink = (link: string) => {
 
 .branches-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 2rem;
   padding: 1rem 0;
 }
@@ -195,74 +195,68 @@ const openLink = (link: string) => {
 }
 
 .btn-text {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  white-space: nowrap;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .branches-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
   }
 
   .branch-image-container {
     height: 280px;
   }
-  
+
   .branch-content {
-    padding: 1.5rem 1.25rem 1.25rem;
+    padding: 1.5rem 1rem 1.25rem;
+    flex-direction: column;
   }
-  
-  .branch-name {
-    font-size: 1.5rem;
-  }
-  
+
   .book-btn,
   .location-btn {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .branch-name {
+    font-size: 1.25rem;
   }
 }
 
 @media (max-width: 480px) {
   .branches-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
   .branch-image-container {
-    height: 250px;
-  }
-  
-  .branch-content {
-    padding: 1.25rem 1rem 1rem;
-    gap: 0.75rem;
-  }
-  
-  .branch-name {
-    font-size: 1.25rem;
+    height: 240px;
   }
 
   .branch-content {
-    flex-direction: column;
+    padding: 1.25rem 0.85rem 1rem;
+    gap: 0.6rem;
+  }
+
+  .branch-name {
+    font-size: 1.15rem;
   }
 
   .book-btn,
   .location-btn {
-    padding: 0.65rem 0.9rem;
-    font-size: 0.85rem;
-    gap: 0.5rem;
-    width: 100%;
-    justify-content: center;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.8rem;
+    gap: 0.45rem;
   }
-  
+
   .location-icon {
     width: 18px;
     height: 18px;
   }
-  
+
   .arrow-icon {
     width: 14px;
     height: 14px;

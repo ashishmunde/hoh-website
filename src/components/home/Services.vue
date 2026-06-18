@@ -137,15 +137,29 @@ const handleServiceClick = (cardId: string) => {
 }
 
 @media (max-width: 768px) {
+  .services-intro {
+    font-size: 0.95rem;
+    margin: -1rem auto 2rem;
+    padding: 0 0.5rem;
+  }
+
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
+
+  .service-title {
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
   .services-grid {
     grid-template-columns: 1fr;
+  }
+
+  .service-overlay {
+    padding: 1.25rem 1rem;
   }
 }
 </style>

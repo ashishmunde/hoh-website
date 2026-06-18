@@ -18,3 +18,17 @@
   --hoh-section-py: clamp(3.5rem, 8vw, 5rem);
   --hoh-container: min(1200px, 100% - 2.5rem);
 }
+
+@media (max-width: 768px) {
+  :root {
+    --hoh-section-py: clamp(2.5rem, 7vw, 3.5rem);
+    --hoh-container: min(1200px, 100% - 2rem);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --hoh-section-py: clamp(2rem, 6vw, 2.75rem);
+    --hoh-container: min(1200px, 100% - 1.5rem);
+  }
+}

@@ -6,16 +6,21 @@
   font-weight: normal;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   min-height: 100vh;
   color: var(--hoh-secondary);
   background: var(--hoh-bg);
   line-height: 1.6;
   font-family: var(--hoh-font-body);
-  font-size: 15px;
+  font-size: clamp(14px, 2.5vw, 15px);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 #app {
