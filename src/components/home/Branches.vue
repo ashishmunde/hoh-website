@@ -4,7 +4,7 @@ import { PRIMARY_COLOR, SECONDARY_COLOR, BRANCHES_DATA } from '@/utils/const'
 
 const branches = BRANCHES_DATA
 
-const openGoogleMaps = (link: string) => {
+const openLink = (link: string) => {
   window.open(link, '_blank')
 }
 </script>
@@ -17,20 +17,29 @@ const openGoogleMaps = (link: string) => {
         <div
           v-for="branch in branches"
           :key="branch.name"
-          class="branch-card card-elevated"
+          class="branch-card"
         >
           <div class="branch-image-container">
             <img :src="branch.thumbnail" :alt="branch.name" class="branch-image" />
             <div class="branch-overlay">
               <div class="branch-content">
-                <button 
-                  @click.stop="openGoogleMaps(branch.googleMapsLink)" 
+                <button
+                  @click.stop="openLink(branch.bookingUrl)"
+                  class="book-btn"
+                >
+                  <span class="btn-text">Book Now</span>
+                  <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button
+                  @click.stop="openLink(branch.googleMapsLink)"
                   class="location-btn"
                 >
                   <svg class="location-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
                   </svg>
-                  <span class="location-text">Get Directions</span>
+                  <span class="btn-text">Get Directions</span>
                   <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
@@ -98,10 +107,11 @@ const openGoogleMaps = (link: string) => {
 .branch-content {
   padding: 2rem 1.5rem 1.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .branch-name {
@@ -114,13 +124,12 @@ const openGoogleMaps = (link: string) => {
   letter-spacing: 0.02em;
 }
 
+.book-btn,
 .location-btn {
   display: flex;
   align-items: center;
   gap: 0.65rem;
   padding: 0.75rem 1.15rem;
-  background: var(--hoh-surface);
-  color: var(--hoh-secondary);
   border: none;
   border-radius: 100px;
   font-size: 0.8rem;
@@ -131,7 +140,22 @@ const openGoogleMaps = (link: string) => {
   transition: all 0.3s var(--hoh-ease);
   box-shadow: var(--hoh-shadow-sm);
   width: fit-content;
-  align-self: center;
+}
+
+.book-btn {
+  background: var(--hoh-primary);
+  color: white;
+}
+
+.book-btn:hover {
+  background: var(--hoh-secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--hoh-shadow-md);
+}
+
+.location-btn {
+  background: var(--hoh-surface);
+  color: var(--hoh-secondary);
 }
 
 .location-btn:hover {
@@ -141,6 +165,7 @@ const openGoogleMaps = (link: string) => {
   box-shadow: var(--hoh-shadow-md);
 }
 
+.book-btn:active,
 .location-btn:active {
   transform: translateX(2px) scale(0.98);
 }
@@ -156,6 +181,11 @@ const openGoogleMaps = (link: string) => {
   transform: scale(1.1);
 }
 
+.book-btn:hover .arrow-icon,
+.location-btn:hover .arrow-icon {
+  transform: translate(2px, -2px);
+}
+
 .arrow-icon {
   width: 16px;
   height: 16px;
@@ -164,11 +194,7 @@ const openGoogleMaps = (link: string) => {
   transition: transform 0.3s ease;
 }
 
-.location-btn:hover .arrow-icon {
-  transform: translate(2px, -2px);
-}
-
-.location-text {
+.btn-text {
   font-size: 0.95rem;
   font-weight: 600;
   white-space: nowrap;
@@ -193,6 +219,7 @@ const openGoogleMaps = (link: string) => {
     font-size: 1.5rem;
   }
   
+  .book-btn,
   .location-btn {
     padding: 0.75rem 1rem;
     font-size: 0.9rem;
@@ -218,10 +245,17 @@ const openGoogleMaps = (link: string) => {
     font-size: 1.25rem;
   }
 
+  .branch-content {
+    flex-direction: column;
+  }
+
+  .book-btn,
   .location-btn {
     padding: 0.65rem 0.9rem;
     font-size: 0.85rem;
     gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
   }
   
   .location-icon {
