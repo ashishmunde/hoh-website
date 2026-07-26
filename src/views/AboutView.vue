@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TopBar from '@/components/home/TopBar.vue'
+import SiteFooter from '@/components/layout/SiteFooter.vue'
 </script>
 
 <template>
@@ -15,6 +16,7 @@ import TopBar from '@/components/home/TopBar.vue'
         in a welcoming salon environment.
       </p>
     </main>
+    <SiteFooter />
   </div>
 </template>
 
@@ -22,6 +24,8 @@ import TopBar from '@/components/home/TopBar.vue'
 .about-page {
   min-height: 100vh;
   background: var(--hoh-bg);
+  display: flex;
+  flex-direction: column;
 }
 
 .about-content {

@@ -1,32 +1,24 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   SERVICE_DIVISIONS,
-  TOP_LEVEL_CARDS,
   findCategory,
   findSubcategory,
+  getBeautyMenuSubcategories,
   getSubcategoryCover,
-  type TopLevelServiceCard,
+  type ServiceSubcategory,
 } from '@/data/servicesCatalog'
-import { getServiceThumbnail } from '@/utils/serviceThumbnails'
-import { PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER } from '@/utils/const'
+import { SERVICE_COVERS } from '@/utils/serviceThumbnails'
 
 const route = useRoute()
 const router = useRouter()
 
-type ViewLevel = 'landing' | 'division' | 'category' | 'subcategory'
+type ViewLevel = 'landing' | 'division' | 'category' | 'subcategory' | 'beauty-menu'
 
 const divisionId = computed(() => route.query.division as string | undefined)
 const categoryId = computed(() => route.query.category as string | undefined)
 const subcategoryId = computed(() => route.query.subcategory as string | undefined)
-
-const viewLevel = computed<ViewLevel>(() => {
-  if (subcategoryId.value && categoryId.value && divisionId.value) return 'subcategory'
-  if (categoryId.value && divisionId.value) return 'category'
-  if (divisionId.value) return 'division'
-  return 'landing'
-})
 
 const currentDivision = computed(() =>
   SERVICE_DIVISIONS.find((d) => d.id === divisionId.value),
@@ -44,22 +36,44 @@ const currentSubcategory = computed(() =>
     : undefined,
 )
 
+/**
+ * Hair Services → Men's Hair / Female Hair
+ * Beauty Services → Waxing, Manicure, Pedicure, Cleanup, Facial, Detan
+ */
+const viewLevel = computed<ViewLevel>(() => {
+  if (subcategoryId.value && categoryId.value && divisionId.value) return 'subcategory'
+  if (categoryId.value && divisionId.value) return 'category'
+  if (divisionId.value === 'beauty') return 'beauty-menu'
+  if (divisionId.value) return 'division'
+  return 'landing'
+})
+
+const beautyMenuItems = computed(() => getBeautyMenuSubcategories())
+
 const breadcrumbs = computed(() => {
   const crumbs: { label: string; query: Record<string, string> }[] = [
     { label: 'Services', query: {} },
   ]
+
   if (currentDivision.value) {
     crumbs.push({
       label: currentDivision.value.name,
       query: { division: currentDivision.value.id },
     })
   }
-  if (currentCategory.value && divisionId.value) {
+
+  // Skip "Beauty Services" category crumb — beauty menu is the division itself
+  if (
+    currentCategory.value &&
+    divisionId.value &&
+    !(divisionId.value === 'beauty' && categoryId.value === 'beauty-services')
+  ) {
     crumbs.push({
       label: currentCategory.value.name,
       query: { division: divisionId.value, category: currentCategory.value.id },
     })
   }
+
   if (currentSubcategory.value && divisionId.value && categoryId.value) {
     crumbs.push({
       label: currentSubcategory.value.name,
@@ -70,27 +84,24 @@ const breadcrumbs = computed(() => {
       },
     })
   }
+
   return crumbs
 })
 
 const pageTitle = computed(() => {
   if (currentSubcategory.value) return currentSubcategory.value.name
-  if (currentCategory.value) return currentCategory.value.name
+  if (
+    currentCategory.value &&
+    !(divisionId.value === 'beauty' && categoryId.value === 'beauty-services')
+  ) {
+    return currentCategory.value.name
+  }
   if (currentDivision.value) return currentDivision.value.name
   return 'Our Services'
 })
 
 const navigate = (query: Record<string, string>) => {
   router.push({ name: 'services', query })
-}
-
-const openCard = (card: TopLevelServiceCard) => {
-  const query: Record<string, string> = {
-    division: card.divisionId,
-    category: card.categoryId,
-  }
-  if (card.subcategoryId) query.subcategory = card.subcategoryId
-  navigate(query)
 }
 
 const openDivision = (id: 'hair' | 'beauty') => {
@@ -101,20 +112,31 @@ const openCategory = (divId: string, catId: string) => {
   navigate({ division: divId, category: catId })
 }
 
-const openSubcategory = (divId: string, catId: string, subId: string) => {
-  navigate({ division: divId, category: catId, subcategory: subId })
+const openBeautyItem = (sub: ServiceSubcategory) => {
+  navigate({
+    division: 'beauty',
+    category: 'beauty-services',
+    subcategory: sub.id,
+  })
 }
 
-watch(
-  () => route.query.card,
-  (card) => {
-    if (typeof card === 'string' && !divisionId.value) {
-      const match = TOP_LEVEL_CARDS.find((c) => c.id === card)
-      if (match) openCard(match)
-    }
-  },
-  { immediate: true },
-)
+const openMakeup = () => {
+  navigate({
+    division: 'beauty',
+    category: 'beauty-services',
+    subcategory: 'makeup',
+  })
+}
+
+/** Flat grouped list of every leaf service under Men's / Female Hair */
+const categoryServiceGroups = computed(() => {
+  if (!currentCategory.value) return []
+  return currentCategory.value.subcategories.map((sub) => ({
+    id: sub.id,
+    name: sub.name,
+    items: sub.items,
+  }))
+})
 </script>
 
 <template>
@@ -135,43 +157,64 @@ watch(
 
     <h1 class="catalog-title">{{ pageTitle }}</h1>
 
-    <!-- Landing -->
+    <!-- Landing: Hair Services | Beauty Services | Makeup (PDF top level) -->
     <template v-if="viewLevel === 'landing'">
       <p class="catalog-subtitle">
         Browse our full service menu — prices available at the salon.
       </p>
-
-      <div class="division-row">
-        <button type="button" class="division-card" @click="openDivision('hair')">
-          <span class="division-label">Hair Services</span>
-          <span class="division-hint">Men's &amp; Women's Hair</span>
-        </button>
-        <button type="button" class="division-card" @click="openDivision('beauty')">
-          <span class="division-label">Beauty Services</span>
-          <span class="division-hint">Waxing, Nails, Facials &amp; Makeup</span>
-        </button>
-      </div>
-
-      <h2 class="section-heading">Browse by category</h2>
       <div class="cards-grid">
         <button
-          v-for="card in TOP_LEVEL_CARDS"
-          :key="card.id"
           type="button"
           class="category-card card-elevated"
-          @click="openCard(card)"
+          @click="openDivision('hair')"
         >
           <div class="category-card-image-wrap">
-            <img :src="card.image" :alt="card.name" class="category-card-image" />
+            <img
+              :src="SERVICE_COVERS.femaleHairColor"
+              alt="Hair Services"
+              class="category-card-image"
+            />
             <div class="category-card-overlay">
-              <span class="category-card-name">{{ card.name }}</span>
+              <span class="category-card-name">Hair Services</span>
+            </div>
+          </div>
+        </button>
+        <button
+          type="button"
+          class="category-card card-elevated"
+          @click="openDivision('beauty')"
+        >
+          <div class="category-card-image-wrap">
+            <img
+              :src="SERVICE_COVERS.facial"
+              alt="Beauty Services"
+              class="category-card-image"
+            />
+            <div class="category-card-overlay">
+              <span class="category-card-name">Beauty Services</span>
+            </div>
+          </div>
+        </button>
+        <button
+          type="button"
+          class="category-card card-elevated"
+          @click="openMakeup"
+        >
+          <div class="category-card-image-wrap">
+            <img
+              :src="SERVICE_COVERS.groomMakeup"
+              alt="Makeup"
+              class="category-card-image"
+            />
+            <div class="category-card-overlay">
+              <span class="category-card-name">Makeup</span>
             </div>
           </div>
         </button>
       </div>
     </template>
 
-    <!-- Division: Men's Hair / Female Hair / Beauty -->
+    <!-- Hair Services → Men's Hair / Female Hair -->
     <template v-else-if="viewLevel === 'division' && currentDivision">
       <p class="catalog-subtitle">Select a service category</p>
       <div class="cards-grid">
@@ -192,20 +235,20 @@ watch(
       </div>
     </template>
 
-    <!-- Category: subcategory cards (PDF drill-down) -->
-    <template v-else-if="viewLevel === 'category' && currentCategory && divisionId">
-      <p class="catalog-subtitle">Choose a service type</p>
+    <!-- Beauty Services → Waxing, Manicure, Pedicure, Cleanup, Facial, Detan -->
+    <template v-else-if="viewLevel === 'beauty-menu'">
+      <p class="catalog-subtitle">Choose a service</p>
       <div class="cards-grid">
         <button
-          v-for="sub in currentCategory.subcategories"
+          v-for="sub in beautyMenuItems"
           :key="sub.id"
           type="button"
           class="category-card card-elevated"
-          @click="openSubcategory(divisionId, currentCategory.id, sub.id)"
+          @click="openBeautyItem(sub)"
         >
           <div class="category-card-image-wrap">
             <img
-              :src="getSubcategoryCover(sub, currentCategory.id)"
+              :src="getSubcategoryCover(sub, 'beauty-services')"
               :alt="sub.name"
               class="category-card-image"
             />
@@ -218,29 +261,58 @@ watch(
       </div>
     </template>
 
-    <!-- Subcategory: full service list with thumbnails -->
-    <template v-else-if="viewLevel === 'subcategory' && currentSubcategory">
-      <p class="catalog-subtitle">
-        {{ currentSubcategory.items.length }} services in this category
-      </p>
+    <!-- Men's / Female Hair: image left + all service names as a list -->
+    <template v-else-if="viewLevel === 'category' && currentCategory">
+      <div class="split-layout">
+        <div class="split-image-wrap">
+          <img
+            :src="currentCategory.image"
+            :alt="currentCategory.name"
+            class="split-image"
+          />
+        </div>
+        <div class="split-list-panel">
+          <section
+            v-for="group in categoryServiceGroups"
+            :key="group.id"
+            class="service-group"
+          >
+            <h2 class="service-group-title">
+              <span class="service-group-label">{{ group.name }}</span>
+              <span class="service-group-count">{{ group.items.length }}</span>
+            </h2>
+            <ul class="service-name-list">
+              <li v-for="item in group.items" :key="item" class="service-name-item">
+                {{ item }}
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </template>
 
-      <ul class="service-items-grid">
-        <li
-          v-for="item in currentSubcategory.items"
-          :key="item"
-          class="service-item-card"
-        >
-          <div class="service-thumb-wrap">
-            <img
-              :src="getServiceThumbnail(item, currentSubcategory.id, categoryId)"
-              :alt="item"
-              class="service-thumb"
-              loading="lazy"
-            />
-          </div>
-          <span class="service-item-name">{{ item }}</span>
-        </li>
-      </ul>
+    <!-- Beauty / Makeup: image left + service names list (no per-item thumbnails) -->
+    <template v-else-if="viewLevel === 'subcategory' && currentSubcategory">
+      <div class="split-layout">
+        <div class="split-image-wrap">
+          <img
+            :src="getSubcategoryCover(currentSubcategory, categoryId || '')"
+            :alt="currentSubcategory.name"
+            class="split-image"
+          />
+        </div>
+        <div class="split-list-panel split-list-panel--flat">
+          <ul class="service-name-list">
+            <li
+              v-for="item in currentSubcategory.items"
+              :key="item"
+              class="service-name-item"
+            >
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -298,52 +370,6 @@ watch(
   font-size: 1.05rem;
   margin: 0 0 2rem;
   line-height: 1.65;
-}
-
-.section-heading {
-  font-family: var(--hoh-font-display);
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--hoh-secondary);
-  margin: 2.5rem 0 1.25rem;
-}
-
-.division-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.division-card {
-  text-align: left;
-  padding: 1.75rem 1.5rem;
-  border: 1px solid var(--hoh-border);
-  border-radius: var(--hoh-radius-lg);
-  background: var(--hoh-surface);
-  cursor: pointer;
-  transition: all 0.25s var(--hoh-ease);
-}
-
-.division-card:hover {
-  border-color: v-bind(PRIMARY_COLOR);
-  box-shadow: var(--hoh-shadow-md);
-  transform: translateY(-2px);
-}
-
-.division-label {
-  display: block;
-  font-family: var(--hoh-font-display);
-  font-size: 1.35rem;
-  font-weight: 500;
-  color: var(--hoh-secondary);
-  margin-bottom: 0.35rem;
-}
-
-.division-hint {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--hoh-text-muted);
 }
 
 .cards-grid {
@@ -410,69 +436,136 @@ watch(
   color: rgba(255, 255, 255, 0.85);
 }
 
-.photo-count.muted {
-  opacity: 0.7;
-}
-
-.service-items-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.split-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: minmax(240px, 0.85fr) minmax(300px, 1.15fr);
+  gap: 3rem;
+  align-items: start;
+  margin-top: 0.5rem;
 }
 
-.service-item-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.75rem;
-}
-
-.service-thumb-wrap {
-  width: 100%;
-  aspect-ratio: 1;
+.split-image-wrap {
+  position: sticky;
+  top: 1.5rem;
   border-radius: var(--hoh-radius-lg);
   overflow: hidden;
+  aspect-ratio: 3 / 4;
   background: var(--hoh-surface);
-  border: 1px solid var(--hoh-border);
-  box-shadow: var(--hoh-shadow-sm);
+  box-shadow: var(--hoh-shadow-md);
 }
 
-.service-thumb {
+.split-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s var(--hoh-ease);
+  display: block;
 }
 
-.service-item-card:hover .service-thumb {
-  transform: scale(1.04);
+.split-list-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+  padding: 0.15rem 0 1rem;
+  min-width: 0;
 }
 
-.service-item-name {
-  font-size: 0.9rem;
-  font-weight: 500;
+.split-list-panel--flat {
+  gap: 0;
+}
+
+.service-group {
+  padding-bottom: 0.25rem;
+}
+
+.service-group + .service-group {
+  border-top: 1px solid var(--hoh-border);
+  padding-top: 2.25rem;
+}
+
+.service-group-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 2px solid var(--hoh-secondary);
+}
+
+.service-group-label {
+  font-family: var(--hoh-font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
   color: var(--hoh-secondary);
-  line-height: 1.35;
-  padding: 0 0.25rem;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.service-group-count {
+  flex-shrink: 0;
+  font-family: var(--hoh-font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hoh-text-muted);
+}
+
+.service-name-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-left: 2px solid color-mix(in srgb, var(--hoh-border) 80%, transparent);
+}
+
+.split-list-panel--flat .service-name-list {
+  padding-left: 0;
+  border-left: none;
+}
+
+.service-name-item {
+  position: relative;
+  font-family: var(--hoh-font-body);
+  font-size: 1.02rem;
+  font-weight: 400;
+  color: var(--hoh-text);
+  line-height: 1.5;
+  padding: 0.7rem 0 0.7rem 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--hoh-border) 70%, transparent);
+}
+
+.service-name-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0.4rem;
+  height: 1px;
+  background: var(--hoh-border);
+  transform: translateY(-50%);
+}
+
+.split-list-panel--flat .service-name-item {
+  padding-left: 0;
+  font-size: 1.08rem;
+}
+
+.split-list-panel--flat .service-name-item::before {
+  display: none;
+}
+
+.service-name-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0.15rem;
 }
 
 @media (max-width: 768px) {
   .catalog-subtitle {
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
-  }
-
-  .section-heading {
-    font-size: 1.25rem;
-    margin-top: 2rem;
-  }
-
-  .division-label {
-    font-size: 1.15rem;
   }
 
   .category-card-name {
@@ -484,9 +577,37 @@ watch(
     gap: 1rem;
   }
 
-  .service-items-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+  .split-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .split-image-wrap {
+    position: static;
+    max-width: 280px;
+    margin: 0 auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .split-list-panel {
+    gap: 1.85rem;
+  }
+
+  .service-group + .service-group {
+    padding-top: 1.85rem;
+  }
+
+  .service-group-label {
+    font-size: 1.3rem;
+  }
+
+  .service-name-list {
+    padding-left: 0.9rem;
+  }
+
+  .service-name-item {
+    font-size: 0.98rem;
+    padding: 0.6rem 0 0.6rem 0.85rem;
   }
 }
 
@@ -499,25 +620,16 @@ watch(
     font-size: 0.9rem;
   }
 
-  .division-row {
-    grid-template-columns: 1fr;
-  }
-
-  .division-card {
-    padding: 1.25rem 1.15rem;
-  }
-
   .cards-grid {
     grid-template-columns: 1fr;
   }
 
-  .service-items-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+  .service-group-label {
+    font-size: 1.2rem;
   }
 
-  .service-item-name {
-    font-size: 0.82rem;
+  .service-name-item {
+    font-size: 0.95rem;
   }
 }
 </style>

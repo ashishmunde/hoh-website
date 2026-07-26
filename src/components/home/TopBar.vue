@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { LOGO_IMAGE, PRIMARY_COLOR, SECONDARY_COLOR } from '@/utils/const'
+import { LOGO_IMAGE, MAIN_CONTACT } from '@/utils/const'
 
 const route = useRoute()
 const isMenuOpen = ref(false)
@@ -10,32 +10,8 @@ const navLinks = [
   { label: 'Home', to: '/home' },
   { label: 'Services', to: '/services' },
   { label: 'Gallery', to: '/gallery' },
+  { label: 'About', to: '/about' },
 ]
-
-const socialMediaIcons = [
-  {
-    name: 'Instagram',
-    icon: 'https://cdn.simpleicons.org/instagram/E4405F',
-    link: 'https://instagram.com/yourpage',
-  },
-  {
-    name: 'WhatsApp',
-    icon: 'https://cdn.simpleicons.org/whatsapp/25D366',
-    link: 'https://wa.me/yourphonenumber',
-  },
-  {
-    name: 'YouTube',
-    icon: 'https://cdn.simpleicons.org/youtube/FF0000',
-    link: 'https://youtube.com/yourchannel',
-  },
-  {
-    name: 'Facebook',
-    icon: 'https://cdn.simpleicons.org/facebook/1877F2',
-    link: 'https://facebook.com/yourpage',
-  },
-]
-
-const locations = ['Karve Nagar', 'Paud Road', 'Aundh']
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
@@ -49,24 +25,13 @@ watch(() => route.path, closeMenu)
 </script>
 
 <template>
-  <div class="topbar">
-    <div class="top-strip">
-      <div class="top-strip-content">
-        <div class="franchise-message">WE DON'T SELL FRANCHISE.</div>
-        <div class="locations">
-          <span class="location-text">{{ locations.join(' · ') }}</span>
-        </div>
-      </div>
-    </div>
+  <header class="site-header">
+    <div class="header-inner page-container">
+      <RouterLink to="/home" class="logo-link" aria-label="Go to home page" @click="closeMenu">
+        <img :src="LOGO_IMAGE" alt="The House of Hair" class="logo-image" />
+      </RouterLink>
 
-    <div class="bottom-strip">
-      <div class="bottom-strip-content">
-        <RouterLink to="/home" class="logo-section" aria-label="Go to home page" @click="closeMenu">
-          <div class="logo-container">
-            <img :src="LOGO_IMAGE" alt="The House of Hair" class="logo-image" />
-          </div>
-        </RouterLink>
-
+      <div class="header-end">
         <nav class="desktop-nav" aria-label="Main navigation">
           <RouterLink
             v-for="link in navLinks"
@@ -78,58 +43,37 @@ watch(() => route.path, closeMenu)
           </RouterLink>
         </nav>
 
-        <div class="header-actions">
-          <div class="contact-section">
-            <div class="social-icons">
-              <a
-                v-for="social in socialMediaIcons"
-                :key="social.name"
-                :href="social.link"
-                class="social-icon"
-                :title="social.name"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img :src="social.icon" :alt="social.name" class="social-icon-image" />
-              </a>
-            </div>
-            <div class="contact-item">
-              <span class="contact-icon" aria-hidden="true">✉️</span>
-              <div class="contact-details">
-                <span class="contact-label">EMAIL</span>
-                <a href="mailto:info@houseofhair.in" class="contact-value">info@houseofhair.in</a>
-              </div>
-            </div>
-            <div class="contact-item">
-              <span class="contact-icon" aria-hidden="true">📞</span>
-              <div class="contact-details">
-                <span class="contact-label">CONTACT</span>
-                <a href="tel:+919999999999" class="contact-value">+91 9999999999</a>
-              </div>
-            </div>
-          </div>
+        <a
+          :href="MAIN_CONTACT.whatsappUrl"
+          class="cta-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Book / WhatsApp
+        </a>
 
-          <button
-            type="button"
-            class="menu-toggle"
-            :aria-expanded="isMenuOpen"
-            aria-controls="mobile-nav"
-            aria-label="Toggle menu"
-            @click="toggleMenu"
-          >
-            <span class="menu-bar" :class="{ open: isMenuOpen }" />
-            <span class="menu-bar" :class="{ open: isMenuOpen }" />
-            <span class="menu-bar" :class="{ open: isMenuOpen }" />
-          </button>
-        </div>
+        <button
+          type="button"
+          class="menu-toggle"
+          :aria-expanded="isMenuOpen"
+          aria-controls="mobile-nav"
+          aria-label="Toggle menu"
+          @click="toggleMenu"
+        >
+          <span class="menu-bar" :class="{ open: isMenuOpen }" />
+          <span class="menu-bar" :class="{ open: isMenuOpen }" />
+          <span class="menu-bar" :class="{ open: isMenuOpen }" />
+        </button>
       </div>
+    </div>
 
-      <nav
-        id="mobile-nav"
-        class="mobile-nav"
-        :class="{ open: isMenuOpen }"
-        aria-label="Mobile navigation"
-      >
+    <nav
+      id="mobile-nav"
+      class="mobile-nav"
+      :class="{ open: isMenuOpen }"
+      aria-label="Mobile navigation"
+    >
+      <div class="mobile-nav-inner page-container">
         <RouterLink
           v-for="link in navLinks"
           :key="link.to"
@@ -139,205 +83,122 @@ watch(() => route.path, closeMenu)
         >
           {{ link.label }}
         </RouterLink>
-        <div class="mobile-contact">
-          <div class="social-icons">
-            <a
-              v-for="social in socialMediaIcons"
-              :key="`mobile-${social.name}`"
-              :href="social.link"
-              class="social-icon"
-              :title="social.name"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img :src="social.icon" :alt="social.name" class="social-icon-image" />
-            </a>
-          </div>
-          <a href="mailto:info@houseofhair.in" class="mobile-contact-link">info@houseofhair.in</a>
-          <a href="tel:+919999999999" class="mobile-contact-link">+91 9999999999</a>
-        </div>
-      </nav>
-    </div>
-  </div>
+        <a
+          :href="MAIN_CONTACT.whatsappUrl"
+          class="mobile-cta"
+          target="_blank"
+          rel="noopener noreferrer"
+          @click="closeMenu"
+        >
+          Book / WhatsApp
+        </a>
+      </div>
+    </nav>
+  </header>
 </template>
 
 <style scoped>
-.topbar {
-  width: 100%;
+.site-header {
   position: sticky;
   top: 0;
   z-index: 200;
-  box-shadow: var(--hoh-shadow-sm);
-}
-
-.top-strip {
-  background-color: v-bind(SECONDARY_COLOR);
-  color: rgba(255, 255, 255, 0.92);
-  padding: 0.45rem 0;
-}
-
-.top-strip-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0 clamp(1rem, 3vw, 2rem);
-}
-
-.franchise-message {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.location-text {
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  opacity: 0.9;
-}
-
-.bottom-strip {
-  background: var(--hoh-surface);
-  padding: 0.75rem 0 0;
+  background: rgba(250, 249, 247, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--hoh-border);
 }
 
-.bottom-strip-content {
-  max-width: 1200px;
-  margin: 0 auto;
+.header-inner {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: 0 clamp(1rem, 3vw, 2rem) 0.75rem;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 4.25rem;
+  padding-block: 0.65rem;
 }
 
-.logo-section {
+.logo-link {
   display: flex;
   align-items: center;
   flex-shrink: 0;
   text-decoration: none;
-  color: inherit;
 }
 
-.logo-section:hover,
-.logo-section:focus,
-.logo-section:focus-visible,
-.logo-section:active,
-.logo-section.router-link-active,
-.logo-section.router-link-exact-active {
-  background-color: transparent;
-  color: inherit;
+.logo-link:hover,
+.logo-link:focus,
+.logo-link:focus-visible,
+.logo-link.router-link-active {
+  background: transparent;
   outline: none;
 }
 
-.logo-container {
-  width: clamp(160px, 28vw, 280px);
-  height: clamp(36px, 6vw, 56px);
-}
-
 .logo-image {
-  width: 100%;
-  height: 100%;
+  height: 2.75rem;
+  width: auto;
+  max-width: 11rem;
   object-fit: contain;
   object-position: left center;
+}
+
+.header-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem 1rem;
+  margin-left: auto;
+  flex: 1;
+  min-width: 0;
 }
 
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
-  margin-left: auto;
+  justify-content: flex-end;
+  gap: 0.15rem;
 }
 
 .nav-link {
-  font-size: 0.85rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--hoh-secondary);
-  text-decoration: none;
-  transition: color 0.2s var(--hoh-ease);
-  white-space: nowrap;
-}
-
-.nav-link:hover,
-.nav-link.router-link-active {
-  color: v-bind(PRIMARY_COLOR);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.contact-section {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.75rem, 2vw, 1.5rem);
-}
-
-.social-icons {
-  display: flex;
-  gap: 0.65rem;
-}
-
-.social-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-.social-icon:hover {
-  opacity: 0.75;
-}
-
-.social-icon-image {
-  width: 100%;
-  height: 100%;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.contact-icon {
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-
-.contact-details {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.contact-label {
-  font-size: 0.62rem;
-  color: v-bind(SECONDARY_COLOR);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-}
-
-.contact-value {
-  font-size: 0.78rem;
   color: var(--hoh-text-muted);
   text-decoration: none;
+  border-radius: 999px;
+  transition: color 0.2s var(--hoh-ease), background 0.2s var(--hoh-ease);
   white-space: nowrap;
 }
 
-.contact-value:hover {
-  color: v-bind(PRIMARY_COLOR);
+.nav-link:hover {
+  color: var(--hoh-secondary);
+  background: rgba(26, 26, 26, 0.04);
+}
+
+.nav-link.router-link-active {
+  color: var(--hoh-secondary);
+  background: rgba(26, 26, 26, 0.06);
+}
+
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: var(--hoh-secondary);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s var(--hoh-ease);
+}
+
+.cta-link:hover {
+  background: #333;
 }
 
 .menu-toggle {
@@ -345,14 +206,13 @@ watch(() => route.path, closeMenu)
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  width: 40px;
-  height: 40px;
-  padding: 8px;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
   border: 1px solid var(--hoh-border);
   border-radius: 8px;
-  background: var(--hoh-surface);
+  background: transparent;
   cursor: pointer;
-  flex-shrink: 0;
 }
 
 .menu-bar {
@@ -378,23 +238,28 @@ watch(() => route.path, closeMenu)
 
 .mobile-nav {
   display: none;
-  flex-direction: column;
-  gap: 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s var(--hoh-ease);
   border-top: 1px solid transparent;
+  transition: max-height 0.35s var(--hoh-ease);
 }
 
 .mobile-nav.open {
-  max-height: 400px;
+  max-height: 28rem;
   border-top-color: var(--hoh-border);
+}
+
+.mobile-nav-inner {
+  display: flex;
+  flex-direction: column;
+  padding-block: 0.5rem 1.25rem;
+  gap: 0.15rem;
 }
 
 .mobile-nav-link {
   display: block;
-  padding: 0.9rem clamp(1rem, 3vw, 2rem);
-  font-size: 0.9rem;
+  padding: 0.85rem 0;
+  font-size: 0.92rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -403,42 +268,28 @@ watch(() => route.path, closeMenu)
   border-bottom: 1px solid var(--hoh-border);
 }
 
-.mobile-nav-link:hover,
 .mobile-nav-link.router-link-active {
-  color: v-bind(PRIMARY_COLOR);
-  background: var(--hoh-bg-alt);
+  color: var(--hoh-primary);
 }
 
-.mobile-contact {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.65rem;
-  padding: 1rem clamp(1rem, 3vw, 2rem) 1.25rem;
-}
-
-.mobile-contact-link {
-  font-size: 0.9rem;
-  color: var(--hoh-text-muted);
+.mobile-cta {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: 0.85rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 999px;
+  background: var(--hoh-secondary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   text-decoration: none;
 }
 
-.mobile-contact-link:hover {
-  color: v-bind(PRIMARY_COLOR);
-}
-
-@media (max-width: 1024px) {
-  .contact-item {
-    display: none;
-  }
-}
-
 @media (max-width: 768px) {
-  .desktop-nav {
-    display: none;
-  }
-
-  .contact-section {
+  .desktop-nav,
+  .cta-link {
     display: none;
   }
 
@@ -447,35 +298,21 @@ watch(() => route.path, closeMenu)
   }
 
   .mobile-nav {
-    display: flex;
+    display: block;
   }
 
-  .bottom-strip-content {
-    padding-bottom: 0.75rem;
+  .header-inner {
+    min-height: 3.75rem;
   }
 
-  .logo-container {
-    width: clamp(140px, 42vw, 220px);
-    height: clamp(32px, 9vw, 48px);
+  .header-end {
+    flex: 0;
+    gap: 0;
   }
 
-  .top-strip-content {
-    flex-direction: column;
-    text-align: center;
-    padding-block: 0.35rem;
-  }
-
-  .franchise-message,
-  .location-text {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo-container {
-    width: min(200px, 58vw);
-    height: 40px;
+  .logo-image {
+    height: 2.35rem;
+    max-width: 9.5rem;
   }
 }
 </style>

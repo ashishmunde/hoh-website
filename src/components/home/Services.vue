@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import SectionHeader from '@/components/ui/SectionHeader.vue'
-import { TOP_LEVEL_CARDS } from '@/data/servicesCatalog'
+import { HOME_SERVICE_CARDS, type HomeServiceCard } from '@/data/servicesCatalog'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const handleServiceClick = (cardId: string) => {
+const handleServiceClick = (card: HomeServiceCard) => {
   router.push({
     name: 'services',
-    query: { card: cardId },
+    query: card.query,
   })
 }
 </script>
@@ -21,15 +21,15 @@ const handleServiceClick = (cardId: string) => {
         subtitle="What we offer"
       />
       <p class="services-intro">
-        Hair, beauty, and makeup — explore our full menu of salon treatments.
+        Hair, beauty, and makeup — explore our full salon menu.
       </p>
       <div class="services-grid">
         <button
-          v-for="card in TOP_LEVEL_CARDS"
+          v-for="card in HOME_SERVICE_CARDS"
           :key="card.id"
           type="button"
           class="service-card card-elevated"
-          @click="handleServiceClick(card.id)"
+          @click="handleServiceClick(card)"
         >
           <div class="service-image-container">
             <img :src="card.image" :alt="card.name" class="service-image" />

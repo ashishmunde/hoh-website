@@ -31,11 +31,14 @@ const isServiceRoute = computed(
 const categoryMap: Record<string, keyof typeof GALLERY_IMAGES_BY_CATEGORY> = {
   'Balayage': 'balayage',
   'Female Haircut': 'femaleHaircut',
+  'Male Haircut': 'mensHaircut',
   "Men's Haircut": 'mensHaircut',
+  'Male Hair Color': 'mensHairColor',
   "Men's Hair Color": 'mensHairColor',
   'Highlights': 'highlights',
   'Global': 'global',
   'Hair Treatment': 'hairTreatment',
+  'Groom Makeup': 'makeupAndHairstyle',
   'Make-up and Hairstyle': 'makeupAndHairstyle',
 }
 

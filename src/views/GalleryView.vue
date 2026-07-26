@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import TopBar from '@/components/home/TopBar.vue'
 import Gallery from '@/components/gallery/Gallery.vue'
+import SiteFooter from '@/components/layout/SiteFooter.vue'
 </script>
 
 <template>
   <div class="gallery-view">
     <TopBar />
     <Gallery />
+    <SiteFooter />
   </div>
 </template>
 

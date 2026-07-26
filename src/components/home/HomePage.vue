@@ -4,6 +4,7 @@ import Services from './Services.vue'
 import TopBar from './TopBar.vue'
 import Branches from './Branches.vue'
 import OurWork from './OurWork.vue'
+import SiteFooter from '@/components/layout/SiteFooter.vue'
 </script>
 
 <template>
@@ -21,6 +22,7 @@ import OurWork from './OurWork.vue'
     <Services />
     <Branches />
     <OurWork />
+    <SiteFooter />
   </div>
 </template>
 

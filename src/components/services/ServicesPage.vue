@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import TopBar from '../home/TopBar.vue'
 import ServiceCatalog from './ServiceCatalog.vue'
+import SiteFooter from '@/components/layout/SiteFooter.vue'
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import ServiceCatalog from './ServiceCatalog.vue'
     <div class="services-content">
       <ServiceCatalog />
     </div>
+    <SiteFooter />
   </div>
 </template>
 
@@ -16,6 +18,8 @@ import ServiceCatalog from './ServiceCatalog.vue'
 .services-page {
   min-height: 100vh;
   background: var(--hoh-bg);
+  display: flex;
+  flex-direction: column;
 }
 
 .services-content {
