@@ -12,7 +12,7 @@ export function serviceThumbnailUrl(filename: string): string {
 export const SERVICE_COVERS = {
   beard: serviceThumbnailUrl('Beard.png'),
   cleanup: serviceThumbnailUrl('Clean Up.png'),
-  detan: serviceThumbnailUrl('D-tan.png'),
+  de_tan: serviceThumbnailUrl('D-tan.png'),
   facial: serviceThumbnailUrl('Facial & Mask.png'),
   waxing: serviceThumbnailUrl('Waxing.png'),
   manicure: serviceThumbnailUrl('Manicure.png'),
@@ -60,7 +60,7 @@ const SUBCATEGORY_THUMBNAILS: Record<string, string> = {
   // Beauty Services — dedicated covers from S3 services/
   'beauty-services::facial': SERVICE_COVERS.facial,
   'beauty-services::cleanup': SERVICE_COVERS.cleanup,
-  'beauty-services::detan': SERVICE_COVERS.detan,
+  'beauty-services::de-tan': SERVICE_COVERS.de_tan,
   'beauty-services::waxing': SERVICE_COVERS.waxing,
   'beauty-services::manicure': SERVICE_COVERS.manicure,
   'beauty-services::pedicure': SERVICE_COVERS.pedicure,

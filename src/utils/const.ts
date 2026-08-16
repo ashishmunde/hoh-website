@@ -21,6 +21,11 @@ export const MAIN_CONTACT = {
     'Karve Nagar, Pune, Maharashtra 411052',
   ],
   whatsappUrl: 'https://wa.me/918850327158',
+  social: {
+    instagram: 'https://www.instagram.com/thehouseofhair/',
+    facebook: 'https://www.facebook.com/thehouseofhair/',
+    youtube: 'https://www.youtube.com/@thehouseofhair',
+  },
 } as const
 
 // Branch Information

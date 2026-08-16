@@ -15,7 +15,7 @@ export const WORK_GALLERY_CATEGORIES = [
     id: 'balayage',
     name: 'Balayage',
     galleryQuery: 'Balayage',
-    thumbnail: BALAYAGE_IMAGES[16],
+    thumbnail: 'https://house-of-hair.s3.ap-south-1.amazonaws.com/balayage/Cover_.jpg',
     images: BALAYAGE_IMAGES,
   },
   {
@@ -43,7 +43,8 @@ export const WORK_GALLERY_CATEGORIES = [
     id: 'female-haircut',
     name: 'Female Haircut',
     galleryQuery: 'Female Haircut',
-    thumbnail: FEMALE_HAIRCUT_IMAGES[0],
+    thumbnail:
+      'https://house-of-hair.s3.ap-south-1.amazonaws.com/female-haircut/+thumbnail+cover_.png',
     images: FEMALE_HAIRCUT_IMAGES,
   },
   {
@@ -57,7 +58,8 @@ export const WORK_GALLERY_CATEGORIES = [
     id: 'mens-hair-color',
     name: 'Male Hair Color',
     galleryQuery: 'Male Hair Color',
-    thumbnail: MENS_HAIR_COLOR_IMAGES[0],
+    thumbnail:
+      'https://house-of-hair.s3.ap-south-1.amazonaws.com/mens-hair-color/Cover_.jpg',
     images: MENS_HAIR_COLOR_IMAGES,
   },
   {

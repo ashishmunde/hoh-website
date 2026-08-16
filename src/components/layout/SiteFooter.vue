@@ -45,9 +45,9 @@ const karveBranch = BRANCHES_DATA.find((b) => b.name === 'Karve Nagar')
           <RouterLink to="/home" class="footer-logo-link">
             <img :src="LOGO_IMAGE" alt="The House of Hair" class="footer-logo" />
           </RouterLink>
-          <p class="footer-tagline">
-            Premium unisex salon in Pune — hair, beauty, and makeup crafted with care.
-          </p>
+      <p class="footer-tagline">
+        Best unisex salon &amp; celebrity hairstylist in Pune — Karve Nagar, Kothrud &amp; Aundh.
+      </p>
           <div class="footer-social">
             <a
               v-for="social in socialLinks"

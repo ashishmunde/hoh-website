@@ -170,7 +170,7 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Global',
             'Highlights',
             'Balayage & Ombre',
-            'touch up',
+            'Touch up',
             'Ammonia Free Touchup',
             'Crazy color',
           ]),
@@ -198,7 +198,7 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Regular',
             'Wine',
             'Chocolate',
-            'Detan',
+            'De-tan',
             'Candle Spa',
             'Signature Plus',
           ]),
@@ -206,7 +206,7 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Regular',
             'Wine',
             'Chocolate',
-            'Detan',
+            'De-tan',
             'Candle Spa',
             'Signature Plus',
           ]),
@@ -224,10 +224,10 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Hydra + O3',
             'Hydra + Janssen',
           ]),
-          beautySub('beauty-services', 'detan', 'Detan', [
-            'O3 Detan',
-            'Janssen Detan',
-            'Raga Detan',
+          beautySub('beauty-services', 'de-tan', 'De-tan', [
+            'O3 De-tan',
+            'Janssen De-tan',
+            'Raga De-tan',
           ]),
           beautySub('beauty-services', 'makeup', 'Makeup', [
             "Groom's Makeup",
@@ -249,7 +249,7 @@ export const BEAUTY_MENU_SUBCATEGORY_IDS = [
   'pedicure',
   'cleanup',
   'facial',
-  'detan',
+  'de-tan',
 ] as const
 
 export function findCategory(

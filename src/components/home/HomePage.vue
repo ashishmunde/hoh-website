@@ -4,6 +4,7 @@ import Services from './Services.vue'
 import TopBar from './TopBar.vue'
 import Branches from './Branches.vue'
 import OurWork from './OurWork.vue'
+import LocalSeo from './LocalSeo.vue'
 import SiteFooter from '@/components/layout/SiteFooter.vue'
 </script>
 
@@ -11,17 +12,18 @@ import SiteFooter from '@/components/layout/SiteFooter.vue'
   <div class="home-page">
     <TopBar />
     <section class="hero">
-      <img :src="BANNER_IMAGE" alt="The House of Hair salon" class="hero-image" />
+      <img :src="BANNER_IMAGE" alt="The House of Hair — best unisex salon and celebrity hairstylist in Pune" class="hero-image" />
       <div class="hero-overlay" />
       <div class="hero-content">
-        <p class="hero-eyebrow">Pune · Unisex Salon</p>
+        <p class="hero-eyebrow">Pune · Unisex Salon · Celebrity Stylist</p>
         <h1 class="hero-title">The House of Hair</h1>
-        <p class="hero-tagline">Where style meets craftsmanship</p>
+        <p class="hero-tagline">Best hair salon in Karve Nagar, Kothrud &amp; Aundh</p>
       </div>
     </section>
     <Services />
     <Branches />
     <OurWork />
+    <LocalSeo />
     <SiteFooter />
   </div>
 </template>

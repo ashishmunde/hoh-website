@@ -2,36 +2,35 @@ const IMAGE_BASE_URL = 'https://house-of-hair.s3.ap-south-1.amazonaws.com'
 
 // Balayage Images
 export const BALAYAGE_IMAGES = [
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_105924_781.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_105934_035.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_110144_793.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_110227_364.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_110232_572.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_110351_850.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_110454_214.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_112639_231.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_114941_299.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_124313_412.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_124551_099.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_124642_569.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_124659_796.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_124712_731.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_124719_425.jpg`,
-  `${IMAGE_BASE_URL}/balayage/IMG_20250801_124815_670.jpg`,
-  `${IMAGE_BASE_URL}/balayage/photo_2025-08-01_13-02-45.jpg`,
-  `${IMAGE_BASE_URL}/balayage/photo_2025-08-01_13-03-17.jpg`,
+  `${IMAGE_BASE_URL}/balayage/1.jpg`,
+  `${IMAGE_BASE_URL}/balayage/2.jpg`,
+  `${IMAGE_BASE_URL}/balayage/3.jpg`,
+  `${IMAGE_BASE_URL}/balayage/4.jpg`,
+  `${IMAGE_BASE_URL}/balayage/5.jpg`,
+  `${IMAGE_BASE_URL}/balayage/6.jpg`,
+  `${IMAGE_BASE_URL}/balayage/7.jpg`,
+  `${IMAGE_BASE_URL}/balayage/8.jpg`,
+  `${IMAGE_BASE_URL}/balayage/9.jpg`,
+  `${IMAGE_BASE_URL}/balayage/10.jpg`,
+  `${IMAGE_BASE_URL}/balayage/11.jpg`,
+  `${IMAGE_BASE_URL}/balayage/12.jpg`,
+  `${IMAGE_BASE_URL}/balayage/13.jpg`,
+  `${IMAGE_BASE_URL}/balayage/14.jpg`,
+  `${IMAGE_BASE_URL}/balayage/15.jpg`,
+  `${IMAGE_BASE_URL}/balayage/16.jpg`,
 ]
 
 // Female Haircut Images
 export const FEMALE_HAIRCUT_IMAGES = [
-  `${IMAGE_BASE_URL}/female-haircut/IMG_20250801_110326_349.jpg`,
-  `${IMAGE_BASE_URL}/female-haircut/IMG_20250801_114048_613.jpg`,
-  `${IMAGE_BASE_URL}/female-haircut/IMG_20250801_114048_690.jpg`,
-  `${IMAGE_BASE_URL}/female-haircut/IMG_20250801_114049_068.jpg`,
-  `${IMAGE_BASE_URL}/female-haircut/IMG_20250801_114049_282.jpg`,
-  `${IMAGE_BASE_URL}/female-haircut/IMG_20250801_115858_382.jpg`,
-  `${IMAGE_BASE_URL}/female-haircut/IMG_20250801_115858_875.jpg`,
-  `${IMAGE_BASE_URL}/female-haircut/IMG_20250801_124911_471.jpg`,
+  `${IMAGE_BASE_URL}/female-haircut/1.png`,
+  `${IMAGE_BASE_URL}/female-haircut/2.png`,
+  `${IMAGE_BASE_URL}/female-haircut/3.png`,
+  `${IMAGE_BASE_URL}/female-haircut/4.png`,
+  `${IMAGE_BASE_URL}/female-haircut/5.png`,
+  `${IMAGE_BASE_URL}/female-haircut/6.png`,
+  `${IMAGE_BASE_URL}/female-haircut/7.jpg`,
+  `${IMAGE_BASE_URL}/female-haircut/8.jpg`,
+  `${IMAGE_BASE_URL}/female-haircut/9.jpg`,
 ]
 
 // Global Images
@@ -148,18 +147,16 @@ export const HOMEPAGE_IMAGES = [
 
 // Men's Hair Color Images
 export const MENS_HAIR_COLOR_IMAGES = [
-  `${IMAGE_BASE_URL}/mens-hair-color/IMG_20250801_113629_298.jpg`,
-  `${IMAGE_BASE_URL}/mens-hair-color/IMG_20250801_114636_930.jpg`,
-  `${IMAGE_BASE_URL}/mens-hair-color/IMG_20250801_114741_290.jpg`,
-  `${IMAGE_BASE_URL}/mens-hair-color/IMG_20250801_114745_336.jpg`,
-  `${IMAGE_BASE_URL}/mens-hair-color/IMG_20250801_115923_351.jpg`,
-  `${IMAGE_BASE_URL}/mens-hair-color/IMG_20250801_124300_561.jpg`,
+  `${IMAGE_BASE_URL}/mens-hair-color/1.jpg`,
+  `${IMAGE_BASE_URL}/mens-hair-color/2.jpg`,
+  `${IMAGE_BASE_URL}/mens-hair-color/3.jpg`,
+  `${IMAGE_BASE_URL}/mens-hair-color/4.jpg`,
+  `${IMAGE_BASE_URL}/mens-hair-color/5.jpg`,
 ]
 
 // Men's Haircut Images
 export const MENS_HAIRCUT_IMAGES = [
   `${IMAGE_BASE_URL}/mens-haircut/photo_2025-08-01_12-56-05.jpg`,
-  `${IMAGE_BASE_URL}/mens-haircut/IMG_20250801_112241_918.jpg`,
   `${IMAGE_BASE_URL}/mens-haircut/IMG_20250801_112254_546.jpg`,
   `${IMAGE_BASE_URL}/mens-haircut/IMG_20250801_112711_207.jpg`,
   `${IMAGE_BASE_URL}/mens-haircut/IMG_20250801_114449_073.jpg`,

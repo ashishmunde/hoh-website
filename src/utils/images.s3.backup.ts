@@ -26,14 +26,15 @@
  * 
  * // Female Haircut Images
  * export const FEMALE_HAIRCUT_IMAGES = [
- *   `${S3_BASE_URL}/female-haircut/IMG_20250801_110326_349.jpg`,
- *   `${S3_BASE_URL}/female-haircut/IMG_20250801_114048_613.jpg`,
- *   `${S3_BASE_URL}/female-haircut/IMG_20250801_114048_690.jpg`,
- *   `${S3_BASE_URL}/female-haircut/IMG_20250801_114049_068.jpg`,
- *   `${S3_BASE_URL}/female-haircut/IMG_20250801_114049_282.jpg`,
- *   `${S3_BASE_URL}/female-haircut/IMG_20250801_115858_382.jpg`,
- *   `${S3_BASE_URL}/female-haircut/IMG_20250801_115858_875.jpg`,
- *   `${S3_BASE_URL}/female-haircut/IMG_20250801_124911_471.jpg`,
+ *   `${S3_BASE_URL}/female-haircut/1.png`,
+ *   `${S3_BASE_URL}/female-haircut/2.png`,
+ *   `${S3_BASE_URL}/female-haircut/3.png`,
+ *   `${S3_BASE_URL}/female-haircut/4.png`,
+ *   `${S3_BASE_URL}/female-haircut/5.png`,
+ *   `${S3_BASE_URL}/female-haircut/6.png`,
+ *   `${S3_BASE_URL}/female-haircut/7.jpg`,
+ *   `${S3_BASE_URL}/female-haircut/8.jpg`,
+ *   `${S3_BASE_URL}/female-haircut/9.jpg`,
  * ]
  * 
  * // Global Images
@@ -147,7 +148,6 @@
  * // Men's Haircut Images
  * export const MENS_HAIRCUT_IMAGES = [
  *   `${S3_BASE_URL}/mens-haircut/photo_2025-08-01_12-56-05.jpg`,
- *   `${S3_BASE_URL}/mens-haircut/IMG_20250801_112241_918.jpg`,
  *   `${S3_BASE_URL}/mens-haircut/IMG_20250801_112254_546.jpg`,
  *   `${S3_BASE_URL}/mens-haircut/IMG_20250801_112711_207.jpg`,
  *   `${S3_BASE_URL}/mens-haircut/IMG_20250801_114449_073.jpg`,
