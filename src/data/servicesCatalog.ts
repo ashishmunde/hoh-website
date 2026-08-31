@@ -34,11 +34,12 @@ export interface HomeServiceCard {
 const hairTreatmentItems = [
   'Cystine',
   'Nanoplastia/Hair Restoration',
-  'Hair & Scalp Nourishment',
   'Hair Spa',
   'Head Massage ( Oil )',
   'Clear Dose',
 ]
+
+const hairScalpNourishmentItems = ['Hair & Scalp Nourishment']
 
 function hairSub(
   _categoryId: string,
@@ -137,6 +138,12 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Beard color',
           ]),
           hairSub('mens-hair', 'hair-treatment', 'Hair Treatment', hairTreatmentItems),
+          hairSub(
+            'mens-hair',
+            'hair-scalp-nourishment',
+            'Hair & Scalp Nourishment',
+            hairScalpNourishmentItems,
+          ),
         ],
       },
       {
@@ -175,6 +182,12 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Crazy color',
           ]),
           hairSub('female-hair', 'hair-treatment', 'Hair Treatment', hairTreatmentItems),
+          hairSub(
+            'female-hair',
+            'hair-scalp-nourishment',
+            'Hair & Scalp Nourishment',
+            hairScalpNourishmentItems,
+          ),
         ],
       },
     ],

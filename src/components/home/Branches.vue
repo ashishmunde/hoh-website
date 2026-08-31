@@ -1,10 +1,19 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import SectionHeader from '@/components/ui/SectionHeader.vue'
-import { PRIMARY_COLOR, SECONDARY_COLOR, BRANCHES_DATA } from '@/utils/const'
+import BookingModal from '@/components/booking/BookingModal.vue'
+import { BRANCHES_DATA } from '@/utils/const'
 
 const branches = BRANCHES_DATA
+const bookingOpen = ref(false)
+const selectedBranch = ref<string | undefined>()
 
-const openLink = (link: string) => {
+const openBooking = (branchName: string) => {
+  selectedBranch.value = branchName
+  bookingOpen.value = true
+}
+
+const openDirections = (link: string) => {
   window.open(link, '_blank')
 }
 </script>
@@ -12,45 +21,44 @@ const openLink = (link: string) => {
 <template>
   <section class="branches-section">
     <div class="page-container">
-      <SectionHeader title="Branches" subtitle="Visit us" />
+      <SectionHeader title="Branches" subtitle="Book with us" />
+      <p class="branches-intro">
+        Tap a branch to book your appointment — choose your preferred location, date &amp; time.
+      </p>
       <div class="branches-grid">
-        <div
-          v-for="branch in branches"
-          :key="branch.name"
-          class="branch-card"
-        >
-          <div class="branch-image-container">
+        <article v-for="branch in branches" :key="branch.name" class="branch-card">
+          <button
+            type="button"
+            class="branch-image-container"
+            @click="openBooking(branch.name)"
+          >
             <img :src="branch.thumbnail" :alt="branch.name" class="branch-image" />
             <div class="branch-overlay">
               <div class="branch-content">
-                <button
-                  @click.stop="openLink(branch.bookingUrl)"
-                  class="book-btn"
-                >
-                  <span class="btn-text">Book Now</span>
+                <span class="book-btn">
+                  <span class="btn-text">Book appointment</span>
                   <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
-                </button>
-                <button
-                  @click.stop="openLink(branch.googleMapsLink)"
-                  class="location-btn"
-                >
-                  <svg class="location-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
-                  </svg>
-                  <span class="btn-text">Get Directions</span>
-                  <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
+                </span>
               </div>
             </div>
+          </button>
+          <div class="branch-footer">
+            <h3 class="branch-name">{{ branch.name }}</h3>
+            <button type="button" class="location-link" @click="openDirections(branch.googleMapsLink)">
+              Get directions
+            </button>
           </div>
-          <h3 class="branch-name">{{ branch.name }}</h3>
-        </div>
+        </article>
       </div>
     </div>
+
+    <BookingModal
+      :open="bookingOpen"
+      :initial-branch="selectedBranch"
+      @close="bookingOpen = false"
+    />
   </section>
 </template>
 
@@ -59,6 +67,15 @@ const openLink = (link: string) => {
   padding: var(--hoh-section-py) 0;
   background: var(--hoh-bg-alt);
   width: 100%;
+}
+
+.branches-intro {
+  text-align: center;
+  color: var(--hoh-text-muted);
+  font-size: 1rem;
+  margin: -1rem auto 2rem;
+  max-width: 32rem;
+  line-height: 1.65;
 }
 
 .branches-grid {
@@ -80,6 +97,11 @@ const openLink = (link: string) => {
   height: 340px;
   overflow: hidden;
   border-radius: var(--hoh-radius-lg);
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  display: block;
+  background: none;
 }
 
 .branch-image {
@@ -101,97 +123,73 @@ const openLink = (link: string) => {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 100%);
   padding: 0;
   color: white;
-  transition: all 0.4s ease;
 }
 
 .branch-content {
   padding: 2rem 1.5rem 1.5rem;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
   justify-content: center;
+}
+
+.branch-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 .branch-name {
   font-family: var(--hoh-font-display);
   font-size: 1.4rem;
   font-weight: 500;
-  margin: 1rem 0 0;
-  text-align: center;
+  margin: 0;
   color: var(--hoh-secondary);
   letter-spacing: 0.02em;
 }
 
-.book-btn,
-.location-btn {
-  display: flex;
+.location-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hoh-text-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.location-link:hover {
+  color: var(--hoh-secondary);
+}
+
+.book-btn {
+  display: inline-flex;
   align-items: center;
   gap: 0.65rem;
   padding: 0.75rem 1.15rem;
-  border: none;
   border-radius: 100px;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s var(--hoh-ease);
-  box-shadow: var(--hoh-shadow-sm);
-  width: fit-content;
-}
-
-.book-btn {
   background: var(--hoh-primary);
   color: white;
+  box-shadow: var(--hoh-shadow-sm);
 }
 
-.book-btn:hover {
+.branch-image-container:hover .book-btn {
   background: var(--hoh-secondary);
   transform: translateY(-2px);
-  box-shadow: var(--hoh-shadow-md);
-}
-
-.location-btn {
-  background: var(--hoh-surface);
-  color: var(--hoh-secondary);
-}
-
-.location-btn:hover {
-  background: var(--hoh-primary);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: var(--hoh-shadow-md);
-}
-
-.book-btn:active,
-.location-btn:active {
-  transform: translateX(2px) scale(0.98);
-}
-
-.location-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
-}
-
-.location-btn:hover .location-icon {
-  transform: scale(1.1);
-}
-
-.book-btn:hover .arrow-icon,
-.location-btn:hover .arrow-icon {
-  transform: translate(2px, -2px);
 }
 
 .arrow-icon {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
-  margin-left: auto;
-  transition: transform 0.3s ease;
 }
 
 .btn-text {
@@ -210,15 +208,6 @@ const openLink = (link: string) => {
 
   .branch-content {
     padding: 1.5rem 1rem 1.25rem;
-    flex-direction: column;
-  }
-
-  .book-btn,
-  .location-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 0.7rem 1rem;
-    font-size: 0.85rem;
   }
 
   .branch-name {
@@ -236,30 +225,9 @@ const openLink = (link: string) => {
     height: 240px;
   }
 
-  .branch-content {
-    padding: 1.25rem 0.85rem 1rem;
-    gap: 0.6rem;
-  }
-
-  .branch-name {
-    font-size: 1.15rem;
-  }
-
-  .book-btn,
-  .location-btn {
-    padding: 0.65rem 0.85rem;
-    font-size: 0.8rem;
-    gap: 0.45rem;
-  }
-
-  .location-icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .arrow-icon {
-    width: 14px;
-    height: 14px;
+  .branch-footer {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>

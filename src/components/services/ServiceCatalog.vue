@@ -10,6 +10,7 @@ import {
   type ServiceSubcategory,
 } from '@/data/servicesCatalog'
 import { SERVICE_COVERS } from '@/utils/serviceThumbnails'
+import { formatItemPrice } from '@/data/servicePricing'
 
 const route = useRoute()
 const router = useRouter()
@@ -128,6 +129,16 @@ const openMakeup = () => {
   })
 }
 
+const itemPrice = (subId: string, item: string) => {
+  if (!categoryId.value) return null
+  return formatItemPrice(categoryId.value, subId, item)
+}
+
+const subcategoryItemPrice = (item: string) => {
+  if (!categoryId.value || !subcategoryId.value) return null
+  return formatItemPrice(categoryId.value, subcategoryId.value, item)
+}
+
 /** Flat grouped list of every leaf service under Men's / Female Hair */
 const categoryServiceGroups = computed(() => {
   if (!currentCategory.value) return []
@@ -160,7 +171,7 @@ const categoryServiceGroups = computed(() => {
     <!-- Landing: Hair Services | Beauty Services | Makeup (PDF top level) -->
     <template v-if="viewLevel === 'landing'">
       <p class="catalog-subtitle">
-        Browse our full service menu — prices available at the salon.
+        Browse our full service menu with indicative pricing.
       </p>
       <div class="cards-grid">
         <button
@@ -254,7 +265,6 @@ const categoryServiceGroups = computed(() => {
             />
             <div class="category-card-overlay">
               <span class="category-card-name">{{ sub.name }}</span>
-              <span class="photo-count">{{ sub.items.length }} services</span>
             </div>
           </div>
         </button>
@@ -279,11 +289,13 @@ const categoryServiceGroups = computed(() => {
           >
             <h2 class="service-group-title">
               <span class="service-group-label">{{ group.name }}</span>
-              <span class="service-group-count">{{ group.items.length }}</span>
             </h2>
             <ul class="service-name-list">
               <li v-for="item in group.items" :key="item" class="service-name-item">
-                {{ item }}
+                <span class="service-name-text">{{ item }}</span>
+                <span v-if="itemPrice(group.id, item)" class="service-price">
+                  {{ itemPrice(group.id, item) }}
+                </span>
               </li>
             </ul>
           </section>
@@ -308,7 +320,10 @@ const categoryServiceGroups = computed(() => {
               :key="item"
               class="service-name-item"
             >
-              {{ item }}
+              <span class="service-name-text">{{ item }}</span>
+              <span v-if="subcategoryItemPrice(item)" class="service-price">
+                {{ subcategoryItemPrice(item) }}
+              </span>
             </li>
           </ul>
         </div>
@@ -528,6 +543,10 @@ const categoryServiceGroups = computed(() => {
 
 .service-name-item {
   position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
   font-family: var(--hoh-font-body);
   font-size: 1.02rem;
   font-weight: 400;
@@ -535,6 +554,19 @@ const categoryServiceGroups = computed(() => {
   line-height: 1.5;
   padding: 0.7rem 0 0.7rem 1rem;
   border-bottom: 1px solid color-mix(in srgb, var(--hoh-border) 70%, transparent);
+}
+
+.service-name-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.service-price {
+  flex-shrink: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--hoh-secondary);
+  white-space: nowrap;
 }
 
 .service-name-item::before {

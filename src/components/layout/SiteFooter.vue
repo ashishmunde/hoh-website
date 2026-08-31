@@ -9,12 +9,13 @@ const quickLinks = [
   { label: 'Services', to: '/services' },
   { label: 'Gallery', to: '/gallery' },
   { label: 'About', to: '/about' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 const socialLinks = [
   {
     name: 'Instagram',
-    href: 'https://instagram.com/yourpage',
+    href: MAIN_CONTACT.social.instagram,
     icon: 'https://cdn.simpleicons.org/instagram/ffffff',
   },
   {
@@ -24,12 +25,12 @@ const socialLinks = [
   },
   {
     name: 'YouTube',
-    href: 'https://youtube.com/yourchannel',
+    href: MAIN_CONTACT.social.youtube,
     icon: 'https://cdn.simpleicons.org/youtube/ffffff',
   },
   {
     name: 'Facebook',
-    href: 'https://facebook.com/yourpage',
+    href: MAIN_CONTACT.social.facebook,
     icon: 'https://cdn.simpleicons.org/facebook/ffffff',
   },
 ]
@@ -46,7 +47,7 @@ const karveBranch = BRANCHES_DATA.find((b) => b.name === 'Karve Nagar')
             <img :src="LOGO_IMAGE" alt="The House of Hair" class="footer-logo" />
           </RouterLink>
       <p class="footer-tagline">
-        Best unisex salon &amp; celebrity hairstylist in Pune — Karve Nagar, Kothrud &amp; Aundh.
+        Premium hair, beauty &amp; grooming in Pune — Karve Nagar, Kothrud &amp; Aundh.
       </p>
           <div class="footer-social">
             <a

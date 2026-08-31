@@ -43,6 +43,7 @@ const SUBCATEGORY_IMAGES: Record<string, string[]> = {
     ...HIGHLIGHTS_IMAGES,
   ],
   [serviceImageKey('hair', 'mens-hair', 'hair-treatment')]: HAIR_TREATMENT_IMAGES,
+  [serviceImageKey('hair', 'mens-hair', 'hair-scalp-nourishment')]: HAIR_TREATMENT_IMAGES,
 
   // Female Hair
   [serviceImageKey('hair', 'female-hair', 'haircut')]: FEMALE_HAIRCUT_IMAGES,
@@ -57,6 +58,7 @@ const SUBCATEGORY_IMAGES: Record<string, string[]> = {
     ...HIGHLIGHTS_IMAGES,
   ],
   [serviceImageKey('hair', 'female-hair', 'hair-treatment')]: HAIR_TREATMENT_IMAGES,
+  [serviceImageKey('hair', 'female-hair', 'hair-scalp-nourishment')]: HAIR_TREATMENT_IMAGES,
 
   // Beauty (no photo folders except makeup)
   [serviceImageKey('beauty', 'beauty-services', 'makeup')]: MAKEUP_AND_HAIRSTYLE_IMAGES,

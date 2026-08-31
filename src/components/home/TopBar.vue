@@ -11,6 +11,7 @@ const navLinks = [
   { label: 'Services', to: '/services' },
   { label: 'Gallery', to: '/gallery' },
   { label: 'About', to: '/about' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 const toggleMenu = () => {

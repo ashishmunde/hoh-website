@@ -49,6 +49,7 @@ const SUBCATEGORY_THUMBNAILS: Record<string, string> = {
   'mens-hair::beard': SERVICE_COVERS.beard,
   'mens-hair::hair-color': SERVICE_COVERS.beard,
   'mens-hair::hair-treatment': SERVICE_COVERS.femaleHairTreatment,
+  'mens-hair::hair-scalp-nourishment': SERVICE_COVERS.femaleScalpNourishment,
 
   // Female Hair
   'female-hair::haircut': SERVICE_COVERS.femaleHaircut,
@@ -56,6 +57,7 @@ const SUBCATEGORY_THUMBNAILS: Record<string, string> = {
   'female-hair::wash-styling': SERVICE_COVERS.femaleWashStyling,
   'female-hair::hair-color': SERVICE_COVERS.femaleHairColor,
   'female-hair::hair-treatment': SERVICE_COVERS.femaleHairTreatment,
+  'female-hair::hair-scalp-nourishment': SERVICE_COVERS.femaleScalpNourishment,
 
   // Beauty Services — dedicated covers from S3 services/
   'beauty-services::facial': SERVICE_COVERS.facial,
@@ -69,10 +71,6 @@ const SUBCATEGORY_THUMBNAILS: Record<string, string> = {
 
 /** Specific line-item overrides */
 const SERVICE_ITEM_THUMBNAILS: Record<string, string> = {
-  'female-hair::hair-treatment::Hair & Scalp Nourishment':
-    SERVICE_COVERS.femaleScalpNourishment,
-  'mens-hair::hair-treatment::Hair & Scalp Nourishment':
-    SERVICE_COVERS.femaleScalpNourishment,
   "beauty-services::makeup::Groom's Makeup": SERVICE_COVERS.groomMakeup,
 }
 

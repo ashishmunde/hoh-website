@@ -99,6 +99,13 @@ export const PAGE_SEO: Record<string, PageSeo> = {
     path: '/about',
     keywords: SEO_KEYWORDS,
   },
+  contact: {
+    title: 'Contact The House of Hair | Book Salon Appointment in Pune',
+    description:
+      'Contact The House of Hair — book hair, beauty & makeup appointments at our Karve Nagar, Kothrud or Aundh branches in Pune.',
+    path: '/contact',
+    keywords: SEO_KEYWORDS,
+  },
 }
 
 export function absoluteUrl(path: string): string {

@@ -6,7 +6,23 @@
         alt="The House of Hair"
         class="loader-logo"
       />
-      <div class="loader-spinner" aria-hidden="true" />
+      <div class="scissors-loader" aria-hidden="true">
+        <svg class="scissors-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="44" r="5" stroke="currentColor" stroke-width="2" />
+          <circle cx="14" cy="20" r="5" stroke="currentColor" stroke-width="2" />
+          <path
+            class="blade blade-top"
+            d="M19 20 L52 8 L58 14 L25 26 Z"
+            fill="currentColor"
+          />
+          <path
+            class="blade blade-bottom"
+            d="M19 44 L52 56 L58 50 L25 38 Z"
+            fill="currentColor"
+          />
+          <path d="M14 25 L14 39" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+      </div>
       <p class="loader-label">Loading</p>
     </div>
   </div>
@@ -42,13 +58,26 @@
   animation: logo-breathe 2.4s ease-in-out infinite;
 }
 
-.loader-spinner {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid rgba(26, 26, 26, 0.12);
-  border-top-color: var(--hoh-secondary, #1a1a1a);
-  animation: spin 0.85s linear infinite;
+.scissors-loader {
+  color: var(--hoh-secondary, #1a1a1a);
+  width: 52px;
+  height: 52px;
+}
+
+.scissors-svg {
+  width: 100%;
+  height: 100%;
+  transform-origin: 14px 32px;
+}
+
+.blade-top {
+  transform-origin: 19px 23px;
+  animation: snip-top 0.9s ease-in-out infinite;
+}
+
+.blade-bottom {
+  transform-origin: 19px 41px;
+  animation: snip-bottom 0.9s ease-in-out infinite;
 }
 
 .loader-label {
@@ -61,9 +90,23 @@
   color: var(--hoh-text-muted, #6b6b6b);
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@keyframes snip-top {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-18deg);
+  }
+}
+
+@keyframes snip-bottom {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(18deg);
   }
 }
 

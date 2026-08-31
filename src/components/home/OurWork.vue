@@ -29,7 +29,6 @@ const openGallery = (galleryQuery: string) => {
             <img :src="cat.thumbnail" :alt="cat.name" class="work-image" />
             <div class="work-overlay">
               <h3 class="work-title">{{ cat.name }}</h3>
-              <span class="work-count">{{ cat.images.length }} photos</span>
             </div>
           </div>
         </button>
