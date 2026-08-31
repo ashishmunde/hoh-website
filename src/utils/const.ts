@@ -14,7 +14,7 @@ export const MAIN_CONTACT = {
   branchName: 'Karve Nagar',
   phone: '+91 8850327158',
   phoneTel: '+918850327158',
-  email: 'recah.thehouseofhair@gmail.com',
+  email: 'reach.thehouseofhair@gmail.com',
   addressLines: [
     'Shop no. 86, Girija Shankar Vihar',
     'Potnis Parisar, opp. Durga Cafe',
