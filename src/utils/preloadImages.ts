@@ -7,14 +7,22 @@ import {
 import { SERVICE_COVERS } from '@/utils/serviceThumbnails'
 import { WORK_GALLERY_CATEGORIES } from '@/utils/workGallery'
 
-/** Unique image URLs used across the site (gallery, homepage, covers, branches). */
-export function getAllSiteImageUrls(): string[] {
+/** Unique image URLs needed for first paint / homepage (not full gallery). */
+export function getCriticalSiteImageUrls(): string[] {
   const urls = [
     LOGO_IMAGE,
     HERO_BANNER_IMAGE,
     ...Object.values(BRANCHES),
     ...Object.values(SERVICE_COVERS),
     ...WORK_GALLERY_CATEGORIES.map((c) => c.thumbnail),
+  ]
+  return [...new Set(urls.filter(Boolean))]
+}
+
+/** @deprecated Prefer getCriticalSiteImageUrls for faster first load; kept for full warm cache if needed. */
+export function getAllSiteImageUrls(): string[] {
+  const urls = [
+    ...getCriticalSiteImageUrls(),
     ...ALL_GALLERY_IMAGES,
   ]
   return [...new Set(urls.filter(Boolean))]

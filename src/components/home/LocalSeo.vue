@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SectionHeader from '@/components/ui/SectionHeader.vue'
-import { MAIN_CONTACT } from '@/utils/const'
+import { BRANCHES_DATA } from '@/utils/const'
 </script>
 
 <template>
@@ -26,29 +26,20 @@ import { MAIN_CONTACT } from '@/utils/const'
       </div>
 
       <div class="location-grid">
-        <article class="location-card">
-          <h3>Salon in Karve Nagar</h3>
-          <p>
-            Main branch — Shop no. 86, Girija Shankar Vihar, Potnis Parisar, opp. Durga Cafe,
-            Karve Nagar, Pune 411052.
-          </p>
-          <a :href="`tel:${MAIN_CONTACT.phoneTel}`" class="location-link">
-            {{ MAIN_CONTACT.phone }}
+        <article
+          v-for="branch in BRANCHES_DATA"
+          :key="branch.name"
+          class="location-card"
+        >
+          <h3>Salon in {{ branch.name }}</h3>
+          <p>{{ branch.address }}</p>
+          <a
+            v-if="branch.phoneTel"
+            :href="`tel:${branch.phoneTel}`"
+            class="location-link"
+          >
+            {{ branch.phone }}
           </a>
-        </article>
-        <article class="location-card">
-          <h3>Salon in Kothrud</h3>
-          <p>
-            Serving Kothrud &amp; Paud Road — ideal when you search for salons in Kothrud,
-            hair salon Kothrud, or a unisex stylist nearby.
-          </p>
-        </article>
-        <article class="location-card">
-          <h3>Salon in Aundh</h3>
-          <p>
-            Aundh salon near Gold’s Gym — book for hair colour, cuts, and beauty when you need
-            salons in Aundh or a hairstylist in Aundh.
-          </p>
         </article>
       </div>
     </div>

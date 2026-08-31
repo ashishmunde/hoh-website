@@ -1,4 +1,5 @@
 import { HERO_BANNER_IMAGE, LOGO_IMAGE } from '@/utils/images'
+import { MAIN_CONTACT } from '@/utils/const'
 
 /** Site-wide SEO and local search configuration */
 
@@ -6,6 +7,26 @@ export const SITE_URL = 'https://thehouseofhair.in'
 export const SITE_NAME = 'The House of Hair'
 export const SITE_TAGLINE = 'Best Unisex Salon & Celebrity Hairstylist in Pune'
 export const OG_IMAGE = HERO_BANNER_IMAGE
+
+/** Public social profiles for Organization sameAs */
+export const SOCIAL_PROFILES = [
+  MAIN_CONTACT.social.instagram,
+  MAIN_CONTACT.social.facebook,
+  MAIN_CONTACT.social.youtube,
+] as const
+
+/**
+ * Opening hours for local schema (update if salon hours change).
+ * Format: 24h HH:MM
+ */
+export const OPENING_HOURS = {
+  days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+  opens: '10:00',
+  closes: '20:00',
+} as const
+
+export const CONTACT_EMAIL = MAIN_CONTACT.email
+export const CONTACT_PHONE = MAIN_CONTACT.phoneTel
 
 /** Primary local keywords for Pune salon discovery */
 export const SEO_KEYWORDS = [
@@ -190,6 +211,13 @@ export interface LocalBusinessBranch {
 /** JSON-LD for Google local / Maps rich results */
 export function buildLocalBusinessJsonLd(branches: LocalBusinessBranch[]) {
   const main = branches[0]
+  const openingHoursSpecification = OPENING_HOURS.days.map((day) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: day,
+    opens: OPENING_HOURS.opens,
+    closes: OPENING_HOURS.closes,
+  }))
+
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -199,21 +227,22 @@ export function buildLocalBusinessJsonLd(branches: LocalBusinessBranch[]) {
         name: SITE_NAME,
         url: SITE_URL,
         logo: LOGO_IMAGE,
-
-        email: 'info@houseofhair.in',
-        sameAs: [],
+        email: CONTACT_EMAIL,
+        telephone: CONTACT_PHONE,
+        sameAs: [...SOCIAL_PROFILES],
         description: DEFAULT_DESCRIPTION,
       },
       {
         '@type': 'HairSalon',
         '@id': `${SITE_URL}/#salon`,
         name: SITE_NAME,
-        alternateName: ['House of Hair', 'HOH Salon Pune'],
+        alternateName: ['House of Hair', 'HOH Salon Pune', 'The House of Hair Pune'],
         url: SITE_URL,
-        image: OG_IMAGE,
-        telephone: main?.telephone,
-        email: 'info@houseofhair.in',
+        image: [OG_IMAGE, LOGO_IMAGE],
+        telephone: main?.telephone ?? CONTACT_PHONE,
+        email: CONTACT_EMAIL,
         priceRange: '₹₹',
+        openingHoursSpecification,
         address: main
           ? {
               '@type': 'PostalAddress',
@@ -267,6 +296,8 @@ export function buildLocalBusinessJsonLd(branches: LocalBusinessBranch[]) {
           telephone: b.telephone,
           url: b.url,
           image: b.image,
+          email: CONTACT_EMAIL,
+          openingHoursSpecification,
           address: {
             '@type': 'PostalAddress',
             streetAddress: b.streetAddress,

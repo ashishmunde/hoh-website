@@ -7,10 +7,10 @@ import {
   buildLocalBusinessJsonLd,
   injectJsonLd,
 } from '@/utils/seo'
-import { BRANCHES_DATA, MAIN_CONTACT } from '@/utils/const'
+import { BRANCHES_DATA } from '@/utils/const'
 import AppLoader from '@/components/ui/AppLoader.vue'
 import WhatsAppFab from '@/components/ui/WhatsAppFab.vue'
-import { getAllSiteImageUrls, preloadImages } from '@/utils/preloadImages'
+import { getCriticalSiteImageUrls, preloadImages } from '@/utils/preloadImages'
 
 const route = useRoute()
 const isReady = ref(false)
@@ -21,10 +21,11 @@ const MAX_WAIT_MS = 20000
 const LOCAL_BRANCHES = [
   {
     name: 'Karve Nagar',
-    streetAddress: 'Shop no. 86, Girija Shankar Vihar, Potnis Parisar, opp. Durga Cafe',
-    addressLocality: 'Karve Nagar, Pune',
+    streetAddress:
+      'Girija Shankar Vihar Society, Potnis Parisar, 86, Lane Number 6, opp. Durga Cafe',
+    addressLocality: 'Karvenagar, Pune',
     postalCode: '411052',
-    telephone: MAIN_CONTACT.phoneTel,
+    telephone: '+918850327158',
     latitude: 18.4967942,
     longitude: 73.8225172,
     url: BRANCHES_DATA[0]!.googleMapsLink,
@@ -32,10 +33,11 @@ const LOCAL_BRANCHES = [
   },
   {
     name: 'Aundh',
-    streetAddress: "Saraja Lane, Opposite Gold's Gym",
+    streetAddress:
+      'Shop no 3, Chaitraban Society, C Wing, Sarja Rd, opp. to Croma mall, Goodwill Society, Sanewadi',
     addressLocality: 'Aundh, Pune',
-    postalCode: '411007',
-    telephone: '+918010535615',
+    postalCode: '411067',
+    telephone: '+918010546437',
     latitude: 18.5532629,
     longitude: 73.80747,
     url: BRANCHES_DATA[1]!.googleMapsLink,
@@ -43,10 +45,11 @@ const LOCAL_BRANCHES = [
   },
   {
     name: 'Kothrud',
-    streetAddress: 'Paud Road',
+    streetAddress:
+      'Rokade Heights, Ideal Colony Metro Station, Mahaganesh Colony',
     addressLocality: 'Kothrud, Pune',
     postalCode: '411038',
-    telephone: MAIN_CONTACT.phoneTel,
+    telephone: '+918263956805',
     latitude: 18.5082763,
     longitude: 73.8223092,
     url: BRANCHES_DATA[2]!.googleMapsLink,
@@ -65,7 +68,7 @@ onMounted(async () => {
   syncSeo()
 
   const started = Date.now()
-  const urls = getAllSiteImageUrls()
+  const urls = getCriticalSiteImageUrls()
 
   await Promise.race([
     preloadImages(urls),

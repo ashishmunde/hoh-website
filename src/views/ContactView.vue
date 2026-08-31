@@ -40,6 +40,14 @@ import { BRANCHES_DATA, MAIN_CONTACT } from '@/utils/const'
           <ul class="branch-list">
             <li v-for="branch in BRANCHES_DATA" :key="branch.name" class="branch-item">
               <strong>{{ branch.name }}</strong>
+              <span v-if="branch.address" class="branch-address">{{ branch.address }}</span>
+              <a
+                v-if="branch.phoneTel"
+                :href="`tel:${branch.phoneTel}`"
+                class="branch-phone"
+              >
+                {{ branch.phone }}
+              </a>
               <a
                 :href="branch.googleMapsLink"
                 class="branch-map-link"
@@ -153,6 +161,22 @@ import { BRANCHES_DATA, MAIN_CONTACT } from '@/utils/const'
   flex-direction: column;
   gap: 0.25rem;
   font-size: 0.95rem;
+}
+
+.branch-address {
+  color: var(--hoh-text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.branch-phone {
+  color: var(--hoh-secondary);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.branch-phone:hover {
+  text-decoration: underline;
 }
 
 .branch-map-link {
