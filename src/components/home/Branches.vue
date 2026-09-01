@@ -1,17 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SectionHeader from '@/components/ui/SectionHeader.vue'
-import BookingModal from '@/components/booking/BookingModal.vue'
 import { BRANCHES_DATA } from '@/utils/const'
 
 const branches = BRANCHES_DATA
-const bookingOpen = ref(false)
-const selectedBranch = ref<string | undefined>()
-
-const openBooking = (branchName: string) => {
-  selectedBranch.value = branchName
-  bookingOpen.value = true
-}
 
 const openDirections = (link: string) => {
   window.open(link, '_blank')
@@ -21,29 +12,30 @@ const openDirections = (link: string) => {
 <template>
   <section class="branches-section">
     <div class="page-container">
-      <SectionHeader title="Branches" subtitle="Book with us" />
+      <SectionHeader title="Branches" subtitle="Call us" />
       <p class="branches-intro">
-        Tap a branch to book your appointment — choose your preferred location, date &amp; time.
+        Tap a branch to call that location — we&apos;ll help you book your appointment.
       </p>
       <div class="branches-grid">
         <article v-for="branch in branches" :key="branch.name" class="branch-card">
-          <button
-            type="button"
+          <a
+            v-if="branch.phoneTel"
             class="branch-image-container"
-            @click="openBooking(branch.name)"
+            :href="`tel:${branch.phoneTel}`"
+            :aria-label="`Call ${branch.name} at ${branch.phone}`"
           >
             <img :src="branch.thumbnail" :alt="branch.name" class="branch-image" />
             <div class="branch-overlay">
               <div class="branch-content">
                 <span class="book-btn">
-                  <span class="btn-text">Book appointment</span>
-                  <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <span class="btn-text">Call us</span>
+                  <svg class="phone-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </span>
               </div>
             </div>
-          </button>
+          </a>
           <div class="branch-footer">
             <h3 class="branch-name">{{ branch.name }}</h3>
             <button type="button" class="location-link" @click="openDirections(branch.googleMapsLink)">
@@ -53,12 +45,6 @@ const openDirections = (link: string) => {
         </article>
       </div>
     </div>
-
-    <BookingModal
-      :open="bookingOpen"
-      :initial-branch="selectedBranch"
-      @close="bookingOpen = false"
-    />
   </section>
 </template>
 
@@ -102,6 +88,8 @@ const openDirections = (link: string) => {
   cursor: pointer;
   display: block;
   background: none;
+  text-decoration: none;
+  color: inherit;
 }
 
 .branch-image {
@@ -186,7 +174,7 @@ const openDirections = (link: string) => {
   transform: translateY(-2px);
 }
 
-.arrow-icon {
+.phone-icon {
   width: 16px;
   height: 16px;
   flex-shrink: 0;

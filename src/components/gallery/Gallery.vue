@@ -3,6 +3,7 @@ import { PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER, SECONDARY_HOVER } from '
 import { ALL_GALLERY_IMAGES, GALLERY_IMAGES_BY_CATEGORY } from '@/utils/images'
 import { getServiceImages } from '@/utils/serviceImages'
 import { findSubcategory } from '@/data/servicesCatalog'
+import { WORK_GALLERY_CATEGORIES } from '@/utils/workGallery'
 import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
 
@@ -27,7 +28,7 @@ const isServiceRoute = computed(
   () => Boolean(division.value && categorySlug.value && subcategoryId.value),
 )
 
-// Map service names to category keys
+// Map service names / aliases to category keys
 const categoryMap: Record<string, keyof typeof GALLERY_IMAGES_BY_CATEGORY> = {
   'Balayage': 'balayage',
   'Female Haircut': 'femaleHaircut',
@@ -43,15 +44,23 @@ const categoryMap: Record<string, keyof typeof GALLERY_IMAGES_BY_CATEGORY> = {
   'Makeup and Hairstyle': 'makeupAndHairstyle',
 }
 
+function imagesForLegacyCategory(label: string) {
+  const workCat = WORK_GALLERY_CATEGORIES.find(
+    (c) => c.galleryQuery === label || c.name === label,
+  )
+  if (workCat) return workCat.images
+
+  const categoryKey = categoryMap[label]
+  if (categoryKey) return GALLERY_IMAGES_BY_CATEGORY[categoryKey]
+  return undefined
+}
+
 const galleryImages = computed(() => {
   if (isServiceRoute.value && division.value && categorySlug.value && subcategoryId.value) {
     return getServiceImages(division.value, categorySlug.value, subcategoryId.value)
   }
   if (legacyCategory.value && !route.query.division) {
-    const categoryKey =
-      categoryMap[legacyCategory.value] ||
-      (legacyCategory.value as keyof typeof GALLERY_IMAGES_BY_CATEGORY)
-    return GALLERY_IMAGES_BY_CATEGORY[categoryKey] || ALL_GALLERY_IMAGES
+    return imagesForLegacyCategory(legacyCategory.value) ?? ALL_GALLERY_IMAGES
   }
   return ALL_GALLERY_IMAGES
 })

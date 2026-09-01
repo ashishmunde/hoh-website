@@ -9,7 +9,7 @@ import {
 } from '@/utils/seo'
 import { BRANCHES_DATA } from '@/utils/const'
 import AppLoader from '@/components/ui/AppLoader.vue'
-import WhatsAppFab from '@/components/ui/WhatsAppFab.vue'
+import FloatingActions from '@/components/ui/FloatingActions.vue'
 import { getCriticalSiteImageUrls, preloadImages } from '@/utils/preloadImages'
 
 const route = useRoute()
@@ -91,7 +91,7 @@ watch(() => route.fullPath, syncSeo)
   </Transition>
   <div v-show="isReady" class="app-shell">
     <router-view />
-    <WhatsAppFab />
+    <FloatingActions />
   </div>
 </template>
 

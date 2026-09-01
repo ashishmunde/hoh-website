@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   SERVICE_DIVISIONS,
@@ -148,6 +148,59 @@ const categoryServiceGroups = computed(() => {
     items: sub.items,
   }))
 })
+
+const isSplitView = computed(
+  () => viewLevel.value === 'category' || viewLevel.value === 'subcategory',
+)
+
+const splitLayout = ref<HTMLElement | null>(null)
+const listPanel = ref<HTMLElement | null>(null)
+
+const isDesktopSplit = () => window.matchMedia('(min-width: 769px)').matches
+
+function onSplitWheel(event: WheelEvent) {
+  if (!isDesktopSplit()) return
+  const panel = listPanel.value
+  if (!panel) return
+
+  const maxScroll = panel.scrollHeight - panel.clientHeight
+  if (maxScroll <= 1) return
+
+  const goingDown = event.deltaY > 0
+  const atTop = panel.scrollTop <= 0
+  const atBottom = panel.scrollTop >= maxScroll - 1
+
+  event.preventDefault()
+
+  if ((goingDown && !atBottom) || (!goingDown && !atTop)) {
+    panel.scrollTop += event.deltaY
+    return
+  }
+
+  window.scrollBy({ top: event.deltaY, left: 0, behavior: 'auto' })
+}
+
+watch(
+  splitLayout,
+  (el, prev) => {
+    prev?.removeEventListener('wheel', onSplitWheel, true)
+    el?.addEventListener('wheel', onSplitWheel, { passive: false, capture: true })
+  },
+  { flush: 'post' },
+)
+
+watch(
+  () => route.fullPath,
+  () => {
+    requestAnimationFrame(() => {
+      if (listPanel.value) listPanel.value.scrollTop = 0
+    })
+  },
+)
+
+onBeforeUnmount(() => {
+  splitLayout.value?.removeEventListener('wheel', onSplitWheel, true)
+})
 </script>
 
 <template>
@@ -166,7 +219,7 @@ const categoryServiceGroups = computed(() => {
       </template>
     </nav>
 
-    <h1 class="catalog-title">{{ pageTitle }}</h1>
+    <h1 v-if="!isSplitView" class="catalog-title">{{ pageTitle }}</h1>
 
     <!-- Landing: Hair Services | Beauty Services | Makeup and Hairstyle -->
     <template v-if="viewLevel === 'landing'">
@@ -273,15 +326,18 @@ const categoryServiceGroups = computed(() => {
 
     <!-- Men's / Female Hair: image left + all service names as a list -->
     <template v-else-if="viewLevel === 'category' && currentCategory">
-      <div class="split-layout">
-        <div class="split-image-wrap">
-          <img
-            :src="currentCategory.image"
-            :alt="currentCategory.name"
-            class="split-image"
-          />
+      <div ref="splitLayout" class="split-layout">
+        <div class="split-left">
+          <h1 class="catalog-title">{{ pageTitle }}</h1>
+          <div class="split-image-wrap">
+            <img
+              :src="currentCategory.image"
+              :alt="currentCategory.name"
+              class="split-image"
+            />
+          </div>
         </div>
-        <div class="split-list-panel">
+        <div ref="listPanel" class="split-list-panel">
           <section
             v-for="group in categoryServiceGroups"
             :key="group.id"
@@ -305,15 +361,18 @@ const categoryServiceGroups = computed(() => {
 
     <!-- Beauty / Makeup: image left + service names list (no per-item thumbnails) -->
     <template v-else-if="viewLevel === 'subcategory' && currentSubcategory">
-      <div class="split-layout">
-        <div class="split-image-wrap">
-          <img
-            :src="getSubcategoryCover(currentSubcategory, categoryId || '')"
-            :alt="currentSubcategory.name"
-            class="split-image"
-          />
+      <div ref="splitLayout" class="split-layout">
+        <div class="split-left">
+          <h1 class="catalog-title">{{ pageTitle }}</h1>
+          <div class="split-image-wrap">
+            <img
+              :src="getSubcategoryCover(currentSubcategory, categoryId || '')"
+              :alt="currentSubcategory.name"
+              class="split-image"
+            />
+          </div>
         </div>
-        <div class="split-list-panel split-list-panel--flat">
+        <div ref="listPanel" class="split-list-panel split-list-panel--flat">
           <ul class="service-name-list">
             <li
               v-for="item in currentSubcategory.items"
@@ -459,9 +518,18 @@ const categoryServiceGroups = computed(() => {
   margin-top: 0.5rem;
 }
 
+.split-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.split-left .catalog-title {
+  margin: 0;
+}
+
 .split-image-wrap {
-  position: sticky;
-  top: 1.5rem;
   border-radius: var(--hoh-radius-lg);
   overflow: hidden;
   aspect-ratio: 3 / 4;
@@ -482,6 +550,15 @@ const categoryServiceGroups = computed(() => {
   gap: 2.25rem;
   padding: 0.15rem 0 1rem;
   min-width: 0;
+  max-height: calc(100dvh - 8.75rem);
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.split-list-panel::-webkit-scrollbar {
+  display: none;
 }
 
 .split-list-panel--flat {
@@ -615,7 +692,6 @@ const categoryServiceGroups = computed(() => {
   }
 
   .split-image-wrap {
-    position: static;
     max-width: 280px;
     margin: 0 auto;
     aspect-ratio: 4 / 5;
@@ -623,6 +699,9 @@ const categoryServiceGroups = computed(() => {
 
   .split-list-panel {
     gap: 1.85rem;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
   }
 
   .service-group + .service-group {

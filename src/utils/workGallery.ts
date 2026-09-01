@@ -8,6 +8,7 @@ import {
   MENS_HAIR_COLOR_IMAGES,
   MAKEUP_AND_HAIRSTYLE_IMAGES,
 } from '@/utils/images'
+import { SERVICE_COVERS } from '@/utils/serviceThumbnails'
 
 /** Portfolio galleries for the homepage "Our Work" section (your uploaded photos). */
 export const WORK_GALLERY_CATEGORIES = [
@@ -58,8 +59,7 @@ export const WORK_GALLERY_CATEGORIES = [
     id: 'mens-hair-color',
     name: 'Male Hair Color',
     galleryQuery: 'Male Hair Color',
-    thumbnail:
-      'https://house-of-hair.s3.ap-south-1.amazonaws.com/mens-hair-color/Cover_.jpg',
+    thumbnail: SERVICE_COVERS.maleHairColor,
     images: MENS_HAIR_COLOR_IMAGES,
   },
   {

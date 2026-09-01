@@ -22,6 +22,7 @@ export const SERVICE_COVERS = {
   femaleHairTreatment: serviceThumbnailUrl('Female Hair Treatment.png'),
   femaleHaircut: serviceThumbnailUrl('Female Haircut.png'),
   femaleWashStyling: serviceThumbnailUrl('Female Wash and styling.png'),
+  maleHairColor: serviceThumbnailUrl('Mens Hair Color.png'),
   groomMakeup: serviceThumbnailUrl('groom makeup thumbnail cover.jpg'),
 } as const
 
@@ -43,11 +44,11 @@ export const CATEGORY_MENU_THUMBNAILS: Record<string, string> = {
 
 /** Subcategory covers */
 const SUBCATEGORY_THUMBNAILS: Record<string, string> = {
-  // Male Hair — only Beard has a dedicated male cover; others use it as category stand-in
+  // Male Hair
   'mens-hair::haircut': SERVICE_COVERS.beard,
   'mens-hair::hair-tattoo': SERVICE_COVERS.beard,
   'mens-hair::beard': SERVICE_COVERS.beard,
-  'mens-hair::hair-color': SERVICE_COVERS.beard,
+  'mens-hair::hair-color': SERVICE_COVERS.maleHairColor,
   'mens-hair::hair-treatment': SERVICE_COVERS.femaleHairTreatment,
   'mens-hair::hair-scalp-nourishment': SERVICE_COVERS.femaleScalpNourishment,
 

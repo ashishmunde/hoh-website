@@ -15,17 +15,12 @@ const emit = defineEmits<{
 const branch = ref(props.initialBranch ?? '')
 const name = ref('')
 const phone = ref('')
-const gender = ref('')
 const service = ref('')
-const preferredDate = ref('')
-const preferredTime = ref('')
-const notes = ref('')
 const submitting = ref(false)
 const feedback = ref<{ ok: boolean; message: string } | null>(null)
 
-const genders = ['Female', 'Male', 'Other']
 const canSubmit = computed(
-  () => branch.value && name.value.trim() && phone.value.trim() && gender.value && !submitting.value,
+  () => branch.value && name.value.trim() && phone.value.trim() && !submitting.value,
 )
 
 async function onSubmit() {
@@ -37,11 +32,7 @@ async function onSubmit() {
     branch: branch.value,
     name: name.value.trim(),
     phone: phone.value.trim(),
-    gender: gender.value,
     service: service.value.trim() || undefined,
-    preferredDate: preferredDate.value || undefined,
-    preferredTime: preferredTime.value || undefined,
-    notes: notes.value.trim() || undefined,
   })
 
   feedback.value = result
@@ -71,7 +62,7 @@ async function onSubmit() {
         <input v-model="name" type="text" required class="field-input" placeholder="Your name" />
       </label>
 
-      <label class="field">
+      <label class="field field-full">
         <span class="field-label">Contact number *</span>
         <input
           v-model="phone"
@@ -83,16 +74,6 @@ async function onSubmit() {
         />
       </label>
 
-      <fieldset class="field field-gender">
-        <legend class="field-label">Gender *</legend>
-        <div class="gender-options">
-          <label v-for="g in genders" :key="g" class="gender-option">
-            <input v-model="gender" type="radio" :value="g" required />
-            <span>{{ g }}</span>
-          </label>
-        </div>
-      </fieldset>
-
       <label class="field field-full">
         <span class="field-label">Service (optional)</span>
         <input
@@ -100,26 +81,6 @@ async function onSubmit() {
           type="text"
           class="field-input"
           placeholder="e.g. Haircut, Balayage, Makeup and Hairstyle"
-        />
-      </label>
-
-      <label class="field">
-        <span class="field-label">Preferred date</span>
-        <input v-model="preferredDate" type="date" class="field-input" />
-      </label>
-
-      <label class="field">
-        <span class="field-label">Preferred time</span>
-        <input v-model="preferredTime" type="time" class="field-input" />
-      </label>
-
-      <label class="field field-full">
-        <span class="field-label">Notes (optional)</span>
-        <textarea
-          v-model="notes"
-          class="field-input field-textarea"
-          rows="3"
-          placeholder="Anything we should know?"
         />
       </label>
     </div>
@@ -160,13 +121,6 @@ async function onSubmit() {
   grid-column: 1 / -1;
 }
 
-.field-gender {
-  grid-column: 1 / -1;
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
 .field-label {
   font-size: 0.72rem;
   font-weight: 600;
@@ -189,33 +143,6 @@ async function onSubmit() {
 .field-input:focus {
   outline: 2px solid color-mix(in srgb, var(--hoh-secondary) 25%, transparent);
   border-color: var(--hoh-secondary);
-}
-
-.field-textarea {
-  resize: vertical;
-  min-height: 4.5rem;
-}
-
-.gender-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-}
-
-.gender-option {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.55rem 0.85rem;
-  border: 1px solid var(--hoh-border);
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.gender-option:has(input:checked) {
-  border-color: var(--hoh-secondary);
-  background: rgba(26, 26, 26, 0.05);
 }
 
 .feedback {

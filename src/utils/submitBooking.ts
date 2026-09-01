@@ -2,11 +2,7 @@ export interface BookingPayload {
   branch: string
   name: string
   phone: string
-  gender: string
   service?: string
-  preferredDate?: string
-  preferredTime?: string
-  notes?: string
 }
 
 export interface BookingResult {

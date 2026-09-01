@@ -21,10 +21,6 @@ import { MAIN_CONTACT } from '@/utils/const'
 
 <style scoped>
 .whatsapp-fab {
-  position: fixed;
-  right: 1.25rem;
-  bottom: 1.25rem;
-  z-index: 4000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,8 +46,6 @@ import { MAIN_CONTACT } from '@/utils/const'
 
 @media (max-width: 480px) {
   .whatsapp-fab {
-    right: 1rem;
-    bottom: 1rem;
     width: 3rem;
     height: 3rem;
   }
