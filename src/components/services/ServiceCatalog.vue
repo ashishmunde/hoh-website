@@ -168,7 +168,7 @@ const categoryServiceGroups = computed(() => {
 
     <h1 class="catalog-title">{{ pageTitle }}</h1>
 
-    <!-- Landing: Hair Services | Beauty Services | Makeup (PDF top level) -->
+    <!-- Landing: Hair Services | Beauty Services | Makeup and Hairstyle -->
     <template v-if="viewLevel === 'landing'">
       <p class="catalog-subtitle">
         Browse our full service menu with indicative pricing.
@@ -214,11 +214,11 @@ const categoryServiceGroups = computed(() => {
           <div class="category-card-image-wrap">
             <img
               :src="SERVICE_COVERS.groomMakeup"
-              alt="Makeup"
+              alt="Makeup and Hairstyle"
               class="category-card-image"
             />
             <div class="category-card-overlay">
-              <span class="category-card-name">Makeup</span>
+              <span class="category-card-name">Makeup and Hairstyle</span>
             </div>
           </div>
         </button>

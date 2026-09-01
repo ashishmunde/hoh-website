@@ -140,7 +140,7 @@ export const PORTFOLIO_SECTIONS = [
   },
   {
     id: 'makeup',
-    name: 'Make-up & Hairstyle',
+    name: 'Makeup and Hairstyle',
     division: 'beauty',
     category: 'beauty-services',
     subcategory: 'makeup',

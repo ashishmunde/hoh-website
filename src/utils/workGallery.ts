@@ -64,8 +64,8 @@ export const WORK_GALLERY_CATEGORIES = [
   },
   {
     id: 'makeup',
-    name: 'Groom Makeup',
-    galleryQuery: 'Groom Makeup',
+    name: 'Makeup and Hairstyle',
+    galleryQuery: 'Makeup and Hairstyle',
     thumbnail: MAKEUP_AND_HAIRSTYLE_IMAGES[0],
     images: MAKEUP_AND_HAIRSTYLE_IMAGES,
   },

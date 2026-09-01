@@ -72,7 +72,7 @@ const openGallery = (galleryQuery: string) => {
   position: relative;
   border-radius: var(--hoh-radius-lg);
   overflow: hidden;
-  aspect-ratio: 1;
+  aspect-ratio: 4/5;
 }
 
 .work-image {

@@ -40,6 +40,7 @@ const categoryMap: Record<string, keyof typeof GALLERY_IMAGES_BY_CATEGORY> = {
   'Hair Treatment': 'hairTreatment',
   'Groom Makeup': 'makeupAndHairstyle',
   'Make-up and Hairstyle': 'makeupAndHairstyle',
+  'Makeup and Hairstyle': 'makeupAndHairstyle',
 }
 
 const galleryImages = computed(() => {
@@ -62,7 +63,12 @@ const galleryTitle = computed(() => {
     const sub = findSubcategory(division.value, categorySlug.value, subcategoryId.value)
     if (sub) return sub.name
   }
-  if (legacyCategory.value) return legacyCategory.value
+  if (legacyCategory.value) {
+    if (categoryMap[legacyCategory.value] === 'makeupAndHairstyle') {
+      return 'Makeup and Hairstyle'
+    }
+    return legacyCategory.value
+  }
   return 'Gallery'
 })
 </script>
@@ -186,7 +192,7 @@ const galleryTitle = computed(() => {
 
 .gallery-image {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
   transition: transform 0.3s ease;

@@ -61,7 +61,7 @@ function beautySub(
 
 /**
  * PDF layout (top level):
- * Hair Services | Beauty Services | Makeup
+ * Hair Services | Beauty Services | Makeup and Hairstyle
  */
 export const HOME_SERVICE_CARDS: HomeServiceCard[] = [
   {
@@ -78,7 +78,7 @@ export const HOME_SERVICE_CARDS: HomeServiceCard[] = [
   },
   {
     id: 'makeup',
-    name: 'Makeup',
+    name: 'Makeup and Hairstyle',
     image: getHomeServiceCardThumbnail('groom-makeup'),
     query: {
       division: 'beauty',
@@ -242,7 +242,7 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Janssen De-tan',
             'Raga De-tan',
           ]),
-          beautySub('beauty-services', 'makeup', 'Makeup', [
+          beautySub('beauty-services', 'makeup', 'Makeup and Hairstyle', [
             "Groom's Makeup",
             "Sider's Makeup",
             "Groom's Hairstyle",

@@ -99,7 +99,7 @@ async function onSubmit() {
           v-model="service"
           type="text"
           class="field-input"
-          placeholder="e.g. Haircut, Balayage, Groom makeup"
+          placeholder="e.g. Haircut, Balayage, Makeup and Hairstyle"
         />
       </label>
 

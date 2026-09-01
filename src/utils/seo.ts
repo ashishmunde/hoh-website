@@ -77,6 +77,7 @@ export const SEO_KEYWORDS = [
   'mens haircut Pune',
   'ladies haircut Pune',
   'groom makeup Pune',
+  'makeup and hairstyle Pune',
   'bridal makeup Pune',
   'hair spa Pune',
   'facial salon Pune',
@@ -109,7 +110,7 @@ export const PAGE_SEO: Record<string, PageSeo> = {
   gallery: {
     title: 'Hair Salon Gallery Pune | Balayage, Highlights & Styles | The House of Hair',
     description:
-      'See real client results from The House of Hair Pune — balayage, highlights, haircuts, colour and groom makeup by our celebrity stylists.',
+      'See real client results from The House of Hair Pune — balayage, highlights, haircuts, colour and makeup and hairstyle by our celebrity stylists.',
     path: '/gallery',
     keywords: SEO_KEYWORDS,
   },
@@ -274,7 +275,7 @@ export function buildLocalBusinessJsonLd(branches: LocalBusinessBranch[]) {
           'Hair colour',
           'Haircut',
           'Hair treatment',
-          'Makeup',
+          'Makeup and Hairstyle',
           'Beauty services',
         ],
         hasOfferCatalog: {
@@ -286,7 +287,7 @@ export function buildLocalBusinessJsonLd(branches: LocalBusinessBranch[]) {
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Balayage' } },
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Hair Treatment' } },
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Beauty Services' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Makeup' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Makeup and Hairstyle' } },
           ],
         },
         department: branches.map((b, i) => ({

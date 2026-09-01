@@ -27,7 +27,7 @@ export const SERVICE_COVERS = {
 
 const DEFAULT_THUMBNAIL = SERVICE_COVERS.femaleHaircut
 
-/** Homepage service cards (Hair / Skin / Groom Makeup) */
+/** Homepage service cards (Hair / Beauty / Makeup and Hairstyle) */
 export const HOME_SERVICE_CARD_THUMBNAILS: Record<string, string> = {
   hair: SERVICE_COVERS.femaleHairColor,
   skin: SERVICE_COVERS.facial,
