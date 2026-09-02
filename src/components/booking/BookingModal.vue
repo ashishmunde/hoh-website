@@ -1,14 +1,34 @@
 <script setup lang="ts">
+import { watch, onBeforeUnmount } from 'vue'
 import BookingForm from './BookingForm.vue'
 
-defineProps<{
+const props = defineProps<{
   open: boolean
   initialBranch?: string
 }>()
 
 const emit = defineEmits<{
   close: []
+  success: [branch: string]
 }>()
+
+function onKey(event: KeyboardEvent) {
+  if (event.key === 'Escape') emit('close')
+}
+
+watch(
+  () => props.open,
+  (open) => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    if (open) window.addEventListener('keydown', onKey)
+    else window.removeEventListener('keydown', onKey)
+  },
+)
+
+onBeforeUnmount(() => {
+  document.body.style.overflow = ''
+  window.removeEventListener('keydown', onKey)
+})
 </script>
 
 <template>
@@ -23,8 +43,9 @@ const emit = defineEmits<{
           <p class="modal-subtitle">Choose your branch and we will confirm your slot shortly.</p>
           <BookingForm
             :initial-branch="initialBranch"
+            show-cancel
             @close="emit('close')"
-            @success="emit('close')"
+            @success="(chosen) => emit('success', chosen)"
           />
         </div>
       </div>

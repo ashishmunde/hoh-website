@@ -1,8 +1,18 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import TopBar from '@/components/home/TopBar.vue'
 import SiteFooter from '@/components/layout/SiteFooter.vue'
 import BookingForm from '@/components/booking/BookingForm.vue'
+import ThankYouModal from '@/components/booking/ThankYouModal.vue'
 import { BRANCHES_DATA, MAIN_CONTACT } from '@/utils/const'
+
+const thanksOpen = ref(false)
+const thanksBranch = ref('')
+
+function onBookingSuccess(chosen: string) {
+  thanksBranch.value = chosen
+  thanksOpen.value = true
+}
 </script>
 
 <template>
@@ -64,9 +74,14 @@ import { BRANCHES_DATA, MAIN_CONTACT } from '@/utils/const'
       <section class="booking-section">
         <h2 class="card-heading">Book an appointment</h2>
         <p class="booking-note">Fill in your details and we will confirm your slot shortly.</p>
-        <BookingForm />
+        <BookingForm @success="onBookingSuccess" />
       </section>
     </main>
+    <ThankYouModal
+      :open="thanksOpen"
+      :branch-name="thanksBranch"
+      @close="thanksOpen = false"
+    />
     <SiteFooter />
   </div>
 </template>

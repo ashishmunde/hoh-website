@@ -58,12 +58,17 @@ watch(() => route.path, closeMenu)
           class="menu-toggle"
           :aria-expanded="isMenuOpen"
           aria-controls="mobile-nav"
-          aria-label="Toggle menu"
+          :aria-label="isMenuOpen ? 'Close menu' : 'Open menu'"
           @click="toggleMenu"
         >
-          <span class="menu-bar" :class="{ open: isMenuOpen }" />
-          <span class="menu-bar" :class="{ open: isMenuOpen }" />
-          <span class="menu-bar" :class="{ open: isMenuOpen }" />
+          <svg
+            class="menu-icon"
+            :class="{ open: isMenuOpen }"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
         </button>
       </div>
     </div>
@@ -204,37 +209,32 @@ watch(() => route.path, closeMenu)
 
 .menu-toggle {
   display: none;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 5px;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0.5rem;
-  border: 1px solid var(--hoh-border);
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: none;
   border-radius: 8px;
   background: transparent;
+  color: var(--hoh-secondary);
   cursor: pointer;
 }
 
-.menu-bar {
+.menu-icon {
+  width: 1.7rem;
+  height: 1.7rem;
   display: block;
-  width: 100%;
-  height: 2px;
-  background: var(--hoh-secondary);
-  border-radius: 2px;
-  transition: transform 0.25s var(--hoh-ease), opacity 0.25s var(--hoh-ease);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.25s var(--hoh-ease);
 }
 
-.menu-bar.open:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.menu-bar.open:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-bar.open:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+.menu-icon.open {
+  transform: rotate(180deg);
 }
 
 .mobile-nav {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PRIMARY_COLOR, SECONDARY_COLOR, PRIMARY_HOVER, SECONDARY_HOVER } from '@/utils/const'
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '@/utils/const'
 import { ALL_GALLERY_IMAGES, GALLERY_IMAGES_BY_CATEGORY } from '@/utils/images'
 import { getServiceImages } from '@/utils/serviceImages'
 import { findSubcategory } from '@/data/servicesCatalog'
@@ -86,8 +86,10 @@ const galleryTitle = computed(() => {
   <div class="gallery-page">
     <div class="gallery-container">
       <div class="gallery-header">
-        <button @click="goBack" class="back-button">
-          <span class="back-icon">←</span>
+        <button type="button" @click="goBack" class="back-button">
+          <svg class="back-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" />
+          </svg>
           <span class="back-text">Back</span>
         </button>
         <h1 class="gallery-title">{{ galleryTitle }}</h1>
@@ -137,34 +139,41 @@ const galleryTitle = computed(() => {
 .back-button {
   position: absolute;
   left: 0;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background-color: v-bind(PRIMARY_COLOR);
-  color: white;
+  gap: 0.2rem;
+  padding: 0.2rem 0;
+  background: none;
+  color: var(--hoh-text-muted);
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  box-shadow: none;
+  font-family: var(--hoh-font-body);
+  font-size: 0.88rem;
   font-weight: 500;
+  letter-spacing: 0.04em;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: color 0.2s var(--hoh-ease), transform 0.2s var(--hoh-ease);
 }
 
 .back-button:hover {
-  background-color: v-bind(PRIMARY_HOVER);
-  transform: translateX(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: var(--hoh-secondary);
+  transform: translateX(-2px);
+  background: none;
+  box-shadow: none;
 }
 
 .back-icon {
-  font-size: 1.2rem;
-  font-weight: bold;
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .back-text {
-  font-size: 1rem;
+  font-size: 0.88rem;
 }
 
 .gallery-title {
@@ -247,8 +256,6 @@ const galleryTitle = computed(() => {
   .back-button {
     position: relative;
     left: auto;
-    padding: 0.6rem 1.1rem;
-    font-size: 0.9rem;
   }
 
   .gallery-title {
