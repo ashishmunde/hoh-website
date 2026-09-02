@@ -47,22 +47,19 @@ import SiteFooter from '@/components/layout/SiteFooter.vue'
 .hero {
   position: relative;
   width: 100%;
-  max-height: min(72vh, 640px);
-  overflow: hidden;
   background: var(--hoh-secondary);
 }
 
 .hero picture {
   display: block;
   width: 100%;
-  height: 100%;
+  line-height: 0;
 }
 
 .hero-image {
+  display: block;
   width: 100%;
-  height: min(72vh, 640px);
-  object-fit: cover;
-  object-position: center center;
+  height: auto;
 }
 
 .hero-overlay {
@@ -112,24 +109,6 @@ import SiteFooter from '@/components/layout/SiteFooter.vue'
 }
 
 @media (max-width: 768px) {
-  .hero {
-    height: min(50vh, 420px);
-    max-height: min(50vh, 420px);
-  }
-
-  .hero picture,
-  .hero-image {
-    width: 100%;
-    height: 100%;
-    max-height: min(50vh, 420px);
-  }
-
-  .hero-image {
-    display: block;
-    object-fit: contain;
-    object-position: center center;
-  }
-
   /* Mobile banner includes its own title; keep the heading in the DOM for SEO. */
   .hero-overlay {
     background: none;
@@ -145,15 +124,6 @@ import SiteFooter from '@/components/layout/SiteFooter.vue'
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero,
-  .hero picture,
-  .hero-image {
-    height: min(45vh, 360px);
-    max-height: min(45vh, 360px);
   }
 }
 </style>
