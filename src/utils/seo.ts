@@ -188,13 +188,20 @@ export function applyPageSeo(seo: PageSeo) {
   upsertMeta('property', 'og:url', url)
   upsertMeta('property', 'og:locale', 'en_IN')
   upsertMeta('property', 'og:image', image)
+  upsertMeta('property', 'og:image:secure_url', image)
+  upsertMeta('property', 'og:image:type', 'image/png')
+  upsertMeta('property', 'og:image:width', '1697')
+  upsertMeta('property', 'og:image:height', '927')
+  upsertMeta('property', 'og:image:alt', `${SITE_NAME} — Exclusive Retreat, unisex salon in Pune`)
 
   upsertMeta('name', 'twitter:card', 'summary_large_image')
   upsertMeta('name', 'twitter:title', title)
   upsertMeta('name', 'twitter:description', description)
   upsertMeta('name', 'twitter:image', image)
+  upsertMeta('name', 'twitter:image:alt', `${SITE_NAME} — Exclusive Retreat, unisex salon in Pune`)
 
   upsertLink('canonical', url)
+  upsertLink('image_src', image)
 }
 
 export interface LocalBusinessBranch {

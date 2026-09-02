@@ -82,6 +82,8 @@ function onBookingSuccess(chosen: string) {
   position: relative;
   width: 100%;
   background: var(--hoh-secondary);
+  container-type: inline-size;
+  container-name: hero;
 }
 
 .hero-media {
@@ -127,40 +129,87 @@ function onBookingSuccess(chosen: string) {
 }
 
 .hero-booking {
+  --hero-widget-pad: clamp(0.7rem, 2.4cqi, 1.6rem);
+  --hero-widget-gap: clamp(0.45rem, 1.8cqi, 1rem);
   position: absolute;
   top: 50%;
-  right: clamp(1.25rem, 4.5vw, 4.5rem);
+  right: clamp(0.85rem, 3.2cqi, 4.5rem);
   transform: translateY(-50%);
   z-index: 2;
-  width: min(22.5rem, 40%);
-  max-height: calc(100% - 2rem);
+  width: 32cqi;
+  min-width: 16rem;
+  max-width: 36cqi;
+  max-height: calc(100% - clamp(1.25rem, 4cqi, 2.5rem));
   overflow: visible;
-  padding: 1.35rem 1.25rem 1.25rem;
+  padding: var(--hero-widget-pad);
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: var(--hoh-radius-lg);
+  border-radius: clamp(12px, 1.2cqi, var(--hoh-radius-lg));
   box-shadow: 0 12px 40px rgba(26, 26, 26, 0.18);
 }
 
 .hero-booking-title {
   font-family: var(--hoh-font-display);
-  font-size: 1.55rem;
+  font-size: clamp(1.15rem, 2.7cqi, 1.85rem);
   font-weight: 500;
   color: var(--hoh-secondary);
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.2rem;
 }
 
 .hero-booking-note {
-  margin: 0 0 1rem;
-  font-size: 0.82rem;
-  line-height: 1.5;
+  margin: 0 0 var(--hero-widget-gap);
+  font-size: clamp(0.72rem, 1.45cqi, 0.9rem);
+  line-height: 1.45;
   color: var(--hoh-text-muted);
+}
+
+.hero-booking :deep(.compact) {
+  gap: var(--hero-widget-gap);
+}
+
+.hero-booking :deep(.compact .form-grid) {
+  gap: clamp(0.4rem, 1.5cqi, 0.85rem);
+}
+
+.hero-booking :deep(.compact .field) {
+  gap: clamp(0.2rem, 0.7cqi, 0.4rem);
+}
+
+.hero-booking :deep(.compact .field-label) {
+  font-size: clamp(0.58rem, 1.15cqi, 0.75rem);
+}
+
+.hero-booking :deep(.compact .field-input) {
+  padding: clamp(0.42rem, 1.15cqi, 0.7rem) clamp(0.55rem, 1.4cqi, 0.85rem);
+  font-size: clamp(0.8rem, 1.5cqi, 1rem);
+}
+
+.hero-booking :deep(.compact .btn-primary) {
+  padding: clamp(0.5rem, 1.3cqi, 0.85rem) 1.15rem;
+  font-size: clamp(0.68rem, 1.25cqi, 0.82rem);
 }
 
 .hero-book-btn {
   display: none;
+}
+
+@media (min-width: 769px) and (max-width: 960px) {
+  .hero-booking-note {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (max-height: 820px) {
+  .hero-booking-note {
+    display: none;
+  }
+
+  .hero-booking {
+    --hero-widget-pad: 0.75rem;
+    --hero-widget-gap: 0.45rem;
+  }
 }
 
 @media (max-width: 768px) {
