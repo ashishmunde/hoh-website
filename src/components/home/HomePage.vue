@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BANNER_IMAGE } from '@/utils/const'
+import { BANNER_IMAGE, BANNER_IMAGE_MOBILE } from '@/utils/const'
 import Services from './Services.vue'
 import TopBar from './TopBar.vue'
 import Branches from './Branches.vue'
@@ -12,7 +12,14 @@ import SiteFooter from '@/components/layout/SiteFooter.vue'
   <div class="home-page">
     <TopBar />
     <section class="hero">
-      <img :src="BANNER_IMAGE" alt="The House of Hair — best unisex salon and celebrity hairstylist in Pune" class="hero-image" />
+      <picture>
+        <source media="(max-width: 768px)" :srcset="BANNER_IMAGE_MOBILE" />
+        <img
+          :src="BANNER_IMAGE"
+          alt="The House of Hair — best unisex salon and celebrity hairstylist in Pune"
+          class="hero-image"
+        />
+      </picture>
       <div class="hero-overlay" />
       <div class="hero-content">
         <p class="hero-eyebrow">Pune · Unisex Salon · Celebrity Stylist</p>
@@ -43,6 +50,12 @@ import SiteFooter from '@/components/layout/SiteFooter.vue'
   max-height: min(72vh, 640px);
   overflow: hidden;
   background: var(--hoh-secondary);
+}
+
+.hero picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .hero-image {
@@ -99,36 +112,48 @@ import SiteFooter from '@/components/layout/SiteFooter.vue'
 }
 
 @media (max-width: 768px) {
-  .hero,
-  .hero-image {
+  .hero {
     height: min(50vh, 420px);
     max-height: min(50vh, 420px);
   }
 
-  .hero-content {
-    padding: 1.5rem 1rem 2rem;
+  .hero picture,
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    max-height: min(50vh, 420px);
   }
 
-  .hero-eyebrow {
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    margin-bottom: 0.5rem;
+  .hero-image {
+    display: block;
+    object-fit: contain;
+    object-position: center center;
+  }
+
+  /* Mobile banner includes its own title; keep the heading in the DOM for SEO. */
+  .hero-overlay {
+    background: none;
+  }
+
+  .hero-content {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 }
 
 @media (max-width: 480px) {
   .hero,
+  .hero picture,
   .hero-image {
     height: min(45vh, 360px);
     max-height: min(45vh, 360px);
-  }
-
-  .hero-title {
-    font-size: clamp(2rem, 9vw, 2.5rem);
-  }
-
-  .hero-tagline {
-    font-size: 0.9rem;
   }
 }
 </style>

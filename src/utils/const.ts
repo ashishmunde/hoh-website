@@ -1,7 +1,8 @@
-import { BRANCHES, HERO_BANNER_IMAGE, LOGO_IMAGE } from './images'
+import { BRANCHES, HERO_BANNER_IMAGE, HERO_BANNER_MOBILE_IMAGE, LOGO_IMAGE } from './images'
 
 export { LOGO_IMAGE }
 export const BANNER_IMAGE = HERO_BANNER_IMAGE
+export const BANNER_IMAGE_MOBILE = HERO_BANNER_MOBILE_IMAGE
 
 // Color Scheme
 export const PRIMARY_COLOR = '#9c9994'

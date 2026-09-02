@@ -2,6 +2,7 @@ import {
   ALL_GALLERY_IMAGES,
   BRANCHES,
   HERO_BANNER_IMAGE,
+  HERO_BANNER_MOBILE_IMAGE,
   LOGO_IMAGE,
 } from '@/utils/images'
 import { SERVICE_COVERS } from '@/utils/serviceThumbnails'
@@ -9,9 +10,11 @@ import { WORK_GALLERY_CATEGORIES } from '@/utils/workGallery'
 
 /** Unique image URLs needed for first paint / homepage (not full gallery). */
 export function getCriticalSiteImageUrls(): string[] {
+  const isMobile =
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
   const urls = [
     LOGO_IMAGE,
-    HERO_BANNER_IMAGE,
+    isMobile ? HERO_BANNER_MOBILE_IMAGE : HERO_BANNER_IMAGE,
     ...Object.values(BRANCHES),
     ...Object.values(SERVICE_COVERS),
     ...WORK_GALLERY_CATEGORIES.map((c) => c.thumbnail),
