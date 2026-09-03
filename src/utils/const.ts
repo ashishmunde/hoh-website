@@ -43,7 +43,7 @@ export const BRANCHES_DATA: Branch[] = [
   {
     name: 'Karve Nagar',
     thumbnail: BRANCHES.KARVE_NAGAR,
-    googleMapsLink: 'https://maps.app.goo.gl/hrMjwdfWugFgZUbz7',
+    googleMapsLink: 'https://maps.app.goo.gl/WqdycwYLiZghRYqS8',
     bookingUrl: 'https://dingg.app/booking/the-house-of-hair-unisex-salon-karve-nagar',
     address:
       'Girija Shankar Vihar Society, Potnis Parisar, 86, Lane Number 6, opp. Durga Cafe, Karvenagar, Pune, Maharashtra 411052',
@@ -63,7 +63,7 @@ export const BRANCHES_DATA: Branch[] = [
   {
     name: 'Kothrud',
     thumbnail: BRANCHES.KOTHRUD,
-    googleMapsLink: 'https://maps.app.goo.gl/WqdycwYLiZghRYqS8',
+    googleMapsLink: 'https://maps.app.goo.gl/hrMjwdfWugFgZUbz7',
     bookingUrl: 'https://dingg.app/booking/the-house-of-hair-paud-road',
     address:
       'The House of Hair salon, Rokade Heights, Ideal Colony Metro Station, Mahaganesh Colony, Kothrud, Pune, Maharashtra 411038',
