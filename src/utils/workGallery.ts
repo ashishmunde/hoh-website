@@ -52,7 +52,7 @@ export const WORK_GALLERY_CATEGORIES = [
     id: 'mens-haircut',
     name: 'Male Haircut',
     galleryQuery: 'Male Haircut',
-    thumbnail: MENS_HAIRCUT_IMAGES[0],
+    thumbnail: SERVICE_COVERS.mensHaircut,
     images: MENS_HAIRCUT_IMAGES,
   },
   {

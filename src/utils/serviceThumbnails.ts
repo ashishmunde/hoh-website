@@ -22,6 +22,7 @@ export const SERVICE_COVERS = {
   femaleHairTreatment: serviceThumbnailUrl('Female Hair Treatment.png'),
   femaleHaircut: serviceThumbnailUrl('Female Haircut.png'),
   femaleWashStyling: serviceThumbnailUrl('Female Wash and styling.png'),
+  mensHaircut: serviceThumbnailUrl('Mens_service.jpeg'),
   maleHairColor: serviceThumbnailUrl('Mens Hair Color.png'),
   groomMakeup: serviceThumbnailUrl('groom makeup thumbnail cover.jpg'),
 } as const
