@@ -45,8 +45,8 @@ function onBookingSuccess(chosen: string) {
         <h1 class="hero-title">The House of Hair</h1>
         <p class="hero-tagline">Best hair salon in Karve Nagar, Kothrud &amp; Aundh</p>
       </div>
-      <aside class="hero-booking" aria-label="Book an appointment">
-        <h2 class="hero-booking-title">Book an appointment</h2>
+      <aside class="hero-booking" aria-label="Request Appointment">
+        <h2 class="hero-booking-title">Request Appointment</h2>
         <p class="hero-booking-note">Choose your branch and we will confirm your slot shortly.</p>
         <BookingForm compact @success="onBookingSuccess" />
       </aside>

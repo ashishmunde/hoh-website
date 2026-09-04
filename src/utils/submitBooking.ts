@@ -2,7 +2,6 @@ export interface BookingPayload {
   branch: string
   name: string
   phone: string
-  service?: string
 }
 
 export interface BookingResult {
@@ -21,8 +20,6 @@ const ENTRY_NAME =
   (import.meta.env.VITE_BOOKING_ENTRY_NAME as string | undefined) || 'entry.2010279491'
 const ENTRY_PHONE =
   (import.meta.env.VITE_BOOKING_ENTRY_PHONE as string | undefined) || 'entry.820777496'
-const ENTRY_SERVICE =
-  (import.meta.env.VITE_BOOKING_ENTRY_SERVICE as string | undefined) || 'entry.1279469736'
 
 /**
  * Posts booking details to the Google Form.
@@ -34,9 +31,6 @@ export async function submitBooking(payload: BookingPayload): Promise<BookingRes
     body.set(ENTRY_BRANCH, payload.branch)
     body.set(ENTRY_NAME, payload.name)
     body.set(ENTRY_PHONE, payload.phone)
-    if (payload.service) {
-      body.set(ENTRY_SERVICE, payload.service)
-    }
 
     await fetch(FORM_URL, {
       method: 'POST',

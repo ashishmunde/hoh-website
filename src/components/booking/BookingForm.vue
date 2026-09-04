@@ -17,7 +17,6 @@ const emit = defineEmits<{
 const branch = ref(props.initialBranch ?? '')
 const name = ref('')
 const phone = ref('')
-const service = ref('')
 const submitting = ref(false)
 const feedback = ref<{ ok: boolean; message: string } | null>(null)
 const branchOpen = ref(false)
@@ -52,7 +51,6 @@ async function onSubmit() {
     branch: branch.value,
     name: name.value.trim(),
     phone: phone.value.trim(),
-    service: service.value.trim() || undefined,
   })
 
   feedback.value = result
@@ -62,7 +60,6 @@ async function onSubmit() {
     const chosen = branch.value
     name.value = ''
     phone.value = ''
-    service.value = ''
     emit('success', chosen)
   }
 }
@@ -135,16 +132,6 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDocPointer))
           inputmode="tel"
         />
       </label>
-
-      <label class="field field-full">
-        <span class="field-label">Service (optional)</span>
-        <input
-          v-model="service"
-          type="text"
-          class="field-input"
-          placeholder="e.g. Haircut, Balayage, Makeup and Hairstyle"
-        />
-      </label>
     </div>
 
     <p v-if="feedback && !feedback.ok" class="feedback err">
@@ -156,7 +143,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDocPointer))
         Cancel
       </button>
       <button type="submit" class="btn-primary" :disabled="!canSubmit">
-        {{ submitting ? 'Sending…' : 'Book appointment' }}
+        {{ submitting ? 'Sending…' : 'Request Now' }}
       </button>
     </div>
   </form>

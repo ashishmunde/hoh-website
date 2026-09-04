@@ -39,7 +39,7 @@ onBeforeUnmount(() => {
           <button type="button" class="modal-close" aria-label="Close" @click="emit('close')">
             ×
           </button>
-          <h2 id="booking-title" class="modal-title">Book an appointment</h2>
+          <h2 id="booking-title" class="modal-title">Request Appointment</h2>
           <p class="modal-subtitle">Choose your branch and we will confirm your slot shortly.</p>
           <BookingForm
             :initial-branch="initialBranch"

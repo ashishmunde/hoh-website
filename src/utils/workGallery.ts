@@ -52,14 +52,14 @@ export const WORK_GALLERY_CATEGORIES = [
     id: 'mens-haircut',
     name: 'Male Haircut',
     galleryQuery: 'Male Haircut',
-    thumbnail: SERVICE_COVERS.mensHaircut,
+    thumbnail: 'https://house-of-hair.s3.ap-south-1.amazonaws.com/mens-haircut/photo_2025-08-01_13-01-01.jpg',
     images: MENS_HAIRCUT_IMAGES,
   },
   {
     id: 'mens-hair-color',
     name: 'Male Hair Color',
     galleryQuery: 'Male Hair Color',
-    thumbnail: SERVICE_COVERS.maleHairColor,
+    thumbnail: 'https://house-of-hair.s3.ap-south-1.amazonaws.com/mens-hair-color/3.jpg',
     images: MENS_HAIR_COLOR_IMAGES,
   },
   {

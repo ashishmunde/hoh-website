@@ -72,7 +72,7 @@ function onBookingSuccess(chosen: string) {
       </div>
 
       <section class="booking-section">
-        <h2 class="card-heading">Book an appointment</h2>
+        <h2 class="card-heading">Request Appointment</h2>
         <p class="booking-note">Fill in your details and we will confirm your slot shortly.</p>
         <BookingForm @success="onBookingSuccess" />
       </section>
