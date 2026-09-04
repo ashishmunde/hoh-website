@@ -35,17 +35,16 @@ export function serviceImageKey(
 const SUBCATEGORY_IMAGES: Record<string, string[]> = {
   // Men's Hair
   [serviceImageKey('hair', 'mens-hair', 'haircut')]: MENS_HAIRCUT_IMAGES,
-  [serviceImageKey('hair', 'mens-hair', 'hair-tattoo')]: MENS_HAIRCUT_IMAGES,
   [serviceImageKey('hair', 'mens-hair', 'beard')]: MENS_HAIRCUT_IMAGES,
   [serviceImageKey('hair', 'mens-hair', 'hair-color')]: [
     ...MENS_HAIR_COLOR_IMAGES,
     ...GLOBAL_IMAGES,
     ...HIGHLIGHTS_IMAGES,
   ],
-  [serviceImageKey('hair', 'mens-hair', 'hair-treatment')]: HAIR_TREATMENT_IMAGES,
+  [serviceImageKey('hair', 'mens-hair', 'texture-services')]: HAIR_TREATMENT_IMAGES,
   [serviceImageKey('hair', 'mens-hair', 'hair-scalp-nourishment')]: HAIR_TREATMENT_IMAGES,
 
-  // Female Hair
+  // Women's Hair
   [serviceImageKey('hair', 'female-hair', 'haircut')]: FEMALE_HAIRCUT_IMAGES,
   [serviceImageKey('hair', 'female-hair', 'fringe')]: FEMALE_HAIRCUT_IMAGES,
   [serviceImageKey('hair', 'female-hair', 'wash-styling')]: [
@@ -57,7 +56,7 @@ const SUBCATEGORY_IMAGES: Record<string, string[]> = {
     ...GLOBAL_IMAGES,
     ...HIGHLIGHTS_IMAGES,
   ],
-  [serviceImageKey('hair', 'female-hair', 'hair-treatment')]: HAIR_TREATMENT_IMAGES,
+  [serviceImageKey('hair', 'female-hair', 'texture-services')]: HAIR_TREATMENT_IMAGES,
   [serviceImageKey('hair', 'female-hair', 'hair-scalp-nourishment')]: HAIR_TREATMENT_IMAGES,
 
   // Beauty (no photo folders except makeup)
@@ -134,7 +133,7 @@ export const PORTFOLIO_SECTIONS = [
     name: 'Hair Treatment',
     division: 'hair',
     category: 'female-hair',
-    subcategory: 'hair-treatment',
+    subcategory: 'texture-services',
     image: HAIR_TREATMENT_IMAGES[0],
     imageCount: HAIR_TREATMENT_IMAGES.length,
   },

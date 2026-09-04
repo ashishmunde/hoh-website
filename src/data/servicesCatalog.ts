@@ -31,16 +31,6 @@ export interface HomeServiceCard {
   query: Record<string, string>
 }
 
-const hairTreatmentItems = [
-  'Cystine',
-  'Nanoplastia/Hair Restoration',
-  'Hair Spa',
-  'Head Massage ( Oil )',
-  'Clear Dose',
-]
-
-const hairScalpNourishmentItems = ['Hair & Scalp Nourishment']
-
 function hairSub(
   _categoryId: string,
   id: string,
@@ -60,7 +50,7 @@ function beautySub(
 }
 
 /**
- * PDF layout (top level):
+ * Rate card layout (top level):
  * Hair Services | Beauty Services | Makeup and Hairstyle
  */
 export const HOME_SERVICE_CARDS: HomeServiceCard[] = [
@@ -89,15 +79,7 @@ export const HOME_SERVICE_CARDS: HomeServiceCard[] = [
 ]
 
 /**
- * PDF catalog structure:
- *
- * Hair Services
- *   Men's Hair → Haircut, Hair Tattoo, Beard, Hair Color, Hair Treatment
- *   Female Hair → Haircut, Fringe, Wash & Styling, Hair Color, Hair Treatment
- *
- * Beauty Services
- *   Waxing, Manicure, Pedicure, Cleanup, Facial, Detan
- *   (Makeup is a separate top-level entry)
+ * Catalog mirrors the rate card sections and service names.
  */
 export const SERVICE_DIVISIONS: ServiceDivision[] = [
   {
@@ -110,84 +92,77 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
         image: getCategoryMenuThumbnail('mens-hair'),
         subcategories: [
           hairSub('mens-hair', 'haircut', 'Haircut', [
-            'Classic Haircut',
-            'Pushback Haircut',
-            'Side part Haircut',
-            'Zero fade Haircut',
-            'High fade Haircut',
-            'Low fade Haircut',
-            'Long layer Haircut',
-            'Curly hair Haircut',
-            'Taper Haircut',
+            'Haircut by Shubham (Style Director)',
+            'Haircut by Expert with Wash',
+            'Haircut by Expert without Wash',
+            'Kids (0-7)',
+            'Hairwash',
+            'Styling',
           ]),
-          hairSub('mens-hair', 'hair-tattoo', 'Hair Tattoo', [
-            'Razor Stroke',
-            'Custom Hair Tattoo',
-            'Free Hand Hair Tattoo',
-            'Alphabetical Hair Tattoo',
+          hairSub('mens-hair', 'beard', 'Beard', ['Beard']),
+          hairSub('mens-hair', 'hair-color', 'Color', [
+            'Global Color',
+            'Ammonia Free Global Color',
+            'Hi-Lights',
+            'Crazy Color (Blue, Green, Ash)',
+            'Beard Color',
           ]),
-          hairSub('mens-hair', 'beard', 'Beard', [
-            'Classic beard',
-            'Beard trim',
-            'Faded beard',
+          hairSub('mens-hair', 'texture-services', 'Texture Services', [
+            'Cysteine',
+            'Hair Restoration',
           ]),
-          hairSub('mens-hair', 'hair-color', 'Hair Color', [
-            'Global color',
-            'Highlights',
-            'Crazy color',
-            'Beard color',
+          hairSub('mens-hair', 'hair-scalp-nourishment', 'Hair & Scalp Nourishment', [
+            'Hairspa Loreal',
+            'Hairspa Schwarzkopf',
+            'Head Massage (20Mins)',
+            'Head Massage with Wash',
+            'Clear Dose',
           ]),
-          hairSub('mens-hair', 'hair-treatment', 'Hair Treatment', hairTreatmentItems),
-          hairSub(
-            'mens-hair',
-            'hair-scalp-nourishment',
-            'Hair & Scalp Nourishment',
-            hairScalpNourishmentItems,
-          ),
         ],
       },
       {
         id: 'female-hair',
-        name: 'Female Hair',
+        name: "Women's Hair",
         image: getCategoryMenuThumbnail('female-hair'),
         subcategories: [
           hairSub('female-hair', 'haircut', 'Haircut', [
-            'Long layer',
-            'Short layers',
-            'Butterfly Haircut',
-            'Face Framing Layers',
-            'Classic Bob',
-            'Graduated Bob',
-            'Curly Shag Haircut',
+            'Haircut by Shubham (Style Director)',
+            'Haircut by Expert with Wash',
+            'Haircut by Expert without Wash',
+            'Kids (0-7)',
           ]),
-          hairSub('female-hair', 'fringe', 'Fringe', [
-            'Side swept Fringe',
-            'Curtain bangs',
-            'Solid Fringes',
-          ]),
+          hairSub('female-hair', 'fringe', 'Fringe', ['Fringe']),
           hairSub('female-hair', 'wash-styling', 'Wash & Styling', [
-            'Hair Wash & Paddle dry',
-            'Hair Wash & Blow Dry',
+            'Hairwash & Paddle Dry',
+            'Blowdry (In-turn, Out-turn, Straight)',
+            'Blow Dry with Shampoo & Conditioner',
             'Ironing',
             'Crimping',
             'Iron Tong',
-            'Tongs',
+            'Tong',
           ]),
-          hairSub('female-hair', 'hair-color', 'Hair Color', [
-            'Global',
-            'Highlights',
+          hairSub('female-hair', 'hair-color', 'Color', [
+            'Ammonia-Free Touch Up',
+            'Touch Up',
+            'Ammonia-Free Global Color',
+            'Global Color',
+            'Hi-Lights & Babylight',
             'Balayage & Ombre',
-            'Touch up',
-            'Ammonia Free Touchup',
-            'Crazy color',
+            'Per Streaks',
+            'Crazy Color',
           ]),
-          hairSub('female-hair', 'hair-treatment', 'Hair Treatment', hairTreatmentItems),
-          hairSub(
-            'female-hair',
-            'hair-scalp-nourishment',
-            'Hair & Scalp Nourishment',
-            hairScalpNourishmentItems,
-          ),
+          hairSub('female-hair', 'texture-services', 'Texture Services', [
+            'Cysteine Treatment',
+            'Hair Restoration',
+          ]),
+          hairSub('female-hair', 'hair-scalp-nourishment', 'Hair & Scalp Nourishment', [
+            'Hairspa Loreal',
+            'Hairspa Schwarzkopf',
+            'Hairspa Naturica',
+            'Head Massage (20Mins)',
+            'Head Massage with Wash',
+            'Clear Dose',
+          ]),
         ],
       },
     ],
@@ -202,45 +177,156 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
         image: getCategoryMenuThumbnail('beauty-services'),
         subcategories: [
           beautySub('beauty-services', 'waxing', 'Waxing', [
-            'Rica Wax',
-            'Regular Wax',
-            'Cartridge Wax',
-            'Peeloff Wax',
+            'Rica Wax — Upper Lip',
+            'Rica Wax — Chin',
+            'Rica Wax — Face',
+            'Rica Wax — Side Lock',
+            'Rica Wax — Under Arms',
+            'Rica Wax — Full Arms',
+            'Rica Wax — Half Arms',
+            'Rica Wax — Full Legs',
+            'Rica Wax — Half Legs',
+            'Rica Wax — Full Back',
+            'Rica Wax — Half Back',
+            'Rica Wax — Full Front',
+            'Rica Wax — Half Front',
+            'Rica Wax — Stomach',
+            'Rica Wax — Behind',
+            'Rica Wax — Bikini Line',
+            'Rica Wax — Buttocks',
+            'Rica Wax — Brazilian',
+            'Rica Wax — Full Body',
+            'Reg. Wax — Upper Lip',
+            'Reg. Wax — Chin',
+            'Reg. Wax — Face',
+            'Reg. Wax — Jawline',
+            'Reg. Wax — Side Lock',
+            'Reg. Wax — Under Arms',
+            'Reg. Wax — Full Arms',
+            'Reg. Wax — Half Arms',
+            'Reg. Wax — Full Legs',
+            'Reg. Wax — Half Legs',
+            'Reg. Wax — Full Back',
+            'Reg. Wax — Half Back',
+            'Reg. Wax — Full Front',
+            'Reg. Wax — Half Front',
+            'Reg. Wax — Stomach',
+            'Reg. Wax — Behind',
+            'Reg. Wax — Buttocks',
+            'Reg. Wax — Bikini Line',
+            'Reg. Wax — Brazilian',
+            'Reg. Wax — Full Body',
+            'Cartridge Wax — Under Arms',
+            'Cartridge Wax — Full Arms',
+            'Cartridge Wax — Half Arms',
+            'Cartridge Wax — Full Legs',
+            'Cartridge Wax — Half Legs',
+            'Cartridge Wax — Full Back',
+            'Cartridge Wax — Half Back',
+            'Cartridge Wax — Half Front',
+            'Cartridge Wax — Full Front',
+            'Cartridge Wax — Stomach',
+            'Cartridge Wax — Full Body',
+            'Peeloff Wax — Upper Lip',
+            'Peeloff Wax — Fore Head',
+            'Peeloff Wax — Chin',
+            'Peeloff Wax — Side Lock',
+            'Peeloff Wax — Neck',
+            'Peeloff Wax — Under Arms',
+            'Peeloff Wax — Brazilian',
+            'Peeloff Wax — Ear',
+            'Peeloff Wax — Nose',
+            'Peeloff Wax — Full Face',
+          ]),
+          beautySub('beauty-services', 'basic-skin-care', 'Basic Skin Care', [
+            'Eyebrow',
+            'Upper Lip',
+            'Chin',
+            'Forehead',
+            'Jawline',
+            'Face',
           ]),
           beautySub('beauty-services', 'manicure', 'Manicure', [
             'Regular',
             'Wine',
             'Chocolate',
-            'De-tan',
+            'D-Tan',
             'Candle Spa',
-            'Signature Plus',
+            'Signature +',
           ]),
           beautySub('beauty-services', 'pedicure', 'Pedicure', [
             'Regular',
             'Wine',
             'Chocolate',
-            'De-tan',
+            'D-Tan',
             'Candle Spa',
-            'Signature Plus',
+            'Signature +',
+            'Heel Peel',
           ]),
-          beautySub('beauty-services', 'cleanup', 'Cleanup', [
+          beautySub('beauty-services', 'hands-feet', 'Hands & Feet', [
+            'Cut & File',
+            'Cut File & Polish',
+            'Nail Cut & File + Nail Polish (French)',
+            'Reflexology',
+          ]),
+          beautySub('beauty-services', 'cleanup', 'Clean Up', [
+            'Matte Effect Fruit Cleansing for Combination to Oily Skin',
+            'Deep Cleansing for Acne Prone Skin',
+            'Lotus Pearl Glow',
             'Hydra Cleanup',
-            "Cheryl's",
-            'O3+ Cleanup',
-            'Janssen Cleanup',
+            'O3+ Clean Up',
+            'Janssen Clean Up',
           ]),
-          beautySub('beauty-services', 'facial', 'Facial', [
+          beautySub('beauty-services', 'facial', 'Facial & Masks', [
+            'Young Blush',
+            'Age Defence',
+            'Hydra Facial',
+            'Pearl Glow',
             'Light & Bright',
             'Biolight (O3+)',
             'Janssen Facial',
-            'Hydra Facial',
             'Hydra + O3',
             'Hydra + Janssen',
           ]),
-          beautySub('beauty-services', 'de-tan', 'De-tan', [
-            'O3 De-tan',
-            'Janssen De-tan',
-            'Raga De-tan',
+          beautySub('beauty-services', 'de-tan', 'De-Tan', [
+            'O3+ — Face',
+            'O3+ — Face, Neck & Blouse Line',
+            'O3+ — Full Arms',
+            'O3+ — Half Arms',
+            'O3+ — Full Back',
+            'O3+ — Half Back',
+            'O3+ — Full Legs',
+            'O3+ — Half Legs',
+            'O3+ — Under Arms',
+            'O3+ — Body',
+            'Janssen — Face',
+            'Janssen — Face, Neck & Blouse Line',
+            'Janssen — Full Arms',
+            'Janssen — Half Arms',
+            'Janssen — Full Back',
+            'Janssen — Under Arms',
+            'Raaga — Face',
+            'Raaga — Face, Neck & Blouse Line',
+            'Raaga — Full Arms',
+            'Raaga — Half Arms',
+            'Raaga — Full Back',
+            'Raaga — Half Back',
+            'Raaga — Full Legs',
+            'Raaga — Half Legs',
+            'Raaga — Under Arms',
+            'Raaga — Body',
+          ]),
+          beautySub('beauty-services', 'spa', 'Spa Services', [
+            'Sparkling Back Exfoliation + Massage + Wrap',
+            'Full Body Exfoliation + Massage + Wrap',
+            'Full Body Exfoliation with Scrub Cream',
+            'Full Body Exfoliation with Sugar Peel',
+            'Sparkling Hands Exfoliation + Massage + Wrap',
+            'Sparkling Legs Exfoliation + Massage + Wrap',
+          ]),
+          beautySub('beauty-services', 'massage', 'Massage', [
+            'Back Massage (with Massage Balm / Essential Oil)',
+            'Body Massage',
           ]),
           beautySub('beauty-services', 'makeup', 'Makeup and Hairstyle', [
             "Groom's Makeup",
@@ -255,14 +341,18 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
   },
 ]
 
-/** Beauty Services tiles in PDF order (Makeup has its own top-level entry) */
+/** Beauty Services tiles (Makeup has its own top-level entry) */
 export const BEAUTY_MENU_SUBCATEGORY_IDS = [
   'waxing',
+  'basic-skin-care',
   'manicure',
   'pedicure',
+  'hands-feet',
   'cleanup',
   'facial',
   'de-tan',
+  'spa',
+  'massage',
 ] as const
 
 export function findCategory(

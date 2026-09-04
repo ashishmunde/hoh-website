@@ -48,18 +48,17 @@ export const CATEGORY_MENU_THUMBNAILS: Record<string, string> = {
 const SUBCATEGORY_THUMBNAILS: Record<string, string> = {
   // Male Hair
   'mens-hair::haircut': SERVICE_COVERS.mensHaircut,
-  'mens-hair::hair-tattoo': SERVICE_COVERS.mensHaircut,
   'mens-hair::beard': SERVICE_COVERS.beard,
   'mens-hair::hair-color': SERVICE_COVERS.maleHairColor,
-  'mens-hair::hair-treatment': SERVICE_COVERS.femaleHairTreatment,
+  'mens-hair::texture-services': SERVICE_COVERS.femaleHairTreatment,
   'mens-hair::hair-scalp-nourishment': SERVICE_COVERS.femaleScalpNourishment,
 
-  // Female Hair
+  // Women's Hair
   'female-hair::haircut': SERVICE_COVERS.femaleHaircut,
   'female-hair::fringe': SERVICE_COVERS.femaleHaircut,
   'female-hair::wash-styling': SERVICE_COVERS.femaleWashStyling,
   'female-hair::hair-color': SERVICE_COVERS.femaleHairColor,
-  'female-hair::hair-treatment': SERVICE_COVERS.femaleHairTreatment,
+  'female-hair::texture-services': SERVICE_COVERS.femaleHairTreatment,
   'female-hair::hair-scalp-nourishment': SERVICE_COVERS.femaleScalpNourishment,
 
   // Beauty Services — dedicated covers from S3 services/
@@ -67,8 +66,12 @@ const SUBCATEGORY_THUMBNAILS: Record<string, string> = {
   'beauty-services::cleanup': SERVICE_COVERS.cleanup,
   'beauty-services::de-tan': SERVICE_COVERS.de_tan,
   'beauty-services::waxing': SERVICE_COVERS.waxing,
+  'beauty-services::basic-skin-care': SERVICE_COVERS.cleanup,
   'beauty-services::manicure': SERVICE_COVERS.manicure,
   'beauty-services::pedicure': SERVICE_COVERS.pedicure,
+  'beauty-services::hands-feet': SERVICE_COVERS.pedicure,
+  'beauty-services::spa': SERVICE_COVERS.facial,
+  'beauty-services::massage': SERVICE_COVERS.facial,
   'beauty-services::makeup': SERVICE_COVERS.groomMakeup,
 }
 
