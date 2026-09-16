@@ -26,6 +26,10 @@ export const SERVICE_COVERS = {
   womensHair: serviceThumbnailUrl('Women_Hair_Service.jpeg'),
   maleHairColor: serviceThumbnailUrl('Mens Hair Color.png'),
   groomMakeup: serviceThumbnailUrl('groom makeup thumbnail cover.jpg'),
+  spa: serviceThumbnailUrl('Spa-services.jpeg'),
+  basicSkinCare: serviceThumbnailUrl('basic-skin-care.jpeg'),
+  handsFeet: serviceThumbnailUrl('hands-and-feet.jpeg'),
+  massage: serviceThumbnailUrl('massage-services.jpeg'),
 } as const
 
 const DEFAULT_THUMBNAIL = SERVICE_COVERS.femaleHaircut
@@ -66,12 +70,12 @@ const SUBCATEGORY_THUMBNAILS: Record<string, string> = {
   'beauty-services::cleanup': SERVICE_COVERS.cleanup,
   'beauty-services::de-tan': SERVICE_COVERS.de_tan,
   'beauty-services::waxing': SERVICE_COVERS.waxing,
-  'beauty-services::basic-skin-care': SERVICE_COVERS.cleanup,
+  'beauty-services::basic-skin-care': SERVICE_COVERS.basicSkinCare,
   'beauty-services::manicure': SERVICE_COVERS.manicure,
   'beauty-services::pedicure': SERVICE_COVERS.pedicure,
-  'beauty-services::hands-feet': SERVICE_COVERS.pedicure,
-  'beauty-services::spa': SERVICE_COVERS.facial,
-  'beauty-services::massage': SERVICE_COVERS.facial,
+  'beauty-services::hands-feet': SERVICE_COVERS.handsFeet,
+  'beauty-services::spa': SERVICE_COVERS.spa,
+  'beauty-services::massage': SERVICE_COVERS.massage,
   'beauty-services::makeup': SERVICE_COVERS.groomMakeup,
 }
 
