@@ -3,8 +3,15 @@ export function formatPrice(amount: number): string {
   return `₹${amount.toLocaleString('en-IN')}`
 }
 
-function itemKey(categoryId: string, subcategoryId: string, itemName: string): string {
-  return `${categoryId}::${subcategoryId}::${itemName}`
+function itemKey(
+  categoryId: string,
+  subcategoryId: string,
+  itemName: string,
+  groupName?: string,
+): string {
+  return groupName
+    ? `${categoryId}::${subcategoryId}::${groupName}::${itemName}`
+    : `${categoryId}::${subcategoryId}::${itemName}`
 }
 
 function subKey(categoryId: string, subcategoryId: string): string {
@@ -12,7 +19,7 @@ function subKey(categoryId: string, subcategoryId: string): string {
 }
 
 /**
- * Exact rates from the rate card, keyed by category::subcategory::item.
+ * Exact rates from the rate card, keyed by category::subcategory::[group::]item.
  * Names match servicesCatalog.ts.
  */
 const ITEM_PRICES: Record<string, number> = {
@@ -49,7 +56,7 @@ const ITEM_PRICES: Record<string, number> = {
 
   [itemKey('female-hair', 'fringe', 'Fringe')]: 300,
 
-  [itemKey('female-hair', 'wash-styling', 'Hairwash & Paddle Dry')]: 400,
+  [itemKey('female-hair', 'wash-styling', 'Hairwash & Paddle Dry (If oil is applied ₹100 extra)')]: 400,
   [itemKey('female-hair', 'wash-styling', 'Blowdry (In-turn, Out-turn, Straight)')]: 400,
   [itemKey('female-hair', 'wash-styling', 'Blow Dry with Shampoo & Conditioner')]: 700,
   [itemKey('female-hair', 'wash-styling', 'Ironing')]: 700,
@@ -77,76 +84,76 @@ const ITEM_PRICES: Record<string, number> = {
   [itemKey('female-hair', 'hair-scalp-nourishment', 'Clear Dose')]: 1000,
 
   // —— Waxing ——
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Upper Lip')]: 130,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Chin')]: 130,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Face')]: 450,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Side Lock')]: 200,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Under Arms')]: 250,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Full Arms')]: 500,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Half Arms')]: 400,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Full Legs')]: 850,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Half Legs')]: 550,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Full Back')]: 650,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Half Back')]: 450,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Full Front')]: 650,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Half Front')]: 450,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Stomach')]: 500,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Behind')]: 700,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Bikini Line')]: 800,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Buttocks')]: 900,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Brazilian')]: 2200,
-  [itemKey('beauty-services', 'waxing', 'Rica Wax — Full Body')]: 3000,
+  [itemKey('beauty-services', 'waxing', 'Upper Lip', 'Rica Wax')]: 130,
+  [itemKey('beauty-services', 'waxing', 'Chin', 'Rica Wax')]: 130,
+  [itemKey('beauty-services', 'waxing', 'Face', 'Rica Wax')]: 450,
+  [itemKey('beauty-services', 'waxing', 'Side Lock', 'Rica Wax')]: 200,
+  [itemKey('beauty-services', 'waxing', 'Under Arms', 'Rica Wax')]: 250,
+  [itemKey('beauty-services', 'waxing', 'Full Arms', 'Rica Wax')]: 500,
+  [itemKey('beauty-services', 'waxing', 'Half Arms', 'Rica Wax')]: 400,
+  [itemKey('beauty-services', 'waxing', 'Full Legs', 'Rica Wax')]: 850,
+  [itemKey('beauty-services', 'waxing', 'Half Legs', 'Rica Wax')]: 550,
+  [itemKey('beauty-services', 'waxing', 'Full Back', 'Rica Wax')]: 650,
+  [itemKey('beauty-services', 'waxing', 'Half Back', 'Rica Wax')]: 450,
+  [itemKey('beauty-services', 'waxing', 'Full Front', 'Rica Wax')]: 650,
+  [itemKey('beauty-services', 'waxing', 'Half Front', 'Rica Wax')]: 450,
+  [itemKey('beauty-services', 'waxing', 'Stomach', 'Rica Wax')]: 500,
+  [itemKey('beauty-services', 'waxing', 'Behind', 'Rica Wax')]: 700,
+  [itemKey('beauty-services', 'waxing', 'Bikini Line', 'Rica Wax')]: 800,
+  [itemKey('beauty-services', 'waxing', 'Buttocks', 'Rica Wax')]: 900,
+  [itemKey('beauty-services', 'waxing', 'Brazilian', 'Rica Wax')]: 2200,
+  [itemKey('beauty-services', 'waxing', 'Full Body', 'Rica Wax')]: 3000,
 
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Upper Lip')]: 100,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Chin')]: 100,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Face')]: 400,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Jawline')]: 150,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Side Lock')]: 170,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Under Arms')]: 160,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Full Arms')]: 450,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Half Arms')]: 350,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Full Legs')]: 650,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Half Legs')]: 500,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Full Back')]: 500,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Half Back')]: 400,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Full Front')]: 550,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Half Front')]: 400,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Stomach')]: 320,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Behind')]: 500,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Buttocks')]: 700,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Bikini Line')]: 600,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Brazilian')]: 1500,
-  [itemKey('beauty-services', 'waxing', 'Reg. Wax — Full Body')]: 2000,
+  [itemKey('beauty-services', 'waxing', 'Upper Lip', 'Reg. Wax')]: 100,
+  [itemKey('beauty-services', 'waxing', 'Chin', 'Reg. Wax')]: 100,
+  [itemKey('beauty-services', 'waxing', 'Face', 'Reg. Wax')]: 400,
+  [itemKey('beauty-services', 'waxing', 'Jawline', 'Reg. Wax')]: 150,
+  [itemKey('beauty-services', 'waxing', 'Side Lock', 'Reg. Wax')]: 170,
+  [itemKey('beauty-services', 'waxing', 'Under Arms', 'Reg. Wax')]: 160,
+  [itemKey('beauty-services', 'waxing', 'Full Arms', 'Reg. Wax')]: 450,
+  [itemKey('beauty-services', 'waxing', 'Half Arms', 'Reg. Wax')]: 350,
+  [itemKey('beauty-services', 'waxing', 'Full Legs', 'Reg. Wax')]: 650,
+  [itemKey('beauty-services', 'waxing', 'Half Legs', 'Reg. Wax')]: 500,
+  [itemKey('beauty-services', 'waxing', 'Full Back', 'Reg. Wax')]: 500,
+  [itemKey('beauty-services', 'waxing', 'Half Back', 'Reg. Wax')]: 400,
+  [itemKey('beauty-services', 'waxing', 'Full Front', 'Reg. Wax')]: 550,
+  [itemKey('beauty-services', 'waxing', 'Half Front', 'Reg. Wax')]: 400,
+  [itemKey('beauty-services', 'waxing', 'Stomach', 'Reg. Wax')]: 320,
+  [itemKey('beauty-services', 'waxing', 'Behind', 'Reg. Wax')]: 500,
+  [itemKey('beauty-services', 'waxing', 'Buttocks', 'Reg. Wax')]: 700,
+  [itemKey('beauty-services', 'waxing', 'Bikini Line', 'Reg. Wax')]: 600,
+  [itemKey('beauty-services', 'waxing', 'Brazilian', 'Reg. Wax')]: 1500,
+  [itemKey('beauty-services', 'waxing', 'Full Body', 'Reg. Wax')]: 2000,
 
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Under Arms')]: 300,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Full Arms')]: 650,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Half Arms')]: 500,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Full Legs')]: 1000,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Half Legs')]: 650,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Full Back')]: 700,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Half Back')]: 500,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Half Front')]: 500,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Full Front')]: 700,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Stomach')]: 550,
-  [itemKey('beauty-services', 'waxing', 'Cartridge Wax — Full Body')]: 3300,
+  [itemKey('beauty-services', 'waxing', 'Under Arms', 'Cartridge Wax')]: 300,
+  [itemKey('beauty-services', 'waxing', 'Full Arms', 'Cartridge Wax')]: 650,
+  [itemKey('beauty-services', 'waxing', 'Half Arms', 'Cartridge Wax')]: 500,
+  [itemKey('beauty-services', 'waxing', 'Full Legs', 'Cartridge Wax')]: 1000,
+  [itemKey('beauty-services', 'waxing', 'Half Legs', 'Cartridge Wax')]: 650,
+  [itemKey('beauty-services', 'waxing', 'Full Back', 'Cartridge Wax')]: 700,
+  [itemKey('beauty-services', 'waxing', 'Half Back', 'Cartridge Wax')]: 500,
+  [itemKey('beauty-services', 'waxing', 'Half Front', 'Cartridge Wax')]: 500,
+  [itemKey('beauty-services', 'waxing', 'Full Front', 'Cartridge Wax')]: 700,
+  [itemKey('beauty-services', 'waxing', 'Stomach', 'Cartridge Wax')]: 550,
+  [itemKey('beauty-services', 'waxing', 'Full Body', 'Cartridge Wax')]: 3300,
 
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Upper Lip')]: 120,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Fore Head')]: 120,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Chin')]: 120,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Side Lock')]: 120,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Neck')]: 120,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Under Arms')]: 250,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Brazilian')]: 2500,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Ear')]: 200,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Nose')]: 150,
-  [itemKey('beauty-services', 'waxing', 'Peeloff Wax — Full Face')]: 600,
+  [itemKey('beauty-services', 'waxing', 'Upper Lip', 'Peeloff Wax')]: 120,
+  [itemKey('beauty-services', 'waxing', 'Fore Head', 'Peeloff Wax')]: 120,
+  [itemKey('beauty-services', 'waxing', 'Chin', 'Peeloff Wax')]: 120,
+  [itemKey('beauty-services', 'waxing', 'Side Lock', 'Peeloff Wax')]: 120,
+  [itemKey('beauty-services', 'waxing', 'Neck', 'Peeloff Wax')]: 120,
+  [itemKey('beauty-services', 'waxing', 'Under Arms', 'Peeloff Wax')]: 250,
+  [itemKey('beauty-services', 'waxing', 'Ear', 'Peeloff Wax')]: 200,
+  [itemKey('beauty-services', 'waxing', 'Nose', 'Peeloff Wax')]: 150,
+  [itemKey('beauty-services', 'waxing', 'Full Face', 'Peeloff Wax')]: 600,
+  [itemKey('beauty-services', 'waxing', 'Brazilian', 'Peeloff Wax')]: 2500,
 
   // —— Basic Skin Care ——
-  [itemKey('beauty-services', 'basic-skin-care', 'Eyebrow')]: 100,
   [itemKey('beauty-services', 'basic-skin-care', 'Upper Lip')]: 60,
   [itemKey('beauty-services', 'basic-skin-care', 'Chin')]: 60,
   [itemKey('beauty-services', 'basic-skin-care', 'Forehead')]: 60,
   [itemKey('beauty-services', 'basic-skin-care', 'Jawline')]: 60,
+  [itemKey('beauty-services', 'basic-skin-care', 'Eyebrow')]: 100,
   [itemKey('beauty-services', 'basic-skin-care', 'Face')]: 250,
 
   // —— Manicure ——
@@ -196,32 +203,32 @@ const ITEM_PRICES: Record<string, number> = {
   [itemKey('beauty-services', 'facial', 'Hydra + Janssen')]: 6500,
 
   // —— De-Tan ——
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Face')]: 1000,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Face, Neck & Blouse Line')]: 1100,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Full Arms')]: 1100,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Half Arms')]: 700,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Full Back')]: 1200,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Half Back')]: 750,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Full Legs')]: 1450,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Half Legs')]: 900,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Under Arms')]: 400,
-  [itemKey('beauty-services', 'de-tan', 'O3+ — Body')]: 4200,
-  [itemKey('beauty-services', 'de-tan', 'Janssen — Face')]: 1200,
-  [itemKey('beauty-services', 'de-tan', 'Janssen — Face, Neck & Blouse Line')]: 1500,
-  [itemKey('beauty-services', 'de-tan', 'Janssen — Full Arms')]: 1400,
-  [itemKey('beauty-services', 'de-tan', 'Janssen — Half Arms')]: 1000,
-  [itemKey('beauty-services', 'de-tan', 'Janssen — Full Back')]: 1800,
-  [itemKey('beauty-services', 'de-tan', 'Janssen — Under Arms')]: 700,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Face')]: 700,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Face, Neck & Blouse Line')]: 850,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Full Arms')]: 850,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Half Arms')]: 500,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Full Back')]: 900,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Half Back')]: 550,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Full Legs')]: 1000,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Half Legs')]: 700,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Under Arms')]: 300,
-  [itemKey('beauty-services', 'de-tan', 'Raaga — Body')]: 3200,
+  [itemKey('beauty-services', 'de-tan', 'Face', 'O3+')]: 1000,
+  [itemKey('beauty-services', 'de-tan', 'Face, Neck & Blouse Line', 'O3+')]: 1100,
+  [itemKey('beauty-services', 'de-tan', 'Full Arms', 'O3+')]: 1100,
+  [itemKey('beauty-services', 'de-tan', 'Half Arms', 'O3+')]: 700,
+  [itemKey('beauty-services', 'de-tan', 'Full Back', 'O3+')]: 1200,
+  [itemKey('beauty-services', 'de-tan', 'Half Back', 'O3+')]: 750,
+  [itemKey('beauty-services', 'de-tan', 'Full Legs', 'O3+')]: 1450,
+  [itemKey('beauty-services', 'de-tan', 'Half Legs', 'O3+')]: 900,
+  [itemKey('beauty-services', 'de-tan', 'Under Arms', 'O3+')]: 400,
+  [itemKey('beauty-services', 'de-tan', 'Body', 'O3+')]: 4200,
+  [itemKey('beauty-services', 'de-tan', 'Face', 'Janssen')]: 1200,
+  [itemKey('beauty-services', 'de-tan', 'Face, Neck & Blouse Line', 'Janssen')]: 1500,
+  [itemKey('beauty-services', 'de-tan', 'Full Arms', 'Janssen')]: 1400,
+  [itemKey('beauty-services', 'de-tan', 'Half Arms', 'Janssen')]: 1000,
+  [itemKey('beauty-services', 'de-tan', 'Full Back', 'Janssen')]: 1800,
+  [itemKey('beauty-services', 'de-tan', 'Under Arms', 'Janssen')]: 700,
+  [itemKey('beauty-services', 'de-tan', 'Face', 'Raaga')]: 700,
+  [itemKey('beauty-services', 'de-tan', 'Face, Neck & Blouse Line', 'Raaga')]: 850,
+  [itemKey('beauty-services', 'de-tan', 'Full Arms', 'Raaga')]: 850,
+  [itemKey('beauty-services', 'de-tan', 'Half Arms', 'Raaga')]: 500,
+  [itemKey('beauty-services', 'de-tan', 'Full Back', 'Raaga')]: 900,
+  [itemKey('beauty-services', 'de-tan', 'Half Back', 'Raaga')]: 550,
+  [itemKey('beauty-services', 'de-tan', 'Full Legs', 'Raaga')]: 1000,
+  [itemKey('beauty-services', 'de-tan', 'Half Legs', 'Raaga')]: 700,
+  [itemKey('beauty-services', 'de-tan', 'Under Arms', 'Raaga')]: 300,
+  [itemKey('beauty-services', 'de-tan', 'Body', 'Raaga')]: 3200,
 
   // —— Spa Services ——
   [itemKey('beauty-services', 'spa', 'Sparkling Back Exfoliation + Massage + Wrap')]: 1800,
@@ -242,6 +249,41 @@ const ITEM_PRICES: Record<string, number> = {
   [itemKey('beauty-services', 'makeup', "Sider's Hairstyle")]: 1000,
   [itemKey('beauty-services', 'makeup', 'Saree Draping')]: 2000,
 }
+
+/** Prices marked with * on the rate card */
+const STARRED_KEYS = new Set([
+  itemKey('mens-hair', 'hair-color', 'Global Color'),
+  itemKey('mens-hair', 'hair-color', 'Ammonia Free Global Color'),
+  itemKey('mens-hair', 'hair-color', 'Hi-Lights'),
+  itemKey('mens-hair', 'hair-color', 'Crazy Color (Blue, Green, Ash)'),
+  itemKey('mens-hair', 'hair-color', 'Beard Color'),
+  itemKey('mens-hair', 'texture-services', 'Cysteine'),
+  itemKey('mens-hair', 'texture-services', 'Hair Restoration'),
+  itemKey('mens-hair', 'hair-scalp-nourishment', 'Hairspa Loreal'),
+  itemKey('mens-hair', 'hair-scalp-nourishment', 'Hairspa Schwarzkopf'),
+
+  itemKey('female-hair', 'wash-styling', 'Blowdry (In-turn, Out-turn, Straight)'),
+  itemKey('female-hair', 'wash-styling', 'Blow Dry with Shampoo & Conditioner'),
+  itemKey('female-hair', 'wash-styling', 'Ironing'),
+  itemKey('female-hair', 'wash-styling', 'Crimping'),
+  itemKey('female-hair', 'wash-styling', 'Iron Tong'),
+  itemKey('female-hair', 'wash-styling', 'Tong'),
+  itemKey('female-hair', 'hair-color', 'Ammonia-Free Touch Up'),
+  itemKey('female-hair', 'hair-color', 'Touch Up'),
+  itemKey('female-hair', 'hair-color', 'Ammonia-Free Global Color'),
+  itemKey('female-hair', 'hair-color', 'Global Color'),
+  itemKey('female-hair', 'hair-color', 'Hi-Lights & Babylight'),
+  itemKey('female-hair', 'hair-color', 'Balayage & Ombre'),
+  itemKey('female-hair', 'hair-color', 'Per Streaks'),
+  itemKey('female-hair', 'hair-color', 'Crazy Color'),
+  itemKey('female-hair', 'texture-services', 'Cysteine Treatment'),
+  itemKey('female-hair', 'texture-services', 'Hair Restoration'),
+  itemKey('female-hair', 'hair-scalp-nourishment', 'Hairspa Loreal'),
+  itemKey('female-hair', 'hair-scalp-nourishment', 'Hairspa Schwarzkopf'),
+  itemKey('female-hair', 'hair-scalp-nourishment', 'Hairspa Naturica'),
+  itemKey('female-hair', 'hair-scalp-nourishment', 'Head Massage (20Mins)'),
+  itemKey('female-hair', 'hair-scalp-nourishment', 'Head Massage with Wash'),
+])
 
 /** Lowest price in each subcategory (for category cards) */
 const SUBCATEGORY_STARTING_PRICES: Record<string, number> = {
@@ -279,9 +321,10 @@ export function getItemPrice(
   categoryId: string,
   subcategoryId: string,
   itemName: string,
+  groupName?: string,
 ): number | null {
   if (!shouldShowPricing(categoryId, subcategoryId)) return null
-  const exact = ITEM_PRICES[itemKey(categoryId, subcategoryId, itemName)]
+  const exact = ITEM_PRICES[itemKey(categoryId, subcategoryId, itemName, groupName)]
   if (exact != null) return exact
   return SUBCATEGORY_STARTING_PRICES[subKey(categoryId, subcategoryId)] ?? null
 }
@@ -290,11 +333,14 @@ export function formatItemPrice(
   categoryId: string,
   subcategoryId: string,
   itemName: string,
+  groupName?: string,
 ): string | null {
-  const price = getItemPrice(categoryId, subcategoryId, itemName)
+  const key = itemKey(categoryId, subcategoryId, itemName, groupName)
+  const price = getItemPrice(categoryId, subcategoryId, itemName, groupName)
   if (price == null) return null
-  if (ITEM_PRICES[itemKey(categoryId, subcategoryId, itemName)] != null) {
-    return formatPrice(price)
+  const star = STARRED_KEYS.has(key) ? '*' : ''
+  if (ITEM_PRICES[key] != null) {
+    return `${formatPrice(price)}${star}`
   }
   return `From ${formatPrice(price)}`
 }

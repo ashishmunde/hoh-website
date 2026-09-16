@@ -4,10 +4,17 @@ import {
   getSubcategoryMenuThumbnail,
 } from '@/utils/serviceThumbnails'
 
+export interface ServiceItemGroup {
+  name: string
+  items: string[]
+}
+
 export interface ServiceSubcategory {
   id: string
   name: string
   items: string[]
+  groups?: ServiceItemGroup[]
+  notes?: string[]
 }
 
 export interface ServiceCategory {
@@ -36,8 +43,9 @@ function hairSub(
   id: string,
   name: string,
   items: string[],
+  notes?: string[],
 ): ServiceSubcategory {
-  return { id, name, items }
+  return { id, name, items, notes }
 }
 
 function beautySub(
@@ -45,9 +53,53 @@ function beautySub(
   id: string,
   name: string,
   items: string[],
+  notes?: string[],
 ): ServiceSubcategory {
-  return { id, name, items }
+  return { id, name, items, notes }
 }
+
+function beautyGrouped(
+  id: string,
+  name: string,
+  groups: ServiceItemGroup[],
+  notes?: string[],
+): ServiceSubcategory {
+  return {
+    id,
+    name,
+    items: groups.flatMap((group) => group.items),
+    groups,
+    notes,
+  }
+}
+
+const MENS_GENERAL_NOTES = [
+  '*Long hair of male would be charged according to female prices.',
+  '*Technical services done by Style Director will be +20% of actual cost.',
+]
+
+const MENS_TECHNICAL_NOTES = [
+  '*Price may vary according to length & density.',
+  '*Long hair of male would be charged according to female prices.',
+  '*Technical services done by Style Director will be +20% of actual cost.',
+]
+
+const WOMENS_WASH_NOTES = [
+  '*If oil is applied, ₹100 extra will be charged with the wash amount.',
+  '*Extra 20% will be charged for Sulphate & paraben free shampoo & conditioner.',
+  '*Hair length below mid-back will be charged extra for blowdry / wash & blowdry / wash & dry / tongs / ironing / crimping.',
+]
+
+const WOMENS_COLOR_NOTES = [
+  '*Technical services done by Style Director will be +20% of actual cost.',
+  '*Price may vary according to length & density.',
+  '*Extra 20% will be charged for Sulphate & paraben free shampoo & conditioner.',
+]
+
+const WOMENS_SCALP_NOTES = [
+  '*If oil is applied, ₹100 extra will be charged with the wash amount.',
+  '*Extra 20% will be charged for Sulphate & paraben free shampoo & conditioner.',
+]
 
 /**
  * Rate card layout (top level):
@@ -100,6 +152,19 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Styling',
           ]),
           hairSub('mens-hair', 'beard', 'Beard', ['Beard']),
+          hairSub(
+            'mens-hair',
+            'hair-scalp-nourishment',
+            'Hair & Scalp Nourishment',
+            [
+              'Hairspa Loreal',
+              'Hairspa Schwarzkopf',
+              'Head Massage (20Mins)',
+              'Head Massage with Wash',
+              'Clear Dose',
+            ],
+            MENS_GENERAL_NOTES,
+          ),
           hairSub('mens-hair', 'hair-color', 'Color', [
             'Global Color',
             'Ammonia Free Global Color',
@@ -107,17 +172,13 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Crazy Color (Blue, Green, Ash)',
             'Beard Color',
           ]),
-          hairSub('mens-hair', 'texture-services', 'Texture Services', [
-            'Cysteine',
-            'Hair Restoration',
-          ]),
-          hairSub('mens-hair', 'hair-scalp-nourishment', 'Hair & Scalp Nourishment', [
-            'Hairspa Loreal',
-            'Hairspa Schwarzkopf',
-            'Head Massage (20Mins)',
-            'Head Massage with Wash',
-            'Clear Dose',
-          ]),
+          hairSub(
+            'mens-hair',
+            'texture-services',
+            'Texture Services',
+            ['Cysteine', 'Hair Restoration'],
+            MENS_TECHNICAL_NOTES,
+          ),
         ],
       },
       {
@@ -132,37 +193,57 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Kids (0-7)',
           ]),
           hairSub('female-hair', 'fringe', 'Fringe', ['Fringe']),
-          hairSub('female-hair', 'wash-styling', 'Wash & Styling', [
-            'Hairwash & Paddle Dry',
-            'Blowdry (In-turn, Out-turn, Straight)',
-            'Blow Dry with Shampoo & Conditioner',
-            'Ironing',
-            'Crimping',
-            'Iron Tong',
-            'Tong',
-          ]),
-          hairSub('female-hair', 'hair-color', 'Color', [
-            'Ammonia-Free Touch Up',
-            'Touch Up',
-            'Ammonia-Free Global Color',
-            'Global Color',
-            'Hi-Lights & Babylight',
-            'Balayage & Ombre',
-            'Per Streaks',
-            'Crazy Color',
-          ]),
-          hairSub('female-hair', 'texture-services', 'Texture Services', [
-            'Cysteine Treatment',
-            'Hair Restoration',
-          ]),
-          hairSub('female-hair', 'hair-scalp-nourishment', 'Hair & Scalp Nourishment', [
-            'Hairspa Loreal',
-            'Hairspa Schwarzkopf',
-            'Hairspa Naturica',
-            'Head Massage (20Mins)',
-            'Head Massage with Wash',
-            'Clear Dose',
-          ]),
+          hairSub(
+            'female-hair',
+            'wash-styling',
+            'Wash & Styling',
+            [
+              'Hairwash & Paddle Dry (If oil is applied ₹100 extra)',
+              'Blowdry (In-turn, Out-turn, Straight)',
+              'Blow Dry with Shampoo & Conditioner',
+              'Ironing',
+              'Crimping',
+              'Iron Tong',
+              'Tong',
+            ],
+            WOMENS_WASH_NOTES,
+          ),
+          hairSub(
+            'female-hair',
+            'hair-color',
+            'Color',
+            [
+              'Ammonia-Free Touch Up',
+              'Touch Up',
+              'Ammonia-Free Global Color',
+              'Global Color',
+              'Hi-Lights & Babylight',
+              'Balayage & Ombre',
+              'Per Streaks',
+              'Crazy Color',
+            ],
+            WOMENS_COLOR_NOTES,
+          ),
+          hairSub(
+            'female-hair',
+            'texture-services',
+            'Texture Services',
+            ['Cysteine Treatment', 'Hair Restoration'],
+          ),
+          hairSub(
+            'female-hair',
+            'hair-scalp-nourishment',
+            'Hair & Scalp Nourishment',
+            [
+              'Hairspa Loreal',
+              'Hairspa Schwarzkopf',
+              'Hairspa Naturica',
+              'Head Massage (20Mins)',
+              'Head Massage with Wash',
+              'Clear Dose',
+            ],
+            WOMENS_SCALP_NOTES,
+          ),
         ],
       },
     ],
@@ -176,74 +257,94 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
         name: 'Beauty Services',
         image: getCategoryMenuThumbnail('beauty-services'),
         subcategories: [
-          beautySub('beauty-services', 'waxing', 'Waxing', [
-            'Rica Wax — Upper Lip',
-            'Rica Wax — Chin',
-            'Rica Wax — Face',
-            'Rica Wax — Side Lock',
-            'Rica Wax — Under Arms',
-            'Rica Wax — Full Arms',
-            'Rica Wax — Half Arms',
-            'Rica Wax — Full Legs',
-            'Rica Wax — Half Legs',
-            'Rica Wax — Full Back',
-            'Rica Wax — Half Back',
-            'Rica Wax — Full Front',
-            'Rica Wax — Half Front',
-            'Rica Wax — Stomach',
-            'Rica Wax — Behind',
-            'Rica Wax — Bikini Line',
-            'Rica Wax — Buttocks',
-            'Rica Wax — Brazilian',
-            'Rica Wax — Full Body',
-            'Reg. Wax — Upper Lip',
-            'Reg. Wax — Chin',
-            'Reg. Wax — Face',
-            'Reg. Wax — Jawline',
-            'Reg. Wax — Side Lock',
-            'Reg. Wax — Under Arms',
-            'Reg. Wax — Full Arms',
-            'Reg. Wax — Half Arms',
-            'Reg. Wax — Full Legs',
-            'Reg. Wax — Half Legs',
-            'Reg. Wax — Full Back',
-            'Reg. Wax — Half Back',
-            'Reg. Wax — Full Front',
-            'Reg. Wax — Half Front',
-            'Reg. Wax — Stomach',
-            'Reg. Wax — Behind',
-            'Reg. Wax — Buttocks',
-            'Reg. Wax — Bikini Line',
-            'Reg. Wax — Brazilian',
-            'Reg. Wax — Full Body',
-            'Cartridge Wax — Under Arms',
-            'Cartridge Wax — Full Arms',
-            'Cartridge Wax — Half Arms',
-            'Cartridge Wax — Full Legs',
-            'Cartridge Wax — Half Legs',
-            'Cartridge Wax — Full Back',
-            'Cartridge Wax — Half Back',
-            'Cartridge Wax — Half Front',
-            'Cartridge Wax — Full Front',
-            'Cartridge Wax — Stomach',
-            'Cartridge Wax — Full Body',
-            'Peeloff Wax — Upper Lip',
-            'Peeloff Wax — Fore Head',
-            'Peeloff Wax — Chin',
-            'Peeloff Wax — Side Lock',
-            'Peeloff Wax — Neck',
-            'Peeloff Wax — Under Arms',
-            'Peeloff Wax — Brazilian',
-            'Peeloff Wax — Ear',
-            'Peeloff Wax — Nose',
-            'Peeloff Wax — Full Face',
+          beautyGrouped('waxing', 'Waxing', [
+            {
+              name: 'Rica Wax',
+              items: [
+                'Upper Lip',
+                'Chin',
+                'Face',
+                'Side Lock',
+                'Under Arms',
+                'Full Arms',
+                'Half Arms',
+                'Full Legs',
+                'Half Legs',
+                'Full Back',
+                'Half Back',
+                'Full Front',
+                'Half Front',
+                'Stomach',
+                'Behind',
+                'Bikini Line',
+                'Buttocks',
+                'Brazilian',
+                'Full Body',
+              ],
+            },
+            {
+              name: 'Reg. Wax',
+              items: [
+                'Upper Lip',
+                'Chin',
+                'Face',
+                'Jawline',
+                'Side Lock',
+                'Under Arms',
+                'Full Arms',
+                'Half Arms',
+                'Full Legs',
+                'Half Legs',
+                'Full Back',
+                'Half Back',
+                'Full Front',
+                'Half Front',
+                'Stomach',
+                'Behind',
+                'Buttocks',
+                'Bikini Line',
+                'Brazilian',
+                'Full Body',
+              ],
+            },
+            {
+              name: 'Cartridge Wax',
+              items: [
+                'Under Arms',
+                'Full Arms',
+                'Half Arms',
+                'Full Legs',
+                'Half Legs',
+                'Full Back',
+                'Half Back',
+                'Half Front',
+                'Full Front',
+                'Stomach',
+                'Full Body',
+              ],
+            },
+            {
+              name: 'Peeloff Wax',
+              items: [
+                'Upper Lip',
+                'Fore Head',
+                'Chin',
+                'Side Lock',
+                'Neck',
+                'Under Arms',
+                'Ear',
+                'Nose',
+                'Full Face',
+                'Brazilian',
+              ],
+            },
           ]),
           beautySub('beauty-services', 'basic-skin-care', 'Basic Skin Care', [
-            'Eyebrow',
             'Upper Lip',
             'Chin',
             'Forehead',
             'Jawline',
+            'Eyebrow',
             'Face',
           ]),
           beautySub('beauty-services', 'manicure', 'Manicure', [
@@ -288,33 +389,48 @@ export const SERVICE_DIVISIONS: ServiceDivision[] = [
             'Hydra + O3',
             'Hydra + Janssen',
           ]),
-          beautySub('beauty-services', 'de-tan', 'De-Tan', [
-            'O3+ — Face',
-            'O3+ — Face, Neck & Blouse Line',
-            'O3+ — Full Arms',
-            'O3+ — Half Arms',
-            'O3+ — Full Back',
-            'O3+ — Half Back',
-            'O3+ — Full Legs',
-            'O3+ — Half Legs',
-            'O3+ — Under Arms',
-            'O3+ — Body',
-            'Janssen — Face',
-            'Janssen — Face, Neck & Blouse Line',
-            'Janssen — Full Arms',
-            'Janssen — Half Arms',
-            'Janssen — Full Back',
-            'Janssen — Under Arms',
-            'Raaga — Face',
-            'Raaga — Face, Neck & Blouse Line',
-            'Raaga — Full Arms',
-            'Raaga — Half Arms',
-            'Raaga — Full Back',
-            'Raaga — Half Back',
-            'Raaga — Full Legs',
-            'Raaga — Half Legs',
-            'Raaga — Under Arms',
-            'Raaga — Body',
+          beautyGrouped('de-tan', 'De-Tan', [
+            {
+              name: 'O3+',
+              items: [
+                'Face',
+                'Face, Neck & Blouse Line',
+                'Full Arms',
+                'Half Arms',
+                'Full Back',
+                'Half Back',
+                'Full Legs',
+                'Half Legs',
+                'Under Arms',
+                'Body',
+              ],
+            },
+            {
+              name: 'Janssen',
+              items: [
+                'Face',
+                'Face, Neck & Blouse Line',
+                'Full Arms',
+                'Half Arms',
+                'Full Back',
+                'Under Arms',
+              ],
+            },
+            {
+              name: 'Raaga',
+              items: [
+                'Face',
+                'Face, Neck & Blouse Line',
+                'Full Arms',
+                'Half Arms',
+                'Full Back',
+                'Half Back',
+                'Full Legs',
+                'Half Legs',
+                'Under Arms',
+                'Body',
+              ],
+            },
           ]),
           beautySub('beauty-services', 'spa', 'Spa Services', [
             'Sparkling Back Exfoliation + Massage + Wrap',
@@ -354,6 +470,18 @@ export const BEAUTY_MENU_SUBCATEGORY_IDS = [
   'spa',
   'massage',
 ] as const
+
+/** Short service lists — keep the cover photo matched to the list height */
+export const COMPACT_SPLIT_SUBCATEGORIES = new Set([
+  'basic-skin-care',
+  'manicure',
+  'pedicure',
+  'hands-feet',
+  'cleanup',
+  'facial',
+  'spa',
+  'massage',
+])
 
 export function findCategory(
   divisionId: string,

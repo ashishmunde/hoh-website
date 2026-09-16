@@ -3,6 +3,7 @@ import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   SERVICE_DIVISIONS,
+  COMPACT_SPLIT_SUBCATEGORIES,
   findCategory,
   findSubcategory,
   getBeautyMenuSubcategories,
@@ -134,9 +135,9 @@ const itemPrice = (subId: string, item: string) => {
   return formatItemPrice(categoryId.value, subId, item)
 }
 
-const subcategoryItemPrice = (item: string) => {
+const subcategoryItemPrice = (item: string, groupName?: string) => {
   if (!categoryId.value || !subcategoryId.value) return null
-  return formatItemPrice(categoryId.value, subcategoryId.value, item)
+  return formatItemPrice(categoryId.value, subcategoryId.value, item, groupName)
 }
 
 /** Flat grouped list of every leaf service under Men's / Female Hair */
@@ -146,8 +147,15 @@ const categoryServiceGroups = computed(() => {
     id: sub.id,
     name: sub.name,
     items: sub.items,
+    notes: sub.notes ?? [],
   }))
 })
+
+const isCompactSplit = computed(
+  () =>
+    viewLevel.value === 'subcategory' &&
+    Boolean(subcategoryId.value && COMPACT_SPLIT_SUBCATEGORIES.has(subcategoryId.value)),
+)
 
 const isSplitView = computed(
   () => viewLevel.value === 'category' || viewLevel.value === 'subcategory',
@@ -354,6 +362,9 @@ onBeforeUnmount(() => {
                 </span>
               </li>
             </ul>
+            <ul v-if="group.notes.length" class="service-notes">
+              <li v-for="note in group.notes" :key="note">{{ note }}</li>
+            </ul>
           </section>
         </div>
       </div>
@@ -361,7 +372,11 @@ onBeforeUnmount(() => {
 
     <!-- Beauty / Makeup: image left + service names list (no per-item thumbnails) -->
     <template v-else-if="viewLevel === 'subcategory' && currentSubcategory">
-      <div ref="splitLayout" class="split-layout">
+      <div
+        ref="splitLayout"
+        class="split-layout"
+        :class="{ 'split-layout--compact': isCompactSplit }"
+      >
         <div class="split-left">
           <h1 class="catalog-title">{{ pageTitle }}</h1>
           <div class="split-image-wrap">
@@ -372,8 +387,38 @@ onBeforeUnmount(() => {
             />
           </div>
         </div>
-        <div ref="listPanel" class="split-list-panel split-list-panel--flat">
-          <ul class="service-name-list">
+        <div
+          ref="listPanel"
+          class="split-list-panel"
+          :class="{ 'split-list-panel--flat': !currentSubcategory.groups?.length }"
+        >
+          <template v-if="currentSubcategory.groups?.length">
+            <section
+              v-for="group in currentSubcategory.groups"
+              :key="group.name"
+              class="service-group"
+            >
+              <h2 class="service-group-title">
+                <span class="service-group-label">{{ group.name }}</span>
+              </h2>
+              <ul class="service-name-list">
+                <li
+                  v-for="item in group.items"
+                  :key="`${group.name}-${item}`"
+                  class="service-name-item"
+                >
+                  <span class="service-name-text">{{ item }}</span>
+                  <span
+                    v-if="subcategoryItemPrice(item, group.name)"
+                    class="service-price"
+                  >
+                    {{ subcategoryItemPrice(item, group.name) }}
+                  </span>
+                </li>
+              </ul>
+            </section>
+          </template>
+          <ul v-else class="service-name-list">
             <li
               v-for="item in currentSubcategory.items"
               :key="item"
@@ -384,6 +429,9 @@ onBeforeUnmount(() => {
                 {{ subcategoryItemPrice(item) }}
               </span>
             </li>
+          </ul>
+          <ul v-if="currentSubcategory.notes?.length" class="service-notes">
+            <li v-for="note in currentSubcategory.notes" :key="note">{{ note }}</li>
           </ul>
         </div>
       </div>
@@ -666,6 +714,40 @@ onBeforeUnmount(() => {
   display: none;
 }
 
+.service-notes {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: color-mix(in srgb, var(--hoh-bg-alt) 80%, white);
+  border-radius: var(--hoh-radius);
+  border: 1px solid color-mix(in srgb, var(--hoh-border) 80%, transparent);
+}
+
+.service-notes li {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--hoh-text-muted);
+}
+
+.split-layout--compact {
+  grid-template-columns: minmax(180px, 260px) minmax(280px, 1fr);
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.split-layout--compact .split-left {
+  height: 100%;
+}
+
+.split-layout--compact .split-image-wrap {
+  flex: 1;
+  aspect-ratio: unset;
+  min-height: 0;
+}
+
 .service-name-item:last-child {
   border-bottom: none;
   padding-bottom: 0.15rem;
@@ -691,9 +773,20 @@ onBeforeUnmount(() => {
     gap: 2rem;
   }
 
+  .split-layout--compact {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .split-image-wrap {
     max-width: 280px;
     margin: 0 auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .split-layout--compact .split-image-wrap {
+    max-width: 220px;
+    min-height: 0;
     aspect-ratio: 4 / 5;
   }
 
