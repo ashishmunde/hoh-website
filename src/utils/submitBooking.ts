@@ -12,14 +12,14 @@ export interface BookingResult {
 /** House of Hair appointment Google Form */
 const FORM_URL =
   (import.meta.env.VITE_BOOKING_FORM_URL as string | undefined) ||
-  'https://docs.google.com/forms/d/e/1FAIpQLScED0hHfPVBsVHUBxO66pTXJcSYwgb7qTuzPMACWQGbPkibFg/formResponse'
+  'https://docs.google.com/forms/d/e/1FAIpQLSfH6nDaNjMsWFqvxe0Rl-6T3nODN3Gx_c3cgDQIQLZh4dcQCg/formResponse'
 
 const ENTRY_BRANCH =
-  (import.meta.env.VITE_BOOKING_ENTRY_BRANCH as string | undefined) || 'entry.1672591005'
+  (import.meta.env.VITE_BOOKING_ENTRY_BRANCH as string | undefined) || 'entry.876267156'
 const ENTRY_NAME =
-  (import.meta.env.VITE_BOOKING_ENTRY_NAME as string | undefined) || 'entry.2010279491'
+  (import.meta.env.VITE_BOOKING_ENTRY_NAME as string | undefined) || 'entry.1595956214'
 const ENTRY_PHONE =
-  (import.meta.env.VITE_BOOKING_ENTRY_PHONE as string | undefined) || 'entry.820777496'
+  (import.meta.env.VITE_BOOKING_ENTRY_PHONE as string | undefined) || 'entry.1088788698'
 
 /**
  * Posts booking details to the Google Form.
