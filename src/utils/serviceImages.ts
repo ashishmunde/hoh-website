@@ -20,7 +20,7 @@ export function serviceImageKey(
 }
 
 /**
- * Maps each PDF service section to photo folders in /hoh.
+ * Maps each PDF service section to the S3 image lists in images.ts.
  *
  * Folders → sections:
  * - Men_s Haircut → Men's Hair (haircut, hair tattoo, beard)
